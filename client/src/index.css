@@ -1,0 +1,54 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.header-list{
+    font-family: "SUSE", sans-serif;
+    font-style: normal;
+}
+
+.logo{
+    font-family: "PT Serif", serif;
+     font-weight: 700;
+     font-style: normal;
+}
+
+.banner{
+    background: url(/image/front-view-female-doctors-clinic.jpg);
+    width: 100%;
+    height:85vh;
+    background-position: center;
+    background-size: cover;
+}
+
+.testi{
+    backdrop-filter: blur(10px);
+}
+
+.ini, .commit{
+    font-family: "Playfair Display", system-ui;
+}
+.head, .serve{
+    font-family: "PT Serif", system-ui;
+    font-weight: 700;
+    font-style: normal;
+}
+.service{
+    animation: slide 35s  infinite linear;
+    overflow: hidden;
+}
+
+@keyframes slider{
+    from{
+        transform: translateX(0%);
+    }
+    to{
+        transform: translateX(-100%);
+    }
+}
+
+.auth-layout{
+    background-image: url(../public/image/Lifesavers\ -\ Waiting.png);
+    background-repeat: no-repeat;
+    background-position: center;
+}
