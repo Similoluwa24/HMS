@@ -4,9 +4,9 @@ import { Link } from 'react-router-dom'
 function Register() {
   return (
     <>
-         <div className="text-[#E1EBEE] w-full bg-[#0000ff] h-[100vh] container">
-          <div className="login">
-            <h1 className='text-center pt-12 text-2xl font-bold font-[lora]'>Your Healthcare Starts Here</h1>
+         <div className="text-[#E1EBEE] w-full bg-[#0070FF] h-[100vh] container">
+          <div className="register">
+            <h1 className='text-center pt-12 text-3xl font-bold font-[lora]'>Your Healthcare Starts Here</h1>
           </div>
           <div className=" mx-5  mt-4 form">
             <form action="" className='space-y-8'>
@@ -63,7 +63,7 @@ function Register() {
                 </div>
 
                 <div className="m-auto">
-                <button type="button" class="text-blue-700 hover:text-white border bg-white w-[200px] border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800">Sign Up</button>
+                <button type="submit" class="text-blue-700 hover:text-white border bg-white w-[200px] border-blue-700 hover:bg-blue-800  font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800">Sign Up</button>
                 <p class="text-sm font-light text-[#E1EBEE] ">
                       Already have an account? <Link to="/auth/login" class="font-medium text-primary-600 hover:underline dark:text-primary-500">Login here</Link>
                </p>
