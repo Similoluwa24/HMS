@@ -2,10 +2,20 @@
 @tailwind components;
 @tailwind utilities;
 
+*{
+    scroll-behavior: smooth;
+}
+
 .header-list{
     font-family: "SUSE", sans-serif;
     font-style: normal;
 }
+.header-list li:hover{
+    color: #007cff;
+}
+
+
+
 
 .logo{
     font-family: "PT Serif", serif;
@@ -14,10 +24,9 @@
 }
 
 .banner{
-    background: url(/image/front-view-female-doctors-clinic.jpg);
-    width: 100%;
+    background: url(/image/medium-shot-doctor-with-device.jpg);
     height:85vh;
-    background-position: center;
+    background-position:top;
     background-size: cover;
 }
 
@@ -51,4 +60,53 @@
     background-image: url(../public/image/Lifesavers\ -\ Waiting.png);
     background-repeat: no-repeat;
     background-position: center;
+}
+
+.servicess{
+    background: linear-gradient(135deg, hsla(212.5,100%,50%, 0.5), hsla(194.6,100%,50%, 0.5)),
+     url(./assets/bg1.jpg);
+    height: 100%;
+    background-repeat: no-repeat;
+    background-position: calc(20%);
+    background-size: cover;
+    backdrop-filter: blur(1px);
+}
+.auth{
+    background: linear-gradient(135deg, hsla(212.5,100%,50%, 0.5), hsla(194.6,100%,50%, 0.5)),
+     url(./assets/bg1.jpg);
+    background-repeat: no-repeat;
+    background-position: calc(20%);
+    background-size: cover;
+    backdrop-filter: blur(1px);
+}
+/* .over{
+    position: relative;
+    overflow-y: hidden;
+} */
+/* .overlay{
+    background: linear-gradient(105deg, hsl(212.5,100%,50%), hsl(194.6,100%,50%)); */
+    /* position: absolute;
+    top: 400px;
+    left: 0; */
+     
+/* } */
+/* .overlay:hover{
+    top:150px;
+} */
+ .one ul li{
+    font-size: 1rem;
+ }
+
+.map {
+    width: 100%;
+    height: 50vh;
+}
+.map iframe{
+    width: 100%;
+    height: 100%;
+}
+.contact-us{
+    position: absolute;
+    top: 0;
+    left: 0;
 }

@@ -10,11 +10,11 @@ import { IoSettingsOutline,  IoHomeOutline } from "react-icons/io5";
 function PatientSidebar() {
   return (
     <>
-        <div class=" py-5 px-3 h-full bg-[#D0F0C0] text-[#00401A] border-r border-gray-200 ">
+        <div class=" py-5 px-3 h-full bg-[#B9D9EB] text-[#001D4E] border-r border-gray-200 ">
             <div className="user">
             <div className=" logo">
-                    <MdLocalHospital className='inline size-12 p-2 border-r-2 border-[#00401A] text-[#00401A]'></MdLocalHospital>
-                    <p className='inline text-2xl p-2 text-[#00401A]'>OJ Hospital</p>
+                    <MdLocalHospital className='lg:inline hidden size-12 lg:p-2 border-r-2 border-[#001D4E] text-[#001D4E]'></MdLocalHospital>
+                    <p className='inline text-sm md:text-2xl p-2 text-[#001D4E]'>OJ Hospital</p>
                 </div>
                 
                 <hr />
@@ -22,19 +22,19 @@ function PatientSidebar() {
             <div className="py-7 list">
                 <ul className='font-[SUSE] px-3 space-y-10'>
                     <li>
-                        <Link to='/user/home'><span><IoHomeOutline className='inline mr-2'></IoHomeOutline></span> My Home</Link>
+                        <Link to='/user/home'><span><IoHomeOutline className='inline mr-2'></IoHomeOutline></span><span className='hidden lg:inline'> My Home</span></Link>
                     </li>
                     <li>
-                        <Link to='/user/appointment'><span><BsJournalBookmark className='inline mr-2'></BsJournalBookmark></span> Appointment</Link>
+                        <Link to='/user/appointment'><span><BsJournalBookmark className='inline mr-2'></BsJournalBookmark></span> <span className='hidden lg:inline'>Appointment</span></Link>
                     </li>
                     <li>
-                        <Link to='/user/history'><span><VscHistory className='inline mr-2'></VscHistory></span>Treatment History</Link>
+                        <Link to='/user/history'><span><VscHistory className='inline mr-2'></VscHistory></span><span className='hidden lg:inline'>Treatment History</span></Link>
                     </li>
                     <li>
-                        <Link to='billing'><span><CiMoneyBill className='inline mr-2'></CiMoneyBill></span>Billings</Link>
+                        <Link to='billing'><span><CiMoneyBill className='inline mr-2'></CiMoneyBill></span><span className='hidden lg:inline'> Billings</span></Link>
                     </li>
                     <li>
-                        <Link to='settings'><span><IoSettingsOutline className='inline mr-2'></IoSettingsOutline></span>Settings</Link>
+                        <Link to='settings'><span><IoSettingsOutline className='inline mr-2'></IoSettingsOutline></span><span className='hidden lg:inline'> Settings</span></Link>
                     </li>
                 </ul>
             </div>

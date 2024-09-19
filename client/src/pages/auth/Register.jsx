@@ -4,14 +4,14 @@ import { Link } from 'react-router-dom'
 function Register() {
   return (
     <>
-         <div className="text-[#E1EBEE] w-full bg-[#0070FF] h-[100vh] container">
+         <div className="text-[#E1EBEE] w-full container">
           <div className="register">
             <h1 className='text-center pt-12 text-3xl font-bold font-[lora]'>Your Healthcare Starts Here</h1>
           </div>
           <div className=" mx-5  mt-4 form">
             <form action="" className='space-y-8'>
 
-                <div className="flex justify-between className">
+                <div className="flex flex-wrap justify-between className">
                       <div className='w-[48%] '>
                         <label for="first_name" className="block mb-2 text-sm font-medium">First name</label>
                         <input type="text" id="first_name" className="bg-gray-50 border border-gray-300 text-[#0000ff] text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 placeholder-[#0000ff] dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Input Firstname" required />
