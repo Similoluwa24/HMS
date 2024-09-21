@@ -8,9 +8,9 @@ import { FaHeartbeat,  FaBaby } from "react-icons/fa";
 
 function Services() {
   return (
-    <div className=" servicess">
+    <div className="bg-[whitesmoke] servicess">
             <div className="lg:max-w-6xl   m-auto pt-6 pb-6 stage" id='service'>
-                <h1 className='text-center pt-7 font-[oswald] text-6xl font-bold text-[#FFf] '>Our Services</h1>
+                <h1 className='text-center pt-7 font-[oswald] text-6xl font-bold text-[#0075ff] '>Our Services</h1>
                <div className="space-x-3 m-8 grid grid-cols-1 lg:grid-cols-4 justify-center items-center gap-3">
                <div className="box-1 text-[#0075FF] space-y-5 bg-white shadow-md h-72 m-auto rounded-tl-lg rounded-br-2xl  p-[2rem] block hover:text-[white] hover:bg-gradient-to-r hover:from-[#0075FF] hover:to-[#00c1ff] hover:duration-300">
                   <div className=" text-center  icon">

@@ -13,6 +13,10 @@ import Home from './pages/patient/Home'
 import { HospitalProvider } from './context/HospitalContext'
 import Gallery from './landinPage/Gallery'
 import Contact from './landinPage/Contact'
+import ServicePage from './frontPages/ServicePage'
+import Doctors from './frontPages/Doctors'
+import BookAppointment from './frontPages/BookAppointment'
+import AboutPage from './frontPages/AboutPage'
 
 
 function App() {
@@ -23,6 +27,11 @@ function App() {
           <Route path='/' element={<LandingPages/>}/>
           <Route path='/gallery' element={<Gallery/>}/>
           <Route path='/contact' element={<Contact/>}/>
+          <Route path='/service' element={<ServicePage/>}/>
+          <Route path='/doctors' element={<Doctors/>}/>
+          <Route path='/appointment' element={<BookAppointment/>}/>
+          <Route path='/about' element={<AboutPage/>}/>
+          
 
           <Route path='/auth' element={<AuthLayout/>}>
             <Route path='login' element={<Login/>}/>

@@ -1,4 +1,5 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
+
 
 
 
@@ -7,10 +8,22 @@ import { createContext, useState } from "react";
 const HospitalContext = createContext()
 
 export const HospitalProvider = ({children})=>{
-    const [data, SetData] = useState()
+    useEffect(()=>{
+        getdoctors()
+    },[])
+    const [doctors, setDoctors] = useState([])
+
+    const getdoctors = async ()=>{
+        const res = await fetch('http://localhost:3000/doctors')
+        const data = await res.json()
+        setDoctors(data)
+        console.log(data);
+        
+    }
+
     return (
         <HospitalContext.Provider value={{
-            data
+            doctors
         }}>
                 {children}
         </HospitalContext.Provider>

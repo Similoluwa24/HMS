@@ -14,9 +14,9 @@ function Header() {
             <div className="text">
               <ul className='hidden lg:flex space-x-3 pr-3 header-list'>
                 <li className=''><Link to="/">Home</Link></li>
-                <li className=''><a href="#service"> Services </a></li>
-                <li className=''><a href="#about"> About</a></li>
-                <li className=''><a href="#hod"> Department</a></li>
+                <li className=''><Link to="/service"> Services </Link></li>
+                <li className=''><Link to="/about"> About</Link></li>
+                <li className=''><Link to="/doctors"> Department</Link></li>
                 <li className=''><Link to="/gallery">Gallery</Link></li>
                 <li className=''><Link to="/auth/login"> Log In</Link></li>
                 <li className=''><Link to="/contact">Contact</Link></li>
@@ -26,7 +26,7 @@ function Header() {
             </div>
             </div>
             <div className="button">
-            <button className='hidden lg:inline border border-[#007cff] hover:bg-[#007cff] p-2 rounded-full hover:text-white text-[#007CFF] ini'><Link to=""> Appointment</Link></button>
+            <button className='hidden lg:inline border border-[#007cff] hover:bg-[#007cff] p-2 rounded-full hover:text-white text-[#007CFF] ini'><Link to="/appointment"> Appointment</Link></button>
             </div>
           </div>
     </div>
