@@ -6,12 +6,12 @@ import Header from '../../landinPage/Header'
 function AuthLayout() {
   return (
     <>
-        <div className='w-full h-[100vh] auth '>
+        <div className='w-full h-[110vh] auth '>
           <header>
             <Header/>
           </header>
             
-            <div className="lg:w-[40%]  m-auto  main">
+            <div className="lg:w-[40%] h-[70vh] m-auto  main">
                 <Outlet/>
             </div>
             

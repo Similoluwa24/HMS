@@ -10,11 +10,11 @@ import { IoSettingsOutline,  IoHomeOutline } from "react-icons/io5";
 function PatientSidebar() {
   return (
     <>
-        <div class=" py-5 px-3 h-full bg-[#B9D9EB] text-[#001D4E] border-r border-gray-200 ">
+        <div class=" py-5 px-3 h-full bg-[#fff] text-[#007cff] border-r border-gray-200 ">
             <div className="user">
             <div className=" logo">
-                    <MdLocalHospital className='lg:inline hidden size-12 lg:p-2 border-r-2 border-[#001D4E] text-[#001D4E]'></MdLocalHospital>
-                    <p className='inline text-sm md:text-2xl p-2 text-[#001D4E]'>OJ Hospital</p>
+                    <MdLocalHospital className='lg:inline hidden size-12 lg:p-2 border-r-2 border-[#007cff] text-[#007cff]'></MdLocalHospital>
+                    <p className='inline text-sm md:text-2xl p-2 text-[#007cff]'>OJ Hospital</p>
                 </div>
                 
                 <hr />

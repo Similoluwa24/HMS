@@ -137,3 +137,15 @@
     height: 100%;
     
 }
+
+
+  .contet {
+    height: 0;
+    overflow-y: hidden;
+    transition: height 0.3s ease-in-out;
+  }
+  
+  .contet.show {
+    height: auto;
+    color: #4b5563;
+  }

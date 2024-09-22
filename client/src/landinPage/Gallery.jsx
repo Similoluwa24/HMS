@@ -14,7 +14,7 @@ function Gallery() {
                         we're proud to provide a comfortable and healing environment for our patients and their loved ones</p>
                 </div> 
                 <div className="max-w-[75rem] mt-12 m-auto content">
-                  <div className="text-[#074cff] space-y-3 mx-5">
+                  <div className="text-[#007cff] space-y-3 mx-5">
                         <p className='lg:text-xl text-gray-600 text-lg font-[poppins]'>Photo Gallery</p>
                         <hr className=' h-[0.2rem]  w-[12%]  bg-[#0075FF]' />
                         <h1 className='lg:text-5xl text-xl font-[poppins]'>Our Patients and</h1>

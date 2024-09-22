@@ -10,8 +10,10 @@ const HospitalContext = createContext()
 export const HospitalProvider = ({children})=>{
     useEffect(()=>{
         getdoctors()
+        getQuestions()
     },[])
     const [doctors, setDoctors] = useState([])
+    const [faq, setFaq] = useState([])
 
     const getdoctors = async ()=>{
         const res = await fetch('http://localhost:3000/doctors')
@@ -20,10 +22,18 @@ export const HospitalProvider = ({children})=>{
         console.log(data);
         
     }
+    const getQuestions = async ()=>{
+        const res = await fetch('http://localhost:3000/faq')
+        const data = await res.json()
+        setFaq(data)
+        console.log(data);
+        
+    }
 
     return (
         <HospitalContext.Provider value={{
-            doctors
+            doctors,
+            faq
         }}>
                 {children}
         </HospitalContext.Provider>

@@ -7,9 +7,9 @@ function ServicePage() {
     <div>
         <div className="serv">
         <Header/>
-        <div className="text-start flex flex-col justify-center px-6 banner-2">
-            <h1 className='text-white text-7xl font-[PT-Serif]'>Services</h1>
-            <p className='text-white text-xl font-[poppins]'>Our comprehensive range of medical services are
+        <div className="text-start flex  flex-col justify-center px-6 banner-2">
+            <h1 className='text-white lg:text-7xl text-2xl font-[PT-Serif]'>Services</h1>
+            <p className='text-white lg:text-xl text-[10px] font-[poppins]'>Our comprehensive range of medical services are
                  designed to provide <br /> exceptional care and support to our patients, from diagnosis to recovery.</p>
         </div>
         <div className=" content">
