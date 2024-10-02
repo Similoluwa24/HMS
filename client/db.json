@@ -1,282 +1,64 @@
 {
-  "user":
-  [{
-    "id": "03359",
-    "first_name": "Dud",
-    "last_name": "Bellwood",
-    "email": "adensham0@house.gov",
-    "gender": "Male",
-    "dob": "7/14/2024",
-    "phone": "497 777 3536",
-    "password": "nN0/?xDt@`StfgO}"
-  }, {
-    "id": "2",
-    "first_name": "Rosalinda",
-    "last_name": "Mines",
-    "email": "sreeman1@furl.net",
-    "gender": "Female",
-    "dob": "10/8/2023",
-    "phone": "627 947 7258",
-    "password": "aV6?i,S|2hidyVSY"
-  }, {
-    "id": "066",
-    "first_name": "Anthiathia",
-    "last_name": "Robert",
-    "email": "rhuxtable2@telegraph.co.uk",
-    "gender": "Female",
-    "dob": "1/16/2024",
-    "phone": "308 715 1206",
-    "password": "qK9~8jzE="
-  }, {
-    "id": "89",
-    "first_name": "Klement",
-    "last_name": "Wardley",
-    "email": "lbillitteri3@buzzfeed.com",
-    "gender": "Male",
-    "dob": "10/30/2023",
-    "phone": "857 998 7846",
-    "password": "oH1{8M>1}LEM6"
-  }, {
-   "id": "27873",
-    "first_name": "Alberta",
-    "last_name": "Caddell",
-    "email": "gbullion4@domainmarket.com",
-    "gender": "Female",
-    "dob": "8/25/2024",
-    "phone": "415 854 9535",
-    "password": "sU0%PP*<k#$B#ep"
-  }, {
-   "id": "64",
-    "first_name": "Kassia",
-    "last_name": "Edworthie",
-    "email": "acassin5@nsw.gov.au",
-    "gender": "Female",
-    "dob": "1/25/2024",
-    "phone": "450 440 0325",
-    "password": "sN1?*/56"
-  }, {
-    "id": "9",
-    "first_name": "Anne-corinne",
-    "last_name": "Kreutzer",
-    "email": "btaft6@newyorker.com",
-    "gender": "Female",
-    "dob": "8/3/2024",
-    "phone": "231 848 8352",
-    "password": "gP7&~/ZeW=6\\"
-  }, {
-   "id": "59205",
-    "first_name": "Sheri",
-    "last_name": "Offer",
-    "email": "tfremantle7@upenn.edu",
-    "gender": "Male",
-    "dob": "5/14/2024",
-    "phone": "820 969 0170",
-    "password": "lR0}S(`\\P1jX+"
-  }, {
-    "id": "21770",
-    "first_name": "Ladonna",
-    "last_name": "Ellesworth",
-    "email": "tloblie8@mail.ru",
-    "gender": "Female",
-    "dob": "1/23/2024",
-    "phone": "727 145 5580",
-    "password": "qQ2*~g`c4SLiQ"
-  }, {
-    "id": "1763",
-    "first_name": "Burnaby",
-    "last_name": "Archell",
-    "email": "dorange9@guardian.co.uk",
-    "gender": "Female",
-    "dob": "7/2/2024",
-    "phone": "845 353 3398",
-    "password": "sP0$EwdG"
-  }],
-  "doctors":
-  [{
-      "id": "0300",
-      "first_name": "Marillin",
-      "last_name": "Kyttor",
-      "email": "mkyttor0@cdc.gov",
-      "img":"/image/w1.jpg",
-      "gender": "Female",
-      "department": "Neurology",
-      "password": "uJ6*hLR#)M/Z\\t11"
-    }, {
-      "id": "2888",
-      "first_name": "Kylila",
-      "last_name": "Poore",
-      "email": "kpoore1@cpanel.net",
-      "img":"/image/w2.jpg",
-      "gender": "Female",
-      "department": "Cardiology",
-      "password": "mB6%?am="
-    }, {
-      "id": "76751",
-      "first_name": "Katleen",
-      "last_name": "Warbys",
-      "email": "kwarbys2@pbs.org",
-      "img":"/image/w3.jpg",
-      "gender": "Female",
-      "department": "Gastroenterology",
-      "password": "jL7}*v*&.>pk"
-    }, {
-      "id": "7",
-      "first_name": "Tedman",
-      "last_name": "Olenov",
-      "email": "tolenov3@photobucket.com",
-      "img":"/image/m1r.jpg",
+  "user": [
+    {
+      "id": "5",
+      "first_name": "Basilio",
+      "last_name": "Sentance",
+      "email": "bsentance4@nps.gov",
       "gender": "Male",
-      "department": "Oncology",
-      "password": "vR9},?71cM"
-    }, {
-      "id": "26521",
-      "first_name": "Timmy",
-      "last_name": "Applegate",
-      "email": "tapplegate4@howstuffworks.com",
-      "img":"/image/m2.jpg",
-      "gender": "Male",
-      "department": "Dermatology",
-      "password": "cH7'TR9aKm7w"
-    }, {
-      "id": "7041",
-      "first_name": "Marjory",
-      "last_name": "MacAlpyne",
-      "email": "mmacalpyne5@behance.net",
-      "img":"/image/w4.jpg",
-      "gender": "Female",
-      "department": "Dermatology",
-      "password": "oK4\\c>GP5>V8"
-    }, {
-      "id": "11",
-      "first_name": "Corly",
-      "last_name": "McGannon",
-      "email": "cmcgannon6@independent.co.uk",
-      "img":"/image/w5.jpg",
-      "gender": "Female",
-      "department": "Endocrinology",
-      "password": "mI1.!ql1W57B\\|!"
-    }, {
-      "id": "89",
-      "first_name": "Lane",
-      "last_name": "Buller",
-      "email": "lbuller7@jugem.jp",
-      "img":"/image/m3.jpg",
-      "gender": "Male",
-      "department": "Psychiatry",
-      "password": "rG1/i!$m"
-    }, {
-      "id": "40",
-      "first_name": "Felizio",
-      "last_name": "Moules",
-      "email": "fmoules8@usnews.com",
-      "img":"/image/m4r.jpg",
-      "gender": "Male",
-      "department": "Cardiology",
-      "password": "hU0'}AM&$duB"
-    }, {
-      "id": "278",
-      "first_name": "Bond",
-      "last_name": "Ronchi",
-      "email": "bronchi9@disqus.com",
-      "img":"/image/m5.jpg",
-      "gender": "Male",
-      "department": "Dermatology",
-      "password": "tP7<t@b_rYqjWHQx"
+      "dob": "10/26/2006",
+      "phone": "197-899-4543",
+      "address": "0 Barby Drive",
+      "NHIS": "1137632607"
     },
     {
-      "id": "2",
-      "first_name": "Derward",
-      "last_name": "Dowgill",
-      "email": "ddowgill0@shop-pro.jp",
-      "img":"/image/m6.jpg",
-      "gender": "Male",
-      "department": "Cardiology",
-      "password": "cQ7=(PZS5q3pjh$\""
-    }, {
-      "id": "646",
-      "first_name": "Hamilton",
-      "last_name": "Mildmott",
-      "email": "hmildmott1@microsoft.com",
-      "img":"/image/m7.jpg",
-      "gender": "Male",
-      "department": "Endocrinology",
-      "password": "aE1_'Kq>e}`_VSj+"
-    }, {
-      "id": "9",
-      "first_name": "Rhetta",
-      "last_name": "Dann",
-      "email": "rdann2@indiegogo.com",
-      "img":"/image/w6.jpg",
-      "gender": "Female",
-      "department": "Dermatology",
-      "password": "bD6<97K~47sK"
-    }, {
-      "id": "0",
-      "first_name": "Gaye",
-      "last_name": "Fabbro",
-      "email": "gfabbro3@wikipedia.org",
-      "img":"/image/w7.jpg",
-      "gender": "Female",
-      "department": "Dermatology",
-      "password": "vZ0>ap6Ck5&"
-    }, {
-      "id": "77833",
-      "first_name": "Hyatt",
-      "last_name": "Aylett",
-      "email": "haylett4@desdev.cn",
-      "img":"/image/m8.jpg",
-      "gender": "Male",
-      "department": "Cardiology",
-      "password": "eF6&i|ir!<zFh_b"
-    }, {
-      "id": "5",
-      "first_name": "Chrystel",
-      "last_name": "Lardeur",
-      "email": "clardeur5@digg.com",
-      "img":"/image/w8.jpg",
-      "gender": "Female",
-      "department": "Oncology",
-      "password": "aO1)T'%x6rSU\"<6_"
-    }, {
-      "id": "63782",
-      "first_name": "Fanni",
-      "last_name": "Deveraux",
-      "email": "fdeveraux6@nhs.uk",
-      "img":"/image/w9.jpg",
-      "gender": "Female",
-      "department": "Cardiology",
-      "password": "yL3#<Zk#X6?@yze"
-    }, {
-      "id": "446",
-      "first_name": "Conny",
-      "last_name": "Danilewicz",
-      "email": "cdanilewicz7@symantec.com",
-      "img":"/image/m9.jpg",
-      "gender": "Male",
-      "department": "Neurology",
-      "password": "qH7!==ErC/x"
-    }, {
-      "id": "06",
-      "first_name": "Babita",
-      "last_name": "Gjerde",
-      "email": "bgjerde8@newsvine.com",
-      "img":"/image/w10.jpg",
-      "gender": "Female",
-      "department": "Psychiatry",
-      "password": "wL2\\Og(3bbrG"
-    }, {
-      "id": "9296",
-      "first_name": "Sebastien",
-      "last_name": "Huddle",
-      "email": "shuddle9@mashable.com",
-      "img":"/image/m10r.jpg",
-      "gender": "Male",
-      "department": "Endocrinology",
-      "password": "iN7/B4pUVr!i{"
+      "first_name": "Update",
+      "last_name": "Ojo",
+      "gender": "male",
+      "dob": "2024-11-01",
+      "phone": "09130778197",
+      "email": "admin@example.com",
+      "address": "3, babatunde hassan close off akute road",
+      "NHIS": "1234567890",
+      "password": "qwerty",
+      "confirmPassword": "qwerty",
+      "id": "6b65"
     }
   ],
-  "vitals":
-  [{
+  "doctors": [
+    {
+      "id": "13",
+      "first_name": "Lionello ",
+      "last_name": "Tonkinson",
+      "email": "ltonkinsonc@fda.gov",
+      "img": "/image/m7.jpg",
+      "gender": "Male",
+      "department": "Oncology",
+      "sch_attended": "Yale School of Medicine",
+      "contact": "968-700-8151",
+      "address": "30236 Prairieview Pass",
+      "role": "doctor"
+    },
+    {
+      "first_name": "Oluwapelumi",
+      "last_name": "Ojo-Akinfolarin",
+      "gender": "male",
+      "email": "qwerty56@gmail.com",
+      "dob": "2024-09-18",
+      "phone": "09130778197",
+      "photo": {
+        "0": {}
+      },
+      "address": "3, babatunde hassan close off akute road",
+      "school": "university of ibadan",
+      "departments": "Orthopedic Surgery",
+      "password": "wertyui",
+      "confirmpwd": "werty",
+      "id": "0b0d"
+    }
+  ],
+  "vitals": [
+    {
       "id": "03359",
       "first_name": "Dud",
       "last_name": "Bellwood",
@@ -285,16 +67,18 @@
       "weight": 66.94,
       "temperature": 41.9,
       "height": 133.7
-    }, {
+    },
+    {
       "id": "2",
       "first_name": "Rosalinda",
       "last_name": "Mines",
       "gender": "Female",
       "bp": "155/105",
       "weight": 66.56,
-      "temperature": 41.0,
-      "height": 197.0
-    }, {
+      "temperature": 41,
+      "height": 197
+    },
+    {
       "id": "066",
       "first_name": "Anthiathia",
       "last_name": "Robert",
@@ -303,7 +87,8 @@
       "weight": 59.24,
       "temperature": 41.9,
       "height": 203.7
-    }, {
+    },
+    {
       "id": "89",
       "first_name": "Klement",
       "last_name": "Wardley",
@@ -312,16 +97,18 @@
       "weight": 47.28,
       "temperature": 36.3,
       "height": 153.8
-    }, {
+    },
+    {
       "id": "27873",
       "first_name": "Alberta",
       "last_name": "Caddell",
       "gender": "Female",
       "bp": "125/80",
       "weight": 37.56,
-      "temperature": 42.0,
+      "temperature": 42,
       "height": 194.4
-    }, {
+    },
+    {
       "id": "64",
       "first_name": "Kassia",
       "last_name": "Edworthie",
@@ -330,7 +117,8 @@
       "weight": 32.51,
       "temperature": 30.3,
       "height": 183.7
-    }, {
+    },
+    {
       "id": "9",
       "first_name": "Anne-corinne",
       "last_name": "Kreutzer",
@@ -339,7 +127,8 @@
       "weight": 74.31,
       "temperature": 42.9,
       "height": 207.7
-    }, {
+    },
+    {
       "id": "59205",
       "first_name": "Sheri",
       "last_name": "Offer",
@@ -348,7 +137,8 @@
       "weight": 91.39,
       "temperature": 37.5,
       "height": 229.4
-    }, {
+    },
+    {
       "id": "21770",
       "first_name": "Ladonna",
       "last_name": "Ellesworth",
@@ -357,7 +147,8 @@
       "weight": 68.35,
       "temperature": 33.6,
       "height": 193.8
-    }, {
+    },
+    {
       "id": "1763",
       "first_name": "Burnaby",
       "last_name": "Archell",
@@ -365,50 +156,111 @@
       "bp": "155/105",
       "weight": 46.17,
       "temperature": 43.8,
-      "height": 240.0
-    }],
-    "faq":
-    [
-      {
-        "question": "What are the hospital's visiting hours?",
-        "answer": "Our visiting hours are from 9:00 AM to 8:00 PM, 7 days a week. Please note that visiting hours may be restricted in certain areas of the hospital, such as the Intensive Care Unit (ICU) or Pediatric Unit, due to patient care needs. We also ask that visitors be respectful of our patients' rest periods and quiet hours."
-      },
-      {
-        "question": "How do I get to the hospital?",
-        "answer": "We are located at 123 Main St, Anytown, USA. You can take the bus (Route 10) and get off at the Main St stop, or drive and park in our parking garage, which offers free parking for patients and visitors. If you need assistance with transportation, please contact our patient services department."
-      },
-      {
-        "question": "What insurance plans do you accept?",
-        "answer": "We accept most major insurance plans, including Blue Cross, Aetna, UnitedHealthcare, and Medicare. Please contact our billing department for more information on specific plans and coverage. We also offer financial assistance programs for patients who are uninsured or underinsured."
-      },
-      {
-        "question": "Can I request a specific doctor or nurse?",
-        "answer": "Yes, you can request a specific doctor or nurse when you schedule your appointment or upon admission to the hospital. Please note that we will do our best to accommodate your request, but it may not always be possible due to staffing and patient care needs."
-      },
-      {
-        "question": "Do you offer any support services for patients and families?",
-        "answer": "Yes, we offer a range of support services, including counseling, social work, and spiritual care. Our social workers can assist with discharge planning, transportation, and home care arrangements, while our chaplains are available to provide emotional and spiritual support. Please ask your care team for more information on these services."
-      },
-      {
-        "question": "How do I get a copy of my medical records?",
-        "answer": "You can request a copy of your medical records by contacting our medical records department at 555-555-1234 or through our patient portal, MyHealth. Please allow 3-5 business days for processing and note that there may be a fee for copying and mailing records."
-      },
-      {
-        "question": "Can I bring my pet to the hospital?",
-        "answer": "Unfortunately, no. For the safety and well-being of our patients and staff, we do not allow pets in the hospital, with the exception of service animals. We understand the importance of emotional support, but we must prioritize patient care and safety."
-      },
-      {
-        "question": "What amenities do you offer for patients and visitors?",
-        "answer": "We offer a range of amenities, including a cafeteria serving breakfast, lunch, and dinner, a gift shop with flowers, cards, and snacks, and free Wi-Fi throughout the hospital. We also have a patient library with books, magazines, and games, as well as a meditation room for quiet reflection."
-      },
-      {
-        "question": "How do I schedule an appointment?",
-        "answer": "You can schedule an appointment by calling our scheduling department at 555-555-5555, Monday-Friday, 8:00 AM-5:00 PM, or through our website using our online scheduling tool. Please have your insurance information and medical history ready to facilitate the scheduling process."
-      },
-      {
-        "question": "What if I have a medical emergency?",
-        "answer": "If you have a medical emergency, please call 911 or go to the nearest emergency room. Our emergency department is open 24/7 and staffed by board-certified emergency medicine physicians and nurses. If you are experiencing symptoms such as chest pain, difficulty breathing, or severe bleeding, do not delay – seek immediate medical attention."
-      }
-    ]
-
+      "height": 240
+    }
+  ],
+  "faq": [
+    {
+      "question": "What are the hospital's visiting hours?",
+      "answer": "Our visiting hours are from 9:00 AM to 8:00 PM, 7 days a week. Please note that visiting hours may be restricted in certain areas of the hospital, such as the Intensive Care Unit (ICU) or Pediatric Unit, due to patient care needs. We also ask that visitors be respectful of our patients' rest periods and quiet hours.",
+      "id": "4dad"
+    },
+    {
+      "question": "How do I get to the hospital?",
+      "answer": "We are located at 123 Main St, Anytown, USA. You can take the bus (Route 10) and get off at the Main St stop, or drive and park in our parking garage, which offers free parking for patients and visitors. If you need assistance with transportation, please contact our patient services department.",
+      "id": "55cc"
+    },
+    {
+      "question": "What insurance plans do you accept?",
+      "answer": "We accept most major insurance plans, including Blue Cross, Aetna, UnitedHealthcare, and Medicare. Please contact our billing department for more information on specific plans and coverage. We also offer financial assistance programs for patients who are uninsured or underinsured.",
+      "id": "01c4"
+    },
+    {
+      "question": "Can I request a specific doctor or nurse?",
+      "answer": "Yes, you can request a specific doctor or nurse when you schedule your appointment or upon admission to the hospital. Please note that we will do our best to accommodate your request, but it may not always be possible due to staffing and patient care needs.",
+      "id": "957a"
+    },
+    {
+      "question": "Do you offer any support services for patients and families?",
+      "answer": "Yes, we offer a range of support services, including counseling, social work, and spiritual care. Our social workers can assist with discharge planning, transportation, and home care arrangements, while our chaplains are available to provide emotional and spiritual support. Please ask your care team for more information on these services.",
+      "id": "b249"
+    },
+    {
+      "question": "How do I get a copy of my medical records?",
+      "answer": "You can request a copy of your medical records by contacting our medical records department at 555-555-1234 or through our patient portal, MyHealth. Please allow 3-5 business days for processing and note that there may be a fee for copying and mailing records.",
+      "id": "e49d"
+    },
+    {
+      "question": "Can I bring my pet to the hospital?",
+      "answer": "Unfortunately, no. For the safety and well-being of our patients and staff, we do not allow pets in the hospital, with the exception of service animals. We understand the importance of emotional support, but we must prioritize patient care and safety.",
+      "id": "b3ad"
+    },
+    {
+      "question": "What amenities do you offer for patients and visitors?",
+      "answer": "We offer a range of amenities, including a cafeteria serving breakfast, lunch, and dinner, a gift shop with flowers, cards, and snacks, and free Wi-Fi throughout the hospital. We also have a patient library with books, magazines, and games, as well as a meditation room for quiet reflection.",
+      "id": "966a"
+    },
+    {
+      "question": "How do I schedule an appointment?",
+      "answer": "You can schedule an appointment by calling our scheduling department at 555-555-5555, Monday-Friday, 8:00 AM-5:00 PM, or through our website using our online scheduling tool. Please have your insurance information and medical history ready to facilitate the scheduling process.",
+      "id": "2b10"
+    },
+    {
+      "question": "What if I have a medical emergency?",
+      "answer": "If you have a medical emergency, please call 911 or go to the nearest emergency room. Our emergency department is open 24/7 and staffed by board-certified emergency medicine physicians and nurses. If you are experiencing symptoms such as chest pain, difficulty breathing, or severe bleeding, do not delay – seek immediate medical attention.",
+      "id": "9861"
+    }
+  ],
+  "department": [
+    {
+      "id": "1",
+      "name": "General Surgery"
+    },
+    {
+      "id": "2",
+      "name": "Internal Medicine"
+    },
+    {
+      "id": "3",
+      "name": "Pediatrics"
+    },
+    {
+      "id": "4",
+      "name": "Obstetrics and Gynecology"
+    },
+    {
+      "id": "5",
+      "name": "Emergency Medicine"
+    },
+    {
+      "id": "6",
+      "name": "Cardiology"
+    },
+    {
+      "id": "7",
+      "name": "Orthopedic Surgery"
+    }
+  ],
+  "appointment": [
+    {
+      "id": "6e4b",
+      "first_name": "Oluwapelumi",
+      "last_name": "Ojo",
+      "email": "qwerty56@gmail.com",
+      "doctor": "Earl Fullager",
+      "date": "2024-10-09",
+      "time": "05:00",
+      "message": "asdfg"
+    },
+    {
+      "first_name": "qwerty",
+      "last_name": "asdfghj",
+      "email": "admin@example.com",
+      "doctor": "13",
+      "date": "2024-10-09",
+      "time": "13:10",
+      "message": "qwertyuioasdfghj",
+      "id": "892a"
+    }
+  ]
 }

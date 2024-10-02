@@ -17,7 +17,19 @@ import ServicePage from './frontPages/ServicePage'
 import Doctors from './frontPages/Doctors'
 import BookAppointment from './frontPages/BookAppointment'
 import AboutPage from './frontPages/AboutPage'
-
+import AdminLayout from './components/admin/AdminLayout'
+import CreateDoctors from './pages/admin/CreateDoctors'
+import CreatePatient from './pages/admin/CreatePatient'
+import CreateAppointment from './pages/admin/CreateAppointment'
+import AllDoctors from './pages/admin/AllDoctors'
+import AllPatients from './pages/admin/AllPatients'
+import AllAppointment from './pages/admin/AllAppointment'
+import AdminSidebar from './components/admin/AdminSidebar'
+import AdminHome from './pages/admin/AdminHome'
+import Modal from './components/common/Modal'
+import EditPatient from './pages/admin/EditPatient'
+import EditAppointment from './pages/admin/EditAppointment'
+import EditDoctors from './pages/admin/EditDoctors'
 
 function App() {
   return (
@@ -31,6 +43,7 @@ function App() {
           <Route path='/doctors' element={<Doctors/>}/>
           <Route path='/appointment' element={<BookAppointment/>}/>
           <Route path='/about' element={<AboutPage/>}/>
+          <Route path='/modal' element={<Modal/>}/>
           
 
           <Route path='/auth' element={<AuthLayout/>}>
@@ -44,6 +57,21 @@ function App() {
             <Route path='billing' element={<Billings/>}/>
             <Route path='settings' element={<Settings/>}/>
           </Route>
+
+          <Route path='/admin' element={<AdminLayout/>} >
+              <Route path='sidebar' element={<AdminSidebar/>} />
+              <Route path='home' element={<AdminHome/>} />
+              <Route path='createdoc' element={<CreateDoctors/>}/>
+              <Route path='createpa' element={<CreatePatient/>}/>
+              <Route path='createapp' element={<CreateAppointment/>}/>
+              <Route path='editpa/:id' element={<EditPatient/>} />
+              <Route path='editapp/:id' element={<EditAppointment/>} />
+              <Route path='editdoc/:id' element={<EditDoctors/>} />
+              <Route path='alldoc' element={<AllDoctors/>}/>
+              <Route path='allpa' element={<AllPatients/>}/>
+              <Route path='allapp' element={<AllAppointment/>}/>
+          </Route>
+
           
         </Routes>
       </HospitalProvider>

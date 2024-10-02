@@ -1,12 +1,35 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import Header from '../landinPage/Header'
 import { PiAmbulanceLight } from "react-icons/pi";
 import { FaUserDoctor } from "react-icons/fa6";
 import { FaPhoneVolume } from "react-icons/fa6";
 import HospitalContext from '../context/HospitalContext'
+import { useNavigate } from 'react-router-dom';
 
 function BookAppointment() {
-  const {doctors}= useContext(HospitalContext)
+  const {doctors, addAppointment}= useContext(HospitalContext)
+  const navigate = useNavigate();
+  const [first_name, setFirstName] = useState('')
+  const [last_name, setLastName] = useState('')
+  const [email, setEmail] = useState('')
+  const [doctor, setDoctor] = useState('')
+  const [date, setDate] = useState('')
+  const [time, setTime] = useState('')
+  const [message, setMessage] = useState('')
+
+  const submitHandler = ()=>{
+    const newAppointment = {
+      first_name,
+      last_name,
+      email,
+      doctor,
+      date,
+      time,
+      message
+    }
+    addAppointment(newAppointment)
+    navigate('/')
+  }
   return (
     <div>
       <div className="pb-6 appoint">
@@ -62,36 +85,49 @@ function BookAppointment() {
                     </div>
 
                     </div>
-                    <form action="" className='space-y-4 text-[#074cff] capitalize  lg:w-[70%]'>
-                      <div className="">
-                          <label for="name" class="block mb-1 text-sm font-medium">your name *</label>
-                          <input type="text" id="name" class="bg-white border border-gray-300 text-[#007CFF] text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  " placeholder="" required />
+                      <form action="" onSubmit={submitHandler} className='space-y-4 text-[#074cff] capitalize  lg:w-[70%]'>
+                      <div className="lg:flex justify-between ">
+                        <div className="w-[48%]">
+                            <label htmlFor="first_name" className="block mb-1 text-sm font-medium">your first name *</label>
+                            <input type="text" id="first_name" onChange={(e)=>{setFirstName(e.target.value)}} className="bg-white border border-gray-300 text-[#007CFF] text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  " placeholder="" required />
+                        </div>
+                        <div className="w-[48%]">
+                            <label htmlFor="last_name" className="block mb-1 text-sm font-medium">your last name *</label>
+                            <input type="text" id="last_name" onChange={(e)=>{setLastName(e.target.value)}} className="bg-white border border-gray-300 text-[#007CFF] text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  " placeholder="" required />
+                        </div>
                       </div>
-                      <div className="">
-                          <label for="email" class="block mb-1 text-sm font-medium">your email *</label>
-                          <input type="email" id="email" class="bg-white border border-gray-300 text-[#007CFF] text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  " placeholder="" required />
-                      </div>
-                      <div className="">
+                        <div className="">
+                            <label for="email" className="block mb-1 text-sm font-medium">your email *</label>
+                            <input type="email" id="email" onChange={(e)=>{setEmail(e.target.value)}} className="bg-white border border-gray-300 text-[#007CFF] text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  " placeholder="" required />
+                        </div>
+                        <div className="">
 
-                         <label for="doctor" class="block mb-1 text-sm font-medium">select your doctor *</label>
-                          <select name="doctors" id="" class="bg-white border border-gray-300 text-[#007CFF] text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  " placeholder="" required>
-                            {doctors.map((item, index) =>(
-                          <option value={item.id} className='divide-y-4'  >{`Dr. ${item.last_name} ${item.first_name} `}</option>
-                        ))}
-                        </select>
-                      </div>
-                      <div className="">
-                          <label for="date" class="block mb-1 text-sm font-medium">select appointment date *</label>
-                          <input type="date" id="date" class="bg-white border border-gray-300 text-[#007CFF] text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  " placeholder="" required />
-                      </div>
-                      <div className="">
-                          <label for="message" class="block mb-1 text-sm font-medium">your message *</label>
-                          <textarea type="text" id="subject" rows="8" class="bg-white border border-gray-300 text-[#007CFF] text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  " placeholder="" required />
-                      </div>
-                      <div className="bott0n">
-                          <button type="submit" className='bg-[#007cff] text-[white] px-5 py-3 rounded-xl '>Book Appointment</button>
-                      </div>
-                    </form>
+                          <label for="doctor" className="block mb-1 text-sm font-medium">select your doctor *</label>
+                            <select name="doctors" id="" onChange={(e)=>{setDoctor(e.target.value)}} className="bg-white border border-gray-300 text-[#007CFF] text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  " placeholder="" required>
+                              <option value="n/a">Choose Doctor</option>
+                              {doctors.map((item, index) =>(
+                            <option key={index} value={item.first_name} className='divide-y-4'  >{`Dr. ${item.first_name} ${item.last_name}`}</option>
+                          ))}
+                          </select>
+                        </div>
+                        <div className="flex gap-4 ">
+                            <div className="w-[48%]">
+                                <label for="date" className="block mb-1 text-sm font-medium">select appointment date *</label>
+                                <input type="date" id="date" onChange={(e)=>{setDate(e.target.value)}} className="bg-white border border-gray-300 text-[#007CFF] text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  " placeholder="" required />
+                            </div>
+                            <div className="w-[48%]">
+                                <label for="time" className="block mb-1 text-sm font-medium">select appointment time *</label>
+                                <input type="time" id="time" onChange={(e)=>{setTime(e.target.value)}} className="bg-white border border-gray-300 text-[#007CFF] text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  " placeholder="" required />
+                            </div>
+                        </div>
+                        <div className="">
+                            <label for="message" className="block mb-1 text-sm font-medium">your message *</label>
+                            <textarea type="text" id="subject" onChange={(e)=>{setMessage(e.target.value)}} rows="8" className="bg-white border border-gray-300 text-[#007CFF] text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  " placeholder="" required />
+                        </div>
+                        <div className="bott0n">
+                            <button type="submit" className='bg-[#007cff] text-[white] px-5 py-3 rounded-xl '>Book Appointment</button>
+                        </div>
+                      </form>
                    
                 </div>
       </div>

@@ -14,8 +14,8 @@ function Header() {
             <div className="text">
               <ul className='hidden lg:flex space-x-3 pr-3 header-list'>
                 <li className=''><Link to="/">Home</Link></li>
-                <li className=''><Link to="/service"> Services </Link></li>
                 <li className=''><Link to="/about"> About</Link></li>
+                <li className=''><Link to="/service"> Services </Link></li>
                 <li className=''><Link to="/doctors"> Department</Link></li>
                 <li className=''><Link to="/gallery">Gallery</Link></li>
                 <li className=''><Link to="/auth/login"> Log In</Link></li>

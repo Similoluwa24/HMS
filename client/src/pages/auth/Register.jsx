@@ -2,9 +2,36 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 function Register() {
+
+  const signupHandler = async (e) => {
+    e.preventDefault()
+
+    try {
+      const res = await fetch('http://localhost:3000/user',{
+        method:'POST',
+        headers:{
+          'Content-Type':'application/json'
+        },
+        body: JSON.stringify({
+          first_name,
+          last_name,
+          email,
+          gender,
+          dob,
+          phone,
+          pasword
+        })
+      })
+      const data = await res.save()
+    } catch (error) {
+      console.log({message: error.message});
+      
+    }
+    
+  }
   return (
     <>
-         <div className="text-[#E1EBEE] w-full container">
+         <div className="text-[#fff] w-full container">
           <div className="register">
             <h1 className='text-center pt-12 text-3xl font-bold font-[lora]'>Your Healthcare Starts Here</h1>
           </div>
@@ -64,7 +91,7 @@ function Register() {
 
                 <div className="m-auto">
                 <button type="submit" class="text-blue-700 hover:text-white border bg-white w-[200px] border-blue-700 hover:bg-blue-800  font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800">Sign Up</button>
-                <p class="text-sm font-light text-[#E1EBEE] ">
+                <p class="text-sm font-light text-[#fff] ">
                       Already have an account? <Link to="/auth/login" class="font-medium text-primary-600 hover:underline dark:text-primary-500">Login here</Link>
                </p>
                 </div>

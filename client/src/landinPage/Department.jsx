@@ -30,9 +30,9 @@ function Department({img, img2, img3, img4}) {
                 <div className="bg-[whitesmoke] max-h-[700px] shadow-lg  over">
                     <img src={img} alt="" className='w-full object-cover object-top lg:w-[450px] h-[450px] ' />
                     <div className="lg:w-[450px] w-[350px] h-[250px] text-center space-y-1 pt-4 overlay">
-                    <h1 className='text-[#0075ff] font-semibold text-lg '> Head of Department of Pediatrics</h1>
-                    <p className='text-[#0075ff] font-[PT-Serif] text-3xl font-semibold '>Sophia Patel</p>
-                    <p className='text-[#0075ff] px-4 text-[12px] font-[poppins]'>Dr. Sophia Patel is a distinguished pediatrician and leader in the field of pediatric medicine, serving as the Chief of Pediatrics at OJ Hospital. With over 7 years of experience in pediatrics, Dr. Patel has earned a reputation 
+                    <h1 className='text-[#0075ff] font-semibold text-center text-lg '> Head of Department of Pediatrics</h1>
+                    <p className='text-[#0075ff] font-[PT-Serif] text-3xl text-center font-semibold '>Sophia Patel</p>
+                    <p className='text-[#0075ff] px-4 text-[12px] text-center font-[poppins]'>Dr. Sophia Patel is a distinguished pediatrician and leader in the field of pediatric medicine, serving as the Chief of Pediatrics at OJ Hospital. With over 7 years of experience in pediatrics, Dr. Patel has earned a reputation 
                         for her exceptional clinical skills, dedication to patient care, and commitment to advancing medical knowledge</p>
                     </div>
                 </div>
