@@ -3,49 +3,125 @@ import { CiDroplet } from "react-icons/ci";
 import { BsHeartPulse } from "react-icons/bs";
 import { BsThermometer } from "react-icons/bs";
 import {  IoPersonCircleOutline } from "react-icons/io5";
+import { GiDna1 } from "react-icons/gi";
+import doc from '../../assets/welcome.png'
+import bp from '../../assets/blood-pressure.png'
+import hr from '../../assets/heart-rate.png'
+import geno from '../../assets/geno.png'
+import thermo from '../../assets/thermo.jpg'
+import { FaCheck, FaXmark } from 'react-icons/fa6';
 
 function Home() {
   return (
-    <div className='bg-[#fff] flex flex-col lg:flex-row  w-full h-screen'>
-      {/* setion 1 */}
-        <section className=' lg:w-[80%]'>
-          {/* vital boxes */}
-          <div className="flex flex-col lg:flex-row gap-3 m-5 boxes">
-            <div className="box-1 rounded-md h-[150px] md:w-[250px] w-[150px] md:h-[250px] text-[#fff] bg-gradient-to-r from-[#004cff] to-[#00c1ff]  ">
-              <div className="mx-12 md:mx-24 mt-6 icon">
-                <CiDroplet className='size-8 md:size-20'></CiDroplet>
-              </div>
-              <div className="lg:mt-5 md:space-y-3 icon-text">
-                <p className='text-center font-semibold font-[SUSE] md:text-2xl'>Blood Pressure</p>
-                <p className='text-center font-bold font-[SUSE] md:text-3xl'>100/70</p>
-              </div>
-            </div>
-            <div className="box-2 rounded-md h-[150px] md:w-[250px] w-[150px] md:h-[250px] text-[#004cff] bg-[#fff] ">
-                <div className="mx-12 md:mx-20 mt-6 icon">
-                  <BsHeartPulse className='size-8 md:size-20'></BsHeartPulse>
-                </div>
-                  <div className="lg:mt-5 md:space-y-3 icon-text">
-                    <p className='text-center font-semibold font-[SUSE] md:text-2xl'>Heart Rate</p>
-                    <p className='text-center font-bold font-[SUSE] md:text-3xl uppercase'>78 bmp</p>
-                  </div>
-            </div>
-            <div className="box-3 h-[150px] md:w-[250px] rounded-md w-[150px] md:h-[250px] text-[#fff] bg-gradient-to-r from-[#004cff] to-[#00c1ff]  ">
-                <div className="mx-12 md:mx-20 mt-6 icon">
-                  <BsThermometer className='size-8 md:size-20'></BsThermometer>
-                </div>
-                  <div className="lg:mt-5 md:space-y-3 icon-text">
-                    <p className='text-center font-semibold font-[SUSE] md:text-2xl'>Temperature</p>
-                    <p className='text-center font-bold font-[SUSE] md:text-3xl'>33.6 °C</p>
-                  </div>
-                </div>
+    <>
+    <div className="bg-[whitesmoke] sm:space-y-4">
+      <div className=" py-7">
+        <div className="w-[80%] rounded-md mx-auto p-3 flex gap-2 h-[30vh] bg-white ">
+          <div className="w-[40%]">
+            <img src={doc} className='' alt="" />
           </div>
-          {/* vital boxes end */}
-        </section>
-        {/* section 2 */}
-        <div className="bg-[#B9D9EB] w-[100%] lg:w-[20%] h-screen boxes-2">
-        lorem200
+          <div className="w-[60%] ">
+            <h2 className='text-gray-500 text-[15px]  lg:text-lg font-[poppins] '>Welcome Back</h2>
+            <h1 className='text-[#007cff] text-[16px] lg:text-2xl font-[poppins] '>Ojo Oluwapelumi !</h1>
+            <p className='text-gray-500 text-[7px] lg:text-[13px] font-[poppins]'>We would like to take this opportunity to welcome you to our practice and to thank you 
+              for choosing our physicians to participate in your healthcare. We look forward to providing 
+              you with personalized, comprehensive health care focusing on wellness and prevention.</p>
+          </div>
         </div>
+      </div>
+      <div class="lg:px-24 lg:py-6 flex flex-col  md:flex-row flex-wrap gap-4 justify-center items-center">
+                    <div class="flex justify-around items-center rounded-md text-center h-[150px] w-[200px]  text-gray-500 border-t-2 border-[#007cff] bg-white cursor-pointer duration-300 card  red">
+                        {/* <CiDroplet className='inline size-8'/> */}
+                        <img src={bp} className='inline size-14' alt="" />
+                        <div className="">
+                        <p class="text-[0.8] font-semibold tip">Blood Type</p>
+                        <p class="text-[1.3em] font-bold text-[#007cff] font-[poppins] tracking-wide second-text">{`O Negative`}</p>                        
+                        </div>
+                    </div>
+
+                <div class="flex justify-around items-center rounded-md text-center h-[150px] w-[200px]  text-gray-500 border-t-2 border-[#007cff] bg-white cursor-pointer duration-300 card blue">
+                    {/* <BsHeartPulse className='inline size-8'/> */}
+                    <img src={hr} alt="" />
+                    <div className="">
+                    <p class="text-[0.8] font-semibold tip">Blood Pressure</p>
+                    <p class="text-[1.3em] font-bold text-[#007cff] font-[poppins] tracking-wide second-text">{` 110/90`}</p>
+                    </div>
+                </div>
+                <div class="flex justify-around items-center rounded-md text-center h-[150px] w-[200px]  text-gray-500 border-t-2 border-[#007cff] bg-white cursor-pointer duration-300 card green">
+                    {/* <BsThermometer className='inline size-8'/> */}
+                    <img src={thermo} className='inline w-[5rem] h-[5rem] ' alt="" />
+                    <div className="">
+                    <p class="text-[0.8] font-semibold tip">Temperature</p>
+                    <p class="text-[1.3em] font-bold text-[#007cff] font-[poppins] tracking-wide second-text">{` 36°C`}</p>
+                   </div>
+                </div>
+                <div class="flex justify-around items-center rounded-md text-center h-[150px] w-[200px]  text-gray-500 border-t-2 border-[#007cff] bg-white cursor-pointer duration-300 card green">
+                    {/* <GiDna1 className='inline size-8'/> */}
+                    <img src={geno} alt="" />
+                    <div className="">
+                    <p class="text-[0.8em] font-semibold tip">Genotype</p>
+                    <p class="text-[1.3em] font-bold text-[#007cff] font-[poppins] tracking-wide second-text">{`AA`}</p>
+                  </div>
+                </div>
+               
+            </div>
+            <div className="flex flex-col lg:flex-row gap-4 mx-4">
+              <div className="lg:w-[70%] h-[50vh] rounded-md bg-white ">
+                <p className='p-2 font-lg text-gray-500 font-[poppins]'>Appointments</p>
+              <div className="relative overflow-x-auto shadow-md sm:rounded-lg ">
+              <table className=" divide-y text-sm text-left min-w-[40rem] m-auto rtl:text-right text-gray-500 ">
+                <thead className="text-xs text-gray-700 uppercase ">
+                    <tr>
+                        <th scope="col" className="px-6 py-3 text-white bg-[#007ccfb6] ">
+                            Doctor
+                        </th>
+                        <th scope="col" className="px-6 py-3">
+                           Appointment Date
+                        </th>
+                        <th scope="col" className="px-6 py-3">
+                           Appointment Time
+                        </th>
+                        <th scope="col" className="px-6 py-3 bg-[#007ccfb6] text-white">
+                            Actions
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                  <tr className="border-b border-gray-200 dark:border-gray-700">
+                    <td  className="px-6 py-4 bg-[#007ccfb6] text-white">Olaoba Adenike</td>
+                    <td  className="px-6 py-4">12/12/2024</td>
+                    <td  className="px-6 py-4">15:00</td>
+                    <td  className="px-6 py-4 bg-[#007ccfb6] text-white">
+                        <div className="flex space-x-2">
+                          <FaCheck/>
+                          <FaXmark/>
+                        </div>
+                    </td>                   
+                  </tr>
+                </tbody>
+                </table>
+                </div>
+              </div>
+              <div className="lg:w-[30%] h-[50vh] rounded-md bg-white ">
+                <p className='p-3 font-lg text-gray-500 text-center  font-[poppins]'>My Prescriptions</p>
+                <table className=" divide-y text-sm text-left min-w-[20rem] m-auto rtl:text-right text-gray-500 ">
+                  <thead className="text-xs text-gray-700 uppercase ">
+                    <tr>
+                      <th scope="col" className="px-6 py-4">Medication Name</th>
+                      <th scope="col" className="px-6 py-4">Dosage</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td className="px-6 py-4">Chloroquine</td>
+                      <td className="px-6 py-4">1-1-1 daily</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
     </div>
+    </>
   )
 }
 

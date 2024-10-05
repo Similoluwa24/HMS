@@ -5,7 +5,7 @@
       "first_name": "Basilio",
       "last_name": "Sentance",
       "email": "bsentance4@nps.gov",
-      "gender": "Male",
+      "gender": "male",
       "dob": "10/26/2006",
       "phone": "197-899-4543",
       "address": "0 Barby Drive",
@@ -42,7 +42,7 @@
     {
       "first_name": "Oluwapelumi",
       "last_name": "Ojo-Akinfolarin",
-      "gender": "male",
+      "gender": "female",
       "email": "qwerty56@gmail.com",
       "dob": "2024-09-18",
       "phone": "09130778197",
@@ -57,106 +57,36 @@
       "id": "0b0d"
     }
   ],
-  "vitals": [
+  "pharmacy": [
     {
-      "id": "03359",
-      "first_name": "Dud",
-      "last_name": "Bellwood",
-      "gender": "Male",
-      "bp": "110/70",
-      "weight": 66.94,
-      "temperature": 41.9,
-      "height": 133.7
+      "name": "panadol ",
+      "category": "tablet",
+      "cName": "galaxoSmithKline",
+      "price": "400000",
+      "pDate": "2024-09-30",
+      "eDate": "2032-10-04",
+      "stock": "100",
+      "id": "ffa1"
     },
     {
-      "id": "2",
-      "first_name": "Rosalinda",
-      "last_name": "Mines",
-      "gender": "Female",
-      "bp": "155/105",
-      "weight": 66.56,
-      "temperature": 41,
-      "height": 197
+      "id": "2d6f",
+      "name": "amoxilcillin",
+      "category": "tablet",
+      "cName": "tuyil pharmaceuticals",
+      "pDate": "2024-09-29",
+      "price": "390000",
+      "eDate": "2030-01-02",
+      "stock": "2000"
     },
     {
-      "id": "066",
-      "first_name": "Anthiathia",
-      "last_name": "Robert",
-      "gender": "Female",
-      "bp": "110/70",
-      "weight": 59.24,
-      "temperature": 41.9,
-      "height": 203.7
-    },
-    {
-      "id": "89",
-      "first_name": "Klement",
-      "last_name": "Wardley",
-      "gender": "Male",
-      "bp": "145/95",
-      "weight": 47.28,
-      "temperature": 36.3,
-      "height": 153.8
-    },
-    {
-      "id": "27873",
-      "first_name": "Alberta",
-      "last_name": "Caddell",
-      "gender": "Female",
-      "bp": "125/80",
-      "weight": 37.56,
-      "temperature": 42,
-      "height": 194.4
-    },
-    {
-      "id": "64",
-      "first_name": "Kassia",
-      "last_name": "Edworthie",
-      "gender": "Female",
-      "bp": "140/90",
-      "weight": 32.51,
-      "temperature": 30.3,
-      "height": 183.7
-    },
-    {
-      "id": "9",
-      "first_name": "Anne-corinne",
-      "last_name": "Kreutzer",
-      "gender": "Female",
-      "bp": "145/95",
-      "weight": 74.31,
-      "temperature": 42.9,
-      "height": 207.7
-    },
-    {
-      "id": "59205",
-      "first_name": "Sheri",
-      "last_name": "Offer",
-      "gender": "Female",
-      "bp": "150/100",
-      "weight": 91.39,
-      "temperature": 37.5,
-      "height": 229.4
-    },
-    {
-      "id": "21770",
-      "first_name": "Ladonna",
-      "last_name": "Ellesworth",
-      "gender": "Female",
-      "bp": "110/70",
-      "weight": 68.35,
-      "temperature": 33.6,
-      "height": 193.8
-    },
-    {
-      "id": "1763",
-      "first_name": "Burnaby",
-      "last_name": "Archell",
-      "gender": "Male",
-      "bp": "155/105",
-      "weight": 46.17,
-      "temperature": 43.8,
-      "height": 240
+      "id": "8825",
+      "name": "chloroquine",
+      "category": "injection",
+      "cName": "tuyil phamaceuticals",
+      "pDate": "2024-09-30",
+      "price": "120000",
+      "eDate": "2027-10-04",
+      "stock": "100"
     }
   ],
   "faq": [
@@ -213,32 +143,20 @@
   ],
   "department": [
     {
-      "id": "1",
-      "name": "General Surgery"
+      "id": "97a6",
+      "name": "Gynecology",
+      "description": "Foe Women",
+      "date": "2024-09-29",
+      "hod": "Ojo O.B.",
+      "status": "active"
     },
     {
-      "id": "2",
-      "name": "Internal Medicine"
-    },
-    {
-      "id": "3",
-      "name": "Pediatrics"
-    },
-    {
-      "id": "4",
-      "name": "Obstetrics and Gynecology"
-    },
-    {
-      "id": "5",
-      "name": "Emergency Medicine"
-    },
-    {
-      "id": "6",
-      "name": "Cardiology"
-    },
-    {
-      "id": "7",
-      "name": "Orthopedic Surgery"
+      "name": "Pediatrics ",
+      "description": "For Children",
+      "date": "2024-08-07",
+      "hod": "Modupe Olaoba",
+      "status": "inactive",
+      "id": "0157"
     }
   ],
   "appointment": [
@@ -261,6 +179,17 @@
       "time": "13:10",
       "message": "qwertyuioasdfghj",
       "id": "892a"
+    }
+  ],
+  "inventory": [
+    {
+      "name": "Hand Gloves ",
+      "category": "Equipment",
+      "quantity": "10000",
+      "pDate": "2024-09-05",
+      "price": "200000",
+      "details": "10 packs of syringe containing 100 pairs each",
+      "id": "37cb"
     }
   ]
 }

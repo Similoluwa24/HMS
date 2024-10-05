@@ -7,10 +7,10 @@ function PatientLayout() {
   return (
     <>
         <div className="h-[100vh] flex justify-between p-layout">
-            <div className="w-[20%]  sidebar">
+            <div className="w-[17%]  sidebar">
             <PatientSidebar/>
             </div>
-            <div className="w-[80%] main">
+            <div className="w-[83%] main">
             <PatientHeader/>
                 <Outlet/>
             </div>

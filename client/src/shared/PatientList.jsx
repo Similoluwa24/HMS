@@ -71,7 +71,7 @@ function PatientList() {
                       {patient.filter((item)=>{
                        return search.toLowerCase() === "" 
                         ? item
-                        : item.first_name.toLowerCase().includes(search)
+                        : item.first_name.toLowerCase().includes(search) || item.last_name.toLowerCase().includes(search)
                       }).map((item, index) => (
 
                         <tr key={index} className="border-b border-gray-200 dark:border-gray-700">

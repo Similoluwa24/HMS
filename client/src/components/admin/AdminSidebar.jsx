@@ -1,12 +1,15 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { MdLocalHospital } from "react-icons/md";
+import { MdLocalHospital,MdOutlineInventory } from "react-icons/md";
 import { BsJournalBookmark } from "react-icons/bs";
-import { VscHistory } from "react-icons/vsc";
-import { CiLogout, CiMoneyBill } from "react-icons/ci";
-import { IoSettingsOutline,  IoHomeOutline } from "react-icons/io5";
-import { FaUserDoctor } from "react-icons/fa6";
+import { CiLogout, CiMoneyBill, CiStethoscope,CiCreditCard1 } from "react-icons/ci";
+import { IoHomeOutline } from "react-icons/io5";
 import { CiUser } from "react-icons/ci";
+import { SiAwsorganizations } from "react-icons/si";
+import { GiMedicinePills } from "react-icons/gi";
+import { RiAdminLine } from "react-icons/ri";
+
+
 
 function AdminSidebar() {
     const [selected, setSelected] = useState(null)
@@ -36,31 +39,26 @@ function AdminSidebar() {
                         <Link to='/admin/allapp'><span><BsJournalBookmark className='inline mr-2'></BsJournalBookmark></span> <span className='hidden lg:inline'>Appointment</span></Link>
                     </li>
                     <li>
-                        <Link to='/admin/allpa' onClick={()=>{toggle(i)}} className='flex justify-between'>
-                        <div className="">
-                        <span><CiUser className='inline mr-2'></CiUser></span>
-                        <span className='hidden lg:inline'>Patients</span>
-                        </div>
-                        <div className="">
-                             
-                        </div>
-                        </Link>
-                        {/* <div className="">
-                            <ul>
-                                <li>All Patients</li>
-                                <li>Add Patient</li>
-                                <li>Edit Patient</li>
-                            </ul>
-                        </div> */}
+                        <Link to='/admin/allpa'><span><CiUser className='inline mr-2'></CiUser></span><span className='hidden lg:inline'>Patients</span></Link>
+                      
                     </li>
                     <li>
-                        <Link to='alldoc'><span><FaUserDoctor className='inline mr-2'></FaUserDoctor></span><span className='hidden lg:inline'> Doctors</span></Link>
+                        <Link to='alldoc'><span><CiStethoscope className='inline mr-2'></CiStethoscope></span><span className='hidden lg:inline'> Doctors</span></Link>
                     </li>
                     <li>
-                        <Link to='transactions'><span><CiMoneyBill className='inline mr-2'></CiMoneyBill></span><span className='hidden lg:inline'> Transactions</span></Link>
+                        <Link to='alladmin'><span><RiAdminLine className='inline mr-2'></RiAdminLine></span><span className='hidden lg:inline'> Admin</span></Link>
                     </li>
                     <li>
-                        <Link to='settings'><span><IoSettingsOutline className='inline mr-2'></IoSettingsOutline></span><span className='hidden lg:inline'> Settings</span></Link>
+                        <Link to='/admin/allpharm'><span><GiMedicinePills className='inline mr-2'></GiMedicinePills></span><span className='hidden lg:inline'> Pharmacy</span></Link>
+                    </li>
+                    <li>
+                        <Link to='/admin/alldepart'><span><SiAwsorganizations className='inline mr-2'></SiAwsorganizations></span><span className='hidden lg:inline'> Department</span></Link>
+                    </li>
+                    <li>
+                        <Link to='/admin/allinvent'><span><MdOutlineInventory className='inline mr-2'></MdOutlineInventory></span><span className='hidden lg:inline'> Inventory</span></Link>
+                    </li>
+                    <li>
+                        <Link to='transactions'><span><CiCreditCard1 className='inline mr-2'></CiCreditCard1></span><span className='hidden lg:inline'> Payment</span></Link>
                     </li>
                     <li>
                         <button ><span><CiLogout className='inline mr-2'></CiLogout></span><span className='hidden lg:inline'> Log Out</span></button>

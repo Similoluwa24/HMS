@@ -64,7 +64,7 @@ function EditDoctors() {
            }
         updateDoctorHandler(editDoctors.items.item.id, addNewDoctor)
         navigate('/admin/alldoc')
-        notify()
+        
     }
 
   return (
@@ -154,7 +154,7 @@ function EditDoctors() {
                 </div>
 
                 <div className="flex justify-start mx-4 m-auto">
-                    <button type="submit" class="text-white hover:text-white border bg-[#007cff] w-[200px] border-blue-700 hover:bg-blue-800  font-medium rounded-md text-sm px-5 py-2.5 text-center me-2 mb-2    ">Update Doctor</button>
+                    <button type="submit" onClick={notify()} class="text-white hover:text-white border bg-[#007cff] w-[200px] border-blue-700 hover:bg-blue-800  font-medium rounded-md text-sm px-5 py-2.5 text-center me-2 mb-2    ">Update Doctor</button>
                     <button type="reset" class="text-white hover:text-white border bg-amber-400 w-[200px]   font-medium rounded-md text-sm px-5 py-2.5 text-center me-2 mb-2    ">Reset</button>               
                 </div>
             </form>

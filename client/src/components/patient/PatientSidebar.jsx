@@ -6,6 +6,7 @@ import { BsJournalBookmark } from "react-icons/bs";
 import { VscHistory } from "react-icons/vsc";
 import { CiMoneyBill } from "react-icons/ci";
 import { IoSettingsOutline,  IoHomeOutline } from "react-icons/io5";
+import { GiMedicinePills } from 'react-icons/gi';
 
 function PatientSidebar() {
   return (
@@ -14,7 +15,7 @@ function PatientSidebar() {
             <div className="user">
             <div className=" logo">
                     <MdLocalHospital className='lg:inline hidden size-12 lg:p-2 border-r-2 border-[#007cff] text-[#007cff]'></MdLocalHospital>
-                    <p className='inline text-sm md:text-2xl p-2 text-[#007cff]'>OJ Hospital</p>
+                    <p className='inline text-sm md:text-xl p-2 text-[#007cff]'>OJ Hospital</p>
                 </div>
                 
                 <hr />
@@ -29,6 +30,9 @@ function PatientSidebar() {
                     </li>
                     <li>
                         <Link to='/user/history'><span><VscHistory className='inline mr-2'></VscHistory></span><span className='hidden lg:inline'>Treatment History</span></Link>
+                    </li>
+                    <li>
+                        <Link to='/user/prescription'><span><GiMedicinePills className='inline mr-2'></GiMedicinePills></span><span className='hidden lg:inline'>Prescription</span></Link>
                     </li>
                     <li>
                         <Link to='billing'><span><CiMoneyBill className='inline mr-2'></CiMoneyBill></span><span className='hidden lg:inline'> Billings</span></Link>

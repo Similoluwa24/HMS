@@ -306,7 +306,7 @@
   }
 }
 
-.Male{
+.male{
     color: rgb(36, 71, 250);
     background-color: #007bff66;
     
@@ -314,4 +314,10 @@
 .female{
     color: rgb(237, 71, 99);
     background-color: rgba(255, 192, 203, 0.406);
+}
+.active{
+  background-color: #4b5563;
+}
+.inactive{
+  background-color: #22c55e;
 }

@@ -8,21 +8,37 @@ export const HospitalProvider = ({children})=>{
         getallDepartment()
         getallPatient()
         getallApointment()
+        getallPharmacy()
+        getInventory()
     },[])
     const [doctors, setDoctors] = useState([])
     const [faq, setFaq] = useState([])
     const [department, setDepartment] = useState([])
     const [patient, setPatient] = useState([])
     const [appointment, setAppointment] = useState([])
+    const [pharmacy, setPharmacy] = useState([])
+    const [inventory, setInventory] = useState([])
     const [editAppointment, setEditAppointment] = useState({
       items:{},
       edit:false
+    })
+    const [editInventory , setEditInventory] = useState({
+      edit: false,
+      items:{}
     })
     const [editPatient, setEditPatient] = useState({
       edit : false,
       items:{}
     })
     const [editDoctors, setEditDoctors] = useState({
+      edit:false,
+      items:{}
+    })
+    const [editPharmacy, setEditPharmacy] = useState({
+      edit:false,
+      items:{}
+    })
+    const [editDepartment, setEditDepartment ] = useState({
       edit:false,
       items:{}
     })
@@ -39,9 +55,14 @@ export const HospitalProvider = ({children})=>{
         
     }
     const getallDepartment = async ()=>{
+      try {
         const res = await fetch('http://localhost:3000/department')
         const data = await res.json()
-        setDepartment(data)
+        setDepartment(data)       
+      } catch (error) {
+        console.log({message:error.message});
+        
+      }
         
     }
     const getallPatient = async ()=>{
@@ -55,6 +76,21 @@ export const HospitalProvider = ({children})=>{
         const res = await fetch('http://localhost:3000/appointment')
         const data = await res.json()
         setAppointment(data)
+    }
+    const getallPharmacy = async () => {
+      const res = await fetch('http://localhost:3000/pharmacy')
+      const data = await res.json()
+      setPharmacy(data)
+    }
+    const getInventory = async () => {
+      const res = await fetch(`http://localhost:3000/inventory`,{
+        method:'GET',
+        headers:{
+          'Content-Type':"appication/json"
+        }
+      })
+      const data = await res.json()
+      setInventory(data)
     }
     const addAppointment = async (newAppointment) =>{
         const res = await fetch('http://localhost:3000/appointment',{
@@ -211,22 +247,205 @@ export const HospitalProvider = ({children})=>{
         const updatedDoctor = doctors.map((items)=>{items.id === id ? {...items, ...updItems}: items})
         setDoctors(updatedDoctor)
       } catch (error) {
+        console.log({message:error.message});
         
       }
       
     }
-    
 
+    const addPharmacy = async(newPharmacy) =>{
+     try {
+      const res = await fetch('http://localhost:3000/pharmacy',{
+        method:'POST',
+        headers:{
+          'Content-Type':"application/json"
+        },
+        body: JSON.stringify(newPharmacy)
+      })
+      const data = await res.json()
+      newPharmacy.id = pharmacy.length + 1
+      setPharmacy([data, ...pharmacy])
+     } catch (error) {
+      console.log({message:error.message});
+      
+     }
+    }
+    
+    const deletePharmacy = async(id) =>{
+      try {
+        const res = await fetch(`http://localhost:3000/pharmacy/${id}`,{
+          method:"DELETE",
+          headers:{
+            'Content-Type':"application/json"
+          }
+        }) 
+        if (res.ok) {
+          const data = pharmacy.filter((items)=>{items.id !== id})
+          setPharmacy(data)          
+        } else {
+          console.log('Unable to delete item')
+        }
+      } catch (error) {
+        console.log({message:error.message});
+        
+      }
+    }
+
+    const editPharmacyHandler = (items)=>{
+      setEditPharmacy({
+        edit:true,
+        items
+      })
+    }
+
+    const updatePharmacyHandler = async(id, upItems) =>{
+      try {
+        const res = await fetch (`http://localhost:3000/pharmacy/${id}`,{
+          method:'PUT',
+          headers:{
+            'Content-Type':"application/json"
+          },
+          body:JSON.stringify(upItems)
+        })
+        const updatePharmacy = pharmacy.map((item)=>{item.id ===id ? {...data, ...upItems} : item})
+        setPharmacy(updatePharmacy)
+      } catch (error) {
+        
+      }
+    }
+
+    const addDepartment = async(newDepart) =>{
+      try {
+        const res = await fetch ('http://localhost:3000/department',{
+          method:'POST',
+          headers:{
+            "Content-Type":"application/json"
+          },
+          body:JSON.stringify(newDepart)
+        })
+        if (res.ok) {
+          newDepart.id = department.length + 1
+          const data = await res.json()
+          setDepartment([data, ...department])                  
+        } else {
+          console.log("Unable to add department");          
+        }
+      } catch (error) {
+        console.log({message:error.message});
+        
+      }
+    }
+
+    const deleteDepartment = async (id) => {
+      try {
+        const res = await fetch (`http://localhost:3000/department/${id}`,{
+          method:'DELETE',
+          headers:{
+            "Content-Type":"application/json"
+          }
+        })
+        if (res.ok) {
+         const data =  department.filter((item)=>{item.id !== id})
+         setDepartment(data)
+        } else {
+          console.log("Unable to delete item");
+          
+        }
+      } catch (error) {
+        console.log({message:error.message});
+        
+      }
+    }
+
+    const editDepartmentHandler = (items)=>{
+      setEditDepartment({
+        edit:true,
+        items
+      })
+    }
+    const updateDepartmentHandler = async(id, updItems)=>{
+      try {
+        const res = await fetch(`http://localhost:3000/department/${id}`,{
+          method:'PUT',
+          headers:{
+            "Content-Type":"application/json"
+          },
+          body: JSON.stringify(updItems)
+        })
+        const updatedDept = department.map((items)=>{items.id === id ? {...data, ...updItems}: items})
+        setDepartment(updatedDept)
+      } catch (error) {
+        
+      }
+    }
+    const addInventory = async(newInventory)=>{
+      try {
+        const res = await fetch ('http://localhost:3000/inventory',{
+          method:'POST',
+          headers:{
+            "Content-Type":"application/json"
+          },
+          body:JSON.stringify(newInventory)
+        })
+        const data = res.json()
+        newInventory.id = inventory.length + 1
+        setInventory([data, ...newInventory])
+      } catch (error) {
+        console.log({message:error.message});
+        
+      }
+    }
+    const deleteInventory = async (id) => {
+      try {
+        const res = await fetch (`http://localhost:3000/inventory/${id}`,{
+          method:'DELETE',
+          headers:{
+            'Content-Type':'application/json'
+          }
+        })
+        const deleteInventory = inventory.filter((item)=>{item.id !== id})
+        setInventory(deleteInventory) 
+      } catch (error) {
+        console.log({message:error.message});        
+      }
+    }
+    const editInventoryHandler = (items)=>{
+      setEditInventory({
+        edit:true,
+        items
+      })
+    }
+    const updateInventoryHandler = async(id, updItems)=>{
+      try {
+        const res = await fetch (`http://localhost:3000/inventory/${id}`,{
+          method:'PUT',
+          headers:{
+            'Content-Type':'application/json'
+          },
+          body:JSON.stringify(updItems)
+        }) 
+        const data = inventory.map((item)=>{item.id === id ?{...data, ...updItems}: item})
+        setInventory(data)
+      } catch (error) {
+        console.log({message:error.message});
+        
+      }
+    }
     return (
         <HospitalContext.Provider value={{
             doctors,
             faq,
             department,
             patient,
+            pharmacy,
+            inventory,
             editPatient,
             appointment,
             editAppointment,
             editDoctors,
+            editPharmacy,
+            editDepartment,
+            editInventory,
             addAppointment,
             deleteAppointment,
             editAppointmentHandler,
@@ -238,7 +457,20 @@ export const HospitalProvider = ({children})=>{
             addDoctor,
             deleteDoctor,
             editDoctorHandler,
-            updateDoctorHandler
+            updateDoctorHandler,
+            addPharmacy,
+            deletePharmacy,
+            editPharmacyHandler,
+            updatePharmacyHandler,
+            addDepartment,
+            deleteDepartment,
+            editDepartmentHandler,
+            updateDepartmentHandler,
+            addInventory,
+            deleteInventory,
+            editInventoryHandler,
+            updateInventoryHandler
+            
         }}>
                 {children}
         </HospitalContext.Provider>

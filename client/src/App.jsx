@@ -30,6 +30,10 @@ import Modal from './components/common/Modal'
 import EditPatient from './pages/admin/EditPatient'
 import EditAppointment from './pages/admin/EditAppointment'
 import EditDoctors from './pages/admin/EditDoctors'
+import AdminPharmacy from './pages/admin/AdminPharmacy'
+import AllDepartments from './pages/admin/AllDepartments'
+import AllInventory from './pages/admin/AllInventory'
+import AllAdmin from './pages/admin/AllAdmin'
 
 function App() {
   return (
@@ -70,6 +74,10 @@ function App() {
               <Route path='alldoc' element={<AllDoctors/>}/>
               <Route path='allpa' element={<AllPatients/>}/>
               <Route path='allapp' element={<AllAppointment/>}/>
+              <Route path='alldepart' element={<AllDepartments/>}/>
+              <Route path='allinvent' element={<AllInventory/>}/>
+              <Route path='allpharm' element={<AdminPharmacy/>}/>
+              <Route path='alladmin' element={<AllAdmin/>}/>
           </Route>
 
           
