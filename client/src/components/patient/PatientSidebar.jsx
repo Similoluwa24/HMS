@@ -1,51 +1,90 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-import { MdLocalHospital } from "react-icons/md";
-import { IoHomeSharp } from "react-icons/io5";
-import { BsJournalBookmark } from "react-icons/bs";
-import { VscHistory } from "react-icons/vsc";
-import { CiMoneyBill } from "react-icons/ci";
-import { IoSettingsOutline,  IoHomeOutline } from "react-icons/io5";
-import { GiMedicinePills } from 'react-icons/gi';
+import React, { useContext } from 'react';
+import { BsJournalBookmark } from 'react-icons/bs';
+import { CiLogout } from 'react-icons/ci';
+import { IoHomeOutline, IoReceiptOutline, IoSettingsOutline } from 'react-icons/io5';
+import { MdLocalHospital } from 'react-icons/md';
+import { TbReportMedical } from "react-icons/tb";
+import { Link, useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../context/AuthContext';
+import Cookies from 'js-cookie';
 
-function PatientSidebar() {
-  return (
-    <>
-        <div class=" py-5 px-3 h-full bg-[#fff] text-[#007cff] border-r border-gray-200 ">
-            <div className="user">
-            <div className=" logo">
-                    <MdLocalHospital className='lg:inline hidden size-12 lg:p-2 border-r-2 border-[#007cff] text-[#007cff]'></MdLocalHospital>
-                    <p className='inline text-sm md:text-xl p-2 text-[#007cff]'>OJ Hospital</p>
-                </div>
-                
-                <hr />
+function DoctorSidebar() {
+    const [state, dispatch] = useContext(AuthContext);
+    const navigate = useNavigate();
+
+    const logout = async () => {
+        try {
+            const res = await fetch('http://localhost:5000/user/logout', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                credentials: 'include',
+            });
+
+            const data = await res.json();
+
+            if (!res.ok) {
+                console.log({ message: data });
+            } else {
+                dispatch({ type: 'LOGOUT', payload: null });
+                localStorage.removeItem('user');
+                Cookies.remove('token');
+                navigate('/auth/login');
+            }
+        } catch (error) {
+            console.log({ message: error.message });
+        }
+    };
+
+    return (
+        <div className="min-h-svh py-5 px-4 bg-white text-[#007cff] border-r border-gray-200 shadow-lg">
+            <div className="mb-8 flex items-center justify-start space-x-2">
+                <MdLocalHospital className="text-3xl lg:text-4xl p-2 bg-[#007cff] text-white rounded-full" />
+                <p className="text-lg lg:text-xl font-bold text-[#007cff]">OJ Hospital</p>
             </div>
-            <div className="py-7 list">
-                <ul className='font-[SUSE] px-3 space-y-10'>
+            <div className="space-y-8">
+                <ul className="space-y-6">
                     <li>
-                        <Link to='/user/home'><span><IoHomeOutline className='inline mr-2'></IoHomeOutline></span><span className='hidden lg:inline'> My Home</span></Link>
+                        <Link to='home' className="flex items-center space-x-4 p-3 rounded-xl bg-white hover:bg-[#e3f2fd] shadow-sm hover:shadow-md transition-all">
+                            <IoHomeOutline className="text-2xl text-[#007cff]" />
+                            <span className="text-lg font-medium text-gray-700">Home</span>
+                        </Link>
                     </li>
                     <li>
-                        <Link to='/user/appointment'><span><BsJournalBookmark className='inline mr-2'></BsJournalBookmark></span> <span className='hidden lg:inline'>Appointment</span></Link>
+                        <Link to='appointment' className="flex items-center space-x-4 p-3 rounded-xl bg-white hover:bg-[#e3f2fd] shadow-sm hover:shadow-md transition-all">
+                            <BsJournalBookmark className="text-2xl text-[#007cff]" />
+                            <span className="text-lg font-medium text-gray-700">Appointments</span>
+                        </Link>
                     </li>
                     <li>
-                        <Link to='/user/history'><span><VscHistory className='inline mr-2'></VscHistory></span><span className='hidden lg:inline'>Treatment History</span></Link>
+                        <Link to='prescription' className="flex items-center space-x-4 p-3 rounded-xl bg-white hover:bg-[#e3f2fd] shadow-sm hover:shadow-md transition-all">
+                            <IoReceiptOutline className="text-2xl text-[#007cff]" />
+                            <span className="text-lg font-medium text-gray-700">Prescriptions</span>
+                        </Link>
                     </li>
                     <li>
-                        <Link to='/user/prescription'><span><GiMedicinePills className='inline mr-2'></GiMedicinePills></span><span className='hidden lg:inline'>Prescription</span></Link>
+                        <Link to='diagnosis' className="flex items-center space-x-4 p-3 rounded-xl bg-white hover:bg-[#e3f2fd] shadow-sm hover:shadow-md transition-all">
+                            <TbReportMedical className="text-2xl text-[#007cff]" />
+                            <span className="text-lg font-medium text-gray-700">Diagnosis</span>
+                        </Link>
                     </li>
                     <li>
-                        <Link to='billing'><span><CiMoneyBill className='inline mr-2'></CiMoneyBill></span><span className='hidden lg:inline'> Billings</span></Link>
+                        <Link to='settings' className="flex items-center space-x-4 p-3 rounded-xl bg-white hover:bg-[#e3f2fd] shadow-sm hover:shadow-md transition-all">
+                            <IoSettingsOutline className="text-2xl text-[#007cff]" />
+                            <span className="text-lg font-medium text-gray-700">Settings</span>
+                        </Link>
                     </li>
                     <li>
-                        <Link to='settings'><span><IoSettingsOutline className='inline mr-2'></IoSettingsOutline></span><span className='hidden lg:inline'> Settings</span></Link>
+                        <button onClick={logout} className="flex items-center space-x-4 p-3 rounded-xl bg-white hover:bg-red-100 shadow-sm hover:shadow-md transition-all w-full">
+                            <CiLogout className="text-2xl text-red-600" />
+                            <span className="text-lg font-medium text-red-600">Log Out</span>
+                        </button>
                     </li>
                 </ul>
             </div>
-
         </div>
-    </>
-  )
+    );
 }
 
-export default PatientSidebar
+export default DoctorSidebar;

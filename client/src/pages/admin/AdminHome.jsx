@@ -1,11 +1,12 @@
 import React, { useContext } from 'react'
 import { FaUserDoctor } from "react-icons/fa6";
-import { CiUser } from "react-icons/ci";
+import { CiCalendar, CiUser, CiWallet } from "react-icons/ci";
 import { BsJournalBookmark } from "react-icons/bs";
 import { FaMoneyBillTrendUp } from "react-icons/fa6";
 import HospitalContext from '../../context/HospitalContext';
 import {Chart as ChartJS, defaults} from 'chart.js/auto'
 import {Doughnut, Bar, Line} from 'react-chartjs-2'
+import admin from '../../assets/morning-img-01.png'
 
 
 
@@ -17,32 +18,46 @@ defaults.plugins.title.align = "start"
 defaults.plugins.title.fullSize = 20
 defaults.plugins.title.color = 'black'
 function AdminHome() {
-    const {doctors, appointment, patient} = useContext(HospitalContext)
+    const {doctors,user, appointment, patient,alluser} = useContext(HospitalContext)
     
+console.log({user});
+  
   return (
     <>
         <div className=' bg-[#F0F8FF]  space-y-5'>
-            <div class="lg:px-24 lg:py-6 flex flex-col md:flex-row flex-wrap gap-4 justify-center items-center">
-                    <div class="flex flex-col justify-center items-center text-center h-[100px] w-[200px] rounded-sm text-gray-500 border-t-2 border-[#007cff] bg-white cursor-pointer duration-300 card  red">
+            <div className=" lg:px-12 lg:py-6 ">
+            <div className="flex bg-white justify-around items-center rounded-md">
+                <div className="text">
+                    <h2 className='font-bold text-gray-700 text-3xl font-[poppins]'>Good day, <span className='text-[#007cff]'>{user?.user.first_name} {user?.user.last_name}</span></h2>
+                    <p className='text-gray-400 font-[poppins] '>Have a nice day at work!</p>
+                </div>
+                <div className="img">
+                    <img src={admin} alt="" className='w-[170px] h-[170px] ' />
+                </div>
+            </div>
+
+            </div>
+            <div className="lg:px-24 lg:py-6 flex flex-col md:flex-row flex-wrap gap-4 justify-center items-center">
+                    <div className="flex flex-col rounded-md justify-center items-center text-center h-[100px] w-[200px]  text-gray-500 border-t-2 border-[#007cff] bg-white cursor-pointer duration-300 card  red">
                         <CiUser className='inline size-8'/>
-                        <p class="text-[1em] font-semibold tip">Users</p>
-                        <p class="text-[0.7em] second-text">{`${patient.length} Users`}</p>
+                        <p className="text-[1em] font-semibold tip">Patients</p>
+                        <p className="text-[0.7em] second-text">{`${patient?.length} Users`}</p>
                     </div>
 
-                <div class="flex flex-col justify-center items-center text-center h-[100px] w-[200px] rounded-sm text-gray-500 border-t-2 border-[#007cff] bg-white cursor-pointer duration-300 card blue">
+                <div className="flex flex-col rounded-md justify-center items-center text-center h-[100px] w-[200px]  text-gray-500 border-t-2 border-[#007cff] bg-white cursor-pointer duration-300 card blue">
                     <FaUserDoctor className='inline size-8'/>
-                    <p class="text-[1em] font-semibold tip">Doctors</p>
-                    <p class="text-[0.7em] second-text">{`${doctors.length} Doctors`}</p>
+                    <p className="text-[1em] font-semibold tip">Doctors</p>
+                    <p className="text-[0.7em] second-text">{`${doctors.length} Doctors`}</p>
                 </div>
-                <div class="flex flex-col justify-center items-center text-center h-[100px] w-[200px] rounded-sm text-gray-500 border-t-2 border-[#007cff] bg-white cursor-pointer duration-300 card green">
-                    <BsJournalBookmark className='inline size-8'/>
-                    <p class="text-[1em] font-semibold tip">Appointment</p>
-                    <p class="text-[0.7em] second-text">{`${appointment.length} Appointment`}</p>
+                <div className="flex flex-col rounded-md justify-center items-center text-center h-[100px] w-[200px]  text-gray-500 border-t-2 border-[#007cff] bg-white cursor-pointer duration-300 card green">
+                    <CiCalendar className='inline size-8'/>
+                    <p className="text-[1em] font-semibold tip">Appointment</p>
+                    <p className="text-[0.7em] second-text">{`${appointment.length} Appointment`}</p>
                 </div>
-                <div class="flex flex-col justify-center items-center text-center h-[100px] w-[200px] rounded-sm text-gray-500 border-t-2 border-[#007cff] bg-white cursor-pointer duration-300 card green">
-                    <FaMoneyBillTrendUp className='inline size-8'/>
-                    <p class="text-[1em] font-semibold tip">Earnings</p>
-                    <p class="text-[0.7em] second-text">{`150,000 Dollars`}</p>
+                <div className="flex flex-col rounded-md justify-center items-center text-center h-[100px] w-[200px]  text-gray-500 border-t-2 border-[#007cff] bg-white cursor-pointer duration-300 card green">
+                    <CiWallet className='inline size-8'/>
+                    <p className="text-[1em] font-semibold tip">Earnings</p>
+                    <p className="text-[0.7em] second-text">{`150,000 Dollars`}</p>
                 </div>
                
             </div>

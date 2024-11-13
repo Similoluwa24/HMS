@@ -9,7 +9,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 function DoctorList() {
-  const {doctors, deleteDoctor,editDoctorHandler} = useContext(HospitalContext)
+  const {doctors,editDoctorHandler} = useContext(HospitalContext)
   const [modal, setModal] = useState(false)
   const [deleteId, setDeleteId] = useState(null)
   const [search, setSearch] = useState('')
@@ -30,10 +30,22 @@ function DoctorList() {
     setDeleteId(id)
 
   }
-  const handleDelete = ()=>{
-    setModal(false)
-    deleteDoctor(deleteId)
-    notify()
+  const handleDelete = async()=>{
+    const res = await fetch(`http://localhost:5000/user/delete/${deleteId}`,{
+        method:'DELETE',
+        headers:{
+            'Content-Type':'application/json'
+        },
+        credentials:'include'
+    })
+    const data = await res.json()
+    if (!res.ok) {
+        console.log(data);
+        
+    } else {
+        setModal(false)
+        notify()       
+    }
   }
 
   
@@ -41,32 +53,19 @@ function DoctorList() {
     <div>
             <div className="my-4 flex gap-3 justify-between b0tt0n">
                 <input type="search" id="default-search" onChange={(e)=>{setSearch(e.target.value)}} className="block w-[75%] p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search By Firstname..." required />
-                <Link to='/admin/createdoc' className='bg-[#007cff] lg:p-2 text-[12px] font-[poppins] text-white rounded-lg'>Add New Doctor + </Link>
+                <Link to='/admin/createdoc' className='bg-blue-600 hover:bg-blue-700 transition duration-200 p-2 text-xs font-semibold text-white rounded-lg'>Add New Doctor + </Link>
            </div>
       <div className="relative overflow-x-auto shadow-md sm:rounded-lg  ">
-              <table className=" divide-y text-sm text-left min-w-[65rem] m-auto rtl:text-right text-gray-500 ">
-                <thead className="text-xs text-gray-700 uppercase ">
-                    <tr>
-                        <th scope="col" className="px-6 py-3 bg-[#007ccfb6] text-white">
-                            ID
-                        </th>
-                        <th scope="col" className="px-6 py-3">
-                            Full Name
-                        </th>
-                        <th scope="col" className="px-6 py-3">
-                            Gender
-                        </th>
-                        <th scope="col" className="px-6 py-3 text-white bg-[#007ccfb6] ">
-                            Email
-                        </th>
-                        <th scope="col" className="px-6 py-3">
-                            Department
-                        </th>
-                        <th scope="col" className="px-6 py-3 bg-[#007ccfb6] text-white">
-                            Actions
-                        </th>
-                    </tr>
-                </thead>
+      <table className="w-full min-w-[65rem] text-sm text-left text-gray-600 border-separate border-spacing-0">
+          <thead className="bg-blue-600 text-white text-xs uppercase">
+            <tr>
+              {['ID', 'Full Name', 'Gender', 'Email', 'Department', 'Actions'].map((header, index) => (
+                <th key={index} className={`px-6 py-3 ${index % 2 === 0 ? 'bg-blue-700' : ''}`}>
+                  {header}
+                </th>
+              ))}
+            </tr>
+          </thead>
                 <tbody>
                       {doctors.filter((item)=>{
                         return search.toLowerCase() === ""
@@ -74,26 +73,25 @@ function DoctorList() {
                         : item.first_name.toLowerCase().includes(search)
                       }).map((item, index) => (
 
-                        <tr key={index} className="border-b border-gray-200 dark:border-gray-700">
-                            <td scope="row" className="px-6 py-4 font-medium text-white whitespace-nowrap bg-[#007ccfb6] ">
-                                {item.id}
+                        <tr key={index} className="border-b border-gray-200 hover:bg-gray-100 transition duration-150">
+                          <td className="px-6 py-4 font-medium text-gray-800 bg-blue-100">
+                                {item._id}
                             </td>
                             <td className="px-6 py-4">
                                  {`${item.first_name} ${item.last_name}`}
                             </td>
-                            <td className="px-6 py-4">
-                                {item.gender}
+                            <td className="px-6 py-4 capitalize">
+                                 <span className={`px-2 py-1 rounded-md ${item.gender === 'female'? 'bg-pink-200 text-pink-700':'bg-blue-200 text-blue-700'}`}>{item.gender}</span>
                             </td>
-                            <td className="px-6 py-4 bg-[#007ccfb6] text-white">
+                            <td className="px-6 py-4 text-gray-800 bg-blue-100">
                                 {item.email}
                             </td>
                             <td className="px-6 py-4">
                                 {item.department} {item.departments}
                             </td>
-                            <td className="px-6 space-x-2 text-center py-4 bg-[#007ccfb6] text-white">                        
-                                <Link to={`/admin/editdoc/${item.id}`} onClick={()=>{editDoctorHandler({item})}}><span><CiEdit className='inline'/></span></Link> 
-                                <span><RiDeleteBinLine onClick={()=>{handleDeleteClick(item.id)}} className='inline'/></span>
-                                {/* <span><RiDeleteBinLine onClick={()=>{deleteDoctor(item.id)}} className='inline'/></span> */}
+                            <td className="px-6 py-4 flex space-x-2 items-center justify-center bg-blue-100">                        
+                                <Link to={`/admin/editdoc/${item.id}`} className="text-blue-600 hover:text-blue-800 transition" onClick={()=>{editDoctorHandler({item})}}><span><CiEdit className='inline'/></span></Link> 
+                                <span  className="text-red-600 hover:text-red-800 transition"><RiDeleteBinLine onClick={()=>{handleDeleteClick(item._id)}} className='inline'/></span>
                             </td>
                         </tr>            
               ))}

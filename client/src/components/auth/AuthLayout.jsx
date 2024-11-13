@@ -11,7 +11,7 @@ function AuthLayout() {
             <Header/>
           </header>
             
-            <div className="lg:w-[40%] h-[70vh] m-auto  main">
+            <div className=" h-[70vh] m-auto  main">
                 <Outlet/>
             </div>
             

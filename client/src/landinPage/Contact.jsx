@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Header from './Header'
 import { PiAmbulanceLight } from "react-icons/pi";
 import { FaUserDoctor } from "react-icons/fa6";
@@ -11,6 +11,28 @@ import Footer from './Footer';
 import { Link } from 'react-router-dom';
 
 function Contact() {
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
+  const [message, setMessage] = useState('')
+  const [subject, setSubject] = useState('')
+
+  const submitHandler = async(e)=>{
+    e.preventDefault()
+    const res = await fetch('http://localhost:5000/contact/add',{
+      method:'POST',
+      headers:{
+        'Content-Type':'application/json'
+      },
+      credentials:"include",
+      body:JSON.stringify({name,email,message,subject})
+    })
+    const data = await res.json()
+    if (!res.ok) {
+      console.log(data); 
+    } else {
+      return alert('Message sent!')
+    }
+  }
   return (
     <div>
         <div className="pb-12 bg-[whitesmoke] contact">
@@ -30,22 +52,22 @@ function Contact() {
                   help. 
               </p>
                 <div className="lg:flex mx-5 space-y-6 gap-7 contact-ux">
-                    <form action="" className='space-y-4  lg:w-[70%]'>
+                    <form action="" onSubmit={submitHandler} className='space-y-4  lg:w-[70%]'>
                       <div className="">
                           <label for="name" class="block mb-1 text-sm font-medium">your name *</label>
-                          <input type="text" id="name" class="bg-white border border-gray-300 text-[#007CFF] text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  " placeholder="" required />
+                          <input type="text" id="name" onChange={(e)=>setName(e.target.value)} className="bg-white border border-gray-300 text-[#007cff] text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  " placeholder="" required />
                       </div>
                       <div className="">
-                          <label for="email" class="block mb-1 text-sm font-medium">email *</label>
-                          <input type="email" id="email" class="bg-white border border-gray-300 text-[#007CFF] text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  " placeholder="" required />
+                          <label for="email" className="block mb-1 text-sm font-medium">email *</label>
+                          <input type="email" id="email" onChange={(e)=>setEmail(e.target.value)} className="bg-white border border-gray-300 text-[#007cff] text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  " placeholder="" required />
                       </div>
                       <div className="">
-                          <label for="subject" class="block mb-1 text-sm font-medium">subject *</label>
-                          <input type="text" id="subject" class="bg-white border border-gray-300 text-[#007CFF] text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  " placeholder="" required />
+                          <label for="subject" className="block mb-1 text-sm font-medium">subject *</label>
+                          <input type="text" id="subject" onChange={(e)=>setSubject(e.target.value)} className="bg-white border border-gray-300 text-[#007cff] text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  " placeholder="" required />
                       </div>
                       <div className="">
-                          <label for="message" class="block mb-1 text-sm font-medium">your message *</label>
-                          <textarea type="text" id="subject" rows="8" class="bg-white border border-gray-300 text-[#007CFF] text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  " placeholder="" required />
+                          <label for="message" className="block mb-1 text-sm font-medium">your message *</label>
+                          <textarea type="text" id="subject" rows="8" onChange={(e)=>setMessage(e.target.value)} className="bg-white border border-gray-300 text-[#007cff] text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  " placeholder="" required />
                       </div>
                       <div className="bott0n">
                           <button type="submit" className='bg-[#007cff] text-[white] px-5 py-3 rounded-xl '>Submit</button>
@@ -54,7 +76,7 @@ function Contact() {
                     <div className="lg:w-[30%] space-y-8 m-auto  tab">
                     <div className="icons space-y-3">
                       <div className="lg:flex justify-center icon">
-                        <PiAmbulanceLight className="size-20 bg-white border border-[#007cff] p-6 rounded-full hover:bg-[#007CFF] hover:text-white "/>
+                        <PiAmbulanceLight className="size-20 bg-white border border-[#007cff] p-6 rounded-full hover:bg-[#007cff] hover:text-white "/>
                       </div>
                       <div className="lg:text-center  text">
                         <h1 className='font-[poppins] text-lg'>EMERGENCY CONTACT</h1>
@@ -64,7 +86,7 @@ function Contact() {
 
                     <div className="icons space-y-3">
                       <div className=" lg:flex justify-center icon">
-                          <FaUserDoctor className="size-20 bg-white border border-[#007cff] p-6 rounded-full hover:bg-[#007CFF] hover:text-white "/>
+                          <FaUserDoctor className="size-20 bg-white border border-[#007cff] p-6 rounded-full hover:bg-[#007cff] hover:text-white "/>
                       </div>
                       <div className="text lg:text-center">
                         <h1 className='font-[poppins] text-lg'>HOME VISIT</h1>
@@ -74,7 +96,7 @@ function Contact() {
 
                     <div className="icons space-y-3">
                       <div className="lg:flex justify-center icon">
-                        <FaPhoneVolume className="size-20 bg-white border border-[#007cff] p-6 rounded-full hover:bg-[#007CFF] hover:text-white "/>
+                        <FaPhoneVolume className="size-20 bg-white border border-[#007cff] p-6 rounded-full hover:bg-[#007cff] hover:text-white "/>
                       </div>
                       <div className="lg:text-center text">
                         <h1 className='font-[poppins] text-lg'>PHONE CONTACT</h1>

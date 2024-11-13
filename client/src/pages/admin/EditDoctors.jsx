@@ -5,7 +5,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 function EditDoctors() {
-    const {department,editDoctors,updateDoctorHandler} = useContext(HospitalContext)
+    const {department,editDoctors,updateDoctorHandler,fetchUserAll,showHide,} = useContext(HospitalContext)
     const [first_name, setFirstName] = useState('')
     const [last_name, setLastName] = useState('')
     const [gender, setGender] = useState('')
@@ -16,21 +16,9 @@ function EditDoctors() {
     const [address, setAddress] = useState('')
     const [school, setSchool] = useState('')
     const [departments, setDepartments] = useState('')
-    const [password, setPassword] = useState('')
-    const [confirmpwd, setConfirmPwd] = useState('')
     const navigate = useNavigate()
-    const notify = ()=>{
-        toast.success(`${editDoctors.items.item.first_name}'s record has been updated`, {
-          position: "top-center",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "colored",
-          });
-      }
+    const id = editDoctors.items.item._id
+ 
 
     useEffect(()=>{
         setFirstName(editDoctors.items.item.first_name)
@@ -43,28 +31,37 @@ function EditDoctors() {
         setAddress(editDoctors.items.item.address)
         setSchool(editDoctors.items.item.school)
         setDepartments(editDoctors.items.item.departments)
-        setPassword(editDoctors.items.item.password)
-        setConfirmPwd(editDoctors.items.item.confirmpwd)
     },[editDoctors])
     
-    const submitHandler = () =>{
-        const addNewDoctor ={
-            first_name,
-            last_name,
-            gender,
-            email,
-            dob,
-            phone,
-            photo,
-            address,
-            school,
-            departments,
-            password,
-            confirmpwd
-           }
-        updateDoctorHandler(editDoctors.items.item.id, addNewDoctor)
+    const submitHandler = async(e) =>{
+      e.preventDefault()
+      const res = await fetch(`http://localhost:5000/user/admin/update/${id}`,{
+        method:'PUT',
+        headers:{
+          'Content-Type':'application/json'
+        },credentials:'include',
+        body:JSON.stringify({
+          first_name,
+          last_name,
+          gender,
+          email,
+          dob,
+          phone,
+          photo,
+          address,
+          school,
+          departments
+        })
+      })
+       const data = await res.json()
+       if (!res.ok) {
+        console.log(data);
+        showHide('error', data.errMessage)
+       } else {
+        showHide('success','doctor updated')
         navigate('/admin/alldoc')
-        
+        await fetchUserAll()
+       }     
     }
 
   return (
@@ -92,7 +89,7 @@ function EditDoctors() {
                     </div>
                       <div className='lg:w-[48%] '>                       
                         <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file_input">Upload file</label>
-                        <input onChange={(e)=>{setPhoto(e.target.files)}}  className="block w-full text-sm text-[#007CFF] border border-gray-300 rounded-lg cursor-pointer bg-gray-50 d focus:outline-none" aria-describedby="file_input_help" id="file_input" type="file"/>
+                        <input onChange={(e)=>{setPhoto(e.target.files)}}  className="block w-full text-sm text-[#007cff] border border-gray-300 rounded-lg cursor-pointer bg-gray-50 d focus:outline-none" aria-describedby="file_input_help" id="file_input" type="file"/>
                         
                       </div>
                 </div>
@@ -142,34 +139,11 @@ function EditDoctors() {
                     </div> 
                 </div>
 
-                <div className="lg:flex justify-between mx-4">
-                    <div className="lg:w-[48%]">
-                        <label for="password" className="block mb-2 text-sm font-medium ">Password</label>
-                        <input type="password" id="password" value={password} onChange={(e)=>{setPassword(e.target.value)}} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  placeholder-[#007cff] " placeholder="Input Password" required />
-                    </div> 
-                    <div className="lg:w-[48%]">
-                        <label for="confirm_password" className="block mb-2 text-sm font-medium">Confirm password</label>
-                        <input type="password" id="confirm_password" value={confirmpwd} onChange={(e)=>{setConfirmPwd(e.target.value)}} className="bg-gray-50 border border-gray-300 text-[#007cff] text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  placeholder-[#007cff] " placeholder="Repeat Password" required />
-                    </div> 
-                </div>
-
                 <div className="flex justify-start mx-4 m-auto">
-                    <button type="submit" onClick={notify()} class="text-white hover:text-white border bg-[#007cff] w-[200px] border-blue-700 hover:bg-blue-800  font-medium rounded-md text-sm px-5 py-2.5 text-center me-2 mb-2    ">Update Doctor</button>
+                    <button type="submit"  class="text-white hover:text-white border bg-[#007cff] w-[200px] border-blue-700 hover:bg-blue-800  font-medium rounded-md text-sm px-5 py-2.5 text-center me-2 mb-2    ">Update Doctor</button>
                     <button type="reset" class="text-white hover:text-white border bg-amber-400 w-[200px]   font-medium rounded-md text-sm px-5 py-2.5 text-center me-2 mb-2    ">Reset</button>               
                 </div>
             </form>
-          <ToastContainer
-              position="top-center"
-              autoClose={5000}
-              hideProgressBar={false}
-              newestOnTop={false}
-              closeOnClick
-              rtl={false}
-              pauseOnFocusLoss
-              draggable
-              pauseOnHover
-              theme={'colored'}
-              />
           </div>
     </>
   )

@@ -1,10 +1,11 @@
 import React, { useContext, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import HospitalContext from '../../context/HospitalContext'
+import Compressor from 'compressorjs'
 import Modals from '../../shared/Modals'
 
 function CreateDoctors() {
-  const { department, addDoctor} = useContext(HospitalContext)
+  const { department,showHide,fetchUserAll} = useContext(HospitalContext)
   const [first_name, setFirstName] = useState('')
   const [last_name, setLastName] = useState('')
   const [gender, setGender] = useState('')
@@ -16,27 +17,107 @@ function CreateDoctors() {
   const [school, setSchool] = useState('')
   const [departments, setDepartments] = useState('')
   const [password, setPassword] = useState('')
-  const [confirmpwd, setConfirmPwd] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
+  const [role, setRole] = useState('')
   const navigate = useNavigate()
+ 
 
-  const submitHandler = (e)=>{
+  // const handleImageUpload = (e)=>{
+  //   const file = e.target.files[0]
+  //   console.log(file);
+
+  //   transformFile(file)
+    
+  // }
+  // const transformFile =(file)=>{
+  //   const reader = new FileReader
+  //   reader.readAsDataURL(file)
+  //   reader.onloadend = ()=>{
+  //     setPhoto(reader.result)
+  //   }
+    
+    
+  // }
+  const handleImageUpload = (e) => {
+    const file = e.target.files[0]
+    if (file) {
+      compressImage(file)
+    }
+  }
+
+  const compressImage = (file) => {
+    new Compressor(file, {
+      quality: 0.6, // Adjust quality here
+      success: (compressedFile) => {
+        // Convert the compressed file to base64
+        transformFile(compressedFile)
+      },
+      error: (err) => {
+        console.error('Compression failed:', err.message)
+      },
+    })
+  }
+
+  const transformFile = (file) => {
+    const reader = new FileReader()
+    reader.readAsDataURL(file)
+    reader.onloadend = () => {
+      setPhoto(reader.result)
+    }
+  }
+
+ 
+  console.log(photo);
+  console.log(password,confirmPassword, first_name,
+    last_name,
+    gender,
+    email,
+    dob,
+    phone,
+    photo,
+    address,
+    school,
+    departments,
+    role);
+  const submitHandler = async(e)=>{
     e.preventDefault()
-     const addNewDoctor ={
-      first_name,
-      last_name,
-      gender,
-      email,
-      dob,
-      phone,
-      photo,
-      address,
-      school,
-      departments,
-      password,
-      confirmpwd
-     }
-     addDoctor(addNewDoctor)
-     navigate('/admin/alldoc', {replace:true})
+    try {
+      const res = await fetch('http://localhost:5000/user/signup',{
+        method:'POST',
+        headers:{
+          "Content-Type":"application/json"
+        },
+        credentials:"include",
+        body:JSON.stringify({ 
+           first_name,
+          last_name,
+          gender,
+          email,
+          dob,
+          phone,
+          photo,
+          address,
+          school,
+          departments,
+          password,role,
+          confirmPassword})
+      })
+      const data = await res.json()
+      if (res.ok) {
+        navigate('/admin/alldoc') 
+         showHide('Doctor created successfully')  
+         await fetchUserAll()
+      }else{
+        console.log(data);
+        
+      }
+      
+    } catch (error) {
+      console.log(error.message);
+      
+    }
+
+     
   }
   return (
     <div className='my-8 mx-5'>
@@ -62,7 +143,7 @@ function CreateDoctors() {
                     </div>
                       <div className='lg:w-[48%] '>                       
                         <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file_input">Upload file</label>
-                        <input onChange={(e)=>{setPhoto(e.target.files)}} class="block w-full text-sm text-[#007CFF] border border-gray-300 rounded-lg cursor-pointer bg-gray-50 d focus:outline-none" aria-describedby="file_input_help" id="file_input" type="file"/>
+                        <input onChange={handleImageUpload} class="block w-full text-sm text-[#007cff] border border-gray-300 rounded-lg cursor-pointer bg-gray-50 d focus:outline-none" aria-describedby="file_input_help" id="file_input" type="file"/>
                         
                       </div>
                 </div>
@@ -74,8 +155,6 @@ function CreateDoctors() {
                         <option selected>Choose Your Gender</option>
                         <option value="male">Male</option>
                         <option value="female">Female</option>
-                        <option value="others">Others</option>
-                        <option value="null">I'd rather not say</option>
                     </select>                      
                   </div>
 
@@ -90,6 +169,14 @@ function CreateDoctors() {
                         <label for="phone" className="block mb-2 text-sm font-medium">Phone number</label>
                         <input type="tel" id="phone" onChange={(e)=>{setPhone(e.target.value)}} className="bg-gray-50 border border-gray-300 text-[#007cff] text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  placeholder-[#007cff] " placeholder="Input Phone Number" pattern="[0-9]{11}" required />
                     </div>
+                    <div className="lg:w-[48%]">
+                        <label for="address" className="block mb-2 text-sm font-medium"> Contact Address</label>
+                        <input type="text" id="address" onChange={(e)=>{setAddress(e.target.value)}} className="bg-gray-50 border border-gray-300 text-[#007cff] text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  placeholder-[#007cff] " placeholder="Input Contact Address" required />
+                    </div> 
+                   
+                </div>
+
+                <div className="lg:flex justify-between gap-2 mx-4">
                     <div className='lg:w-[48%] phone'>
                         <label for="department" className="block mb-2 text-sm font-medium">Department</label>
                         <select name="department" id="department" onChange={(e)=>{setDepartments(e.target.value)}} className="bg-gray-50 border border-gray-300 text-[#007cff] text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
@@ -98,17 +185,16 @@ function CreateDoctors() {
                       ))}
                         </select>
                     </div>
-                   
-                </div>
-
-                <div className="lg:flex justify-between mx-4">
+                    <div className="lg:w-[48%]">
+                        <label for="role" className="block mb-2 text-sm font-medium ">Role</label>
+                        <select id="role" onChange={(e)=>{setRole(e.target.value)}} className="bg-gray-50 border border-gray-300  text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  text-[#007cff] "  required >
+                          <option value="">Select Your Role</option>
+                          <option value="doctor">Doctor</option>
+                        </select>
+                    </div> 
                     <div className="lg:w-[48%]">
                         <label for="school" className="block mb-2 text-sm font-medium ">School Attended</label>
                         <input type="text" id="school" onChange={(e)=>{setSchool(e.target.value)}} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  placeholder-[#007cff] " placeholder="Input School Attended" required />
-                    </div> 
-                    <div className="lg:w-[48%]">
-                        <label for="address" className="block mb-2 text-sm font-medium"> Contact Address</label>
-                        <input type="text" id="address" onChange={(e)=>{setAddress(e.target.value)}} className="bg-gray-50 border border-gray-300 text-[#007cff] text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  placeholder-[#007cff] " placeholder="Input Contact Address" required />
                     </div> 
                 </div>
 
@@ -119,7 +205,7 @@ function CreateDoctors() {
                     </div> 
                     <div className="lg:w-[48%]">
                         <label for="confirm_password" className="block mb-2 text-sm font-medium">Confirm password</label>
-                        <input type="password" id="confirm_password" onChange={(e)=>{setConfirmPwd(e.target.value)}} className="bg-gray-50 border border-gray-300 text-[#007cff] text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  placeholder-[#007cff] " placeholder="Repeat Password" required />
+                        <input type="password" id="confirm_password" onChange={(e)=>{setConfirmPassword(e.target.value)}} className="bg-gray-50 border border-gray-300 text-[#007cff] text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  placeholder-[#007cff] " placeholder="Repeat Password" required />
                     </div> 
                 </div>
 

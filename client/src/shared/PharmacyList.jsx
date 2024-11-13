@@ -5,10 +5,10 @@ import Modals from './Modals'
 import { TbTrashX } from 'react-icons/tb';
 import { FaXmark } from "react-icons/fa6";
 import HospitalContext from '../context/HospitalContext';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 function PharmacyList() {
-    const {addPharmacy, pharmacy, deletePharmacy, editPharmacy, editPharmacyHandler, updatePharmacyHandler} = useContext(HospitalContext)
+    const { pharmacy,showHide,getallPharmacy, editPharmacy, editPharmacyHandler} = useContext(HospitalContext)
     const [openDelete, setOpenDelete] = useState(false)
     const [openAdd, setOpenAdd] = useState(false)
     const [openEdit, setOpenEdit] = useState(false)
@@ -20,36 +20,68 @@ function PharmacyList() {
     const [eDate, setEdate] = useState('')
     const [stock, setStock] = useState('')
     const [deleteId, setDeleteId] =  useState(null)
+    const [deleteItem, setDeleteItem] = useState(null);
     const [editId, setEditId] =  useState(null)
-    const navigate = useNavigate()
+    const token = editPharmacy.items._id
 
-    const handleSubmit = (e)=>{
+    const handleSubmit = async(e)=>{
         e.preventDefault()
-        const newMed = {
-            name,
-            category,
-            cName,
-            pDate,
-            price,
-            eDate,
-            stock
+        const res = await fetch('http://localhost:5000/pharmacy/add',{
+            method:'POST',
+            headers:{
+                'Content-Type':'application/json'
+            },
+            credentials:'include',
+            body:JSON.stringify({
+                name,
+                category,
+                cName,
+                pDate,
+                price,
+                eDate,
+                stock
+            })
+        })
+        const data = await res.json()
+        if (!res.ok) {
+            console.log(data);            
+        } else {
+            setOpenAdd(false)
+            showHide('success','medication added successfully')
+            await getallPharmacy()
         }
-        addPharmacy(newMed)
-        setOpenAdd(false)
     }
-    const handleDeleteClick  = (id) =>{
+    const handleDeleteClick  = (id,item) =>{
+        setDeleteItem(item)
         setDeleteId(id)
         setOpenDelete(true)
     } 
+
+    const handleDelete = async()=> {
+        const res = await fetch(`http://localhost:5000/pharmacy/delete/${deleteId}`,{
+            method:'DELETE',
+            headers:{
+                'Content-Type':'application/json'
+            },
+            credentials:'include',
+            body:JSON.stringify({deleteId})
+        })
+        const data = await res.json()
+        if (!res.ok) {
+            console.log(data);
+            
+        } else {
+            setOpenDelete(false)
+             showHide('success','deleted!')
+             await getallPharmacy()
+        }
+    }
+
     const handleEditClick  = (item) =>{
         editPharmacyHandler(item)
         setOpenEdit(true)
     } 
 
-    const handleDelete = ()=> {
-        deletePharmacy(deleteId)
-        setOpenDelete(false)
-    }
     
    useEffect(()=>{
     if (editPharmacy.edit === true) {
@@ -62,20 +94,40 @@ function PharmacyList() {
         setStock(editPharmacy.items.stock)
     }
    },[editPharmacy])
-
-   const editSubmitHandler = (e)=>{
-    e.preventDefault()
-    const updatedMed = {
-        name,
-        category,
-        cName,
-        price,
-        pDate,
-        eDate,
-        stock
-    }
-    updatePharmacyHandler(editPharmacy.items.id, updatedMed)
-    setOpenEdit(false)
+   
+   const editSubmitHandler = async(e)=>{
+       e.preventDefault()
+       try {
+           const res = await fetch(`http://localhost:5000/pharmacy/edit/${token}`,{
+               method:'PUT',
+               headers:{
+                   'Content-type':'application/json'
+               },
+               credentials:'include',
+               body:JSON.stringify({
+                    name,
+                   category,
+                   cName,
+                   price,
+                   pDate,
+                   eDate,
+                   stock
+               })
+           })
+           const data = await res.json()
+           if (!res.ok) {
+               console.log(data);    
+               showHide('error',data.errMessage)   
+           } else {
+               setOpenEdit(false)
+              showHide('success','updated successfully');
+              await getallPharmacy()
+                  
+           }
+       } catch (error) {
+        console.log({message:error.message});
+        
+       }
    }
   return (
     <>
@@ -117,17 +169,17 @@ function PharmacyList() {
                             {pharmacy.map((item,index)=>(
 
                             <tr key={index} className="border-b capitalize border-gray-200 dark:border-gray-700">
-                                <td className="px-6 py-4 bg-[#007ccfb6] text-white">{item.name} </td>
-                                <td className="px-6 py-4">{item.category}</td>
-                                <td className="px-6 py-4">{item.cName}</td>
-                                <td className="px-6 py-4 bg-[#007ccfb6] text-white">{item.pDate}</td>
-                                <td className="px-6 py-4">{item.price}</td>
-                                <td className="px-6 py-4">{item.eDate}</td>
-                                <td className="px-6 py-4">{item.stock}</td>
+                                <td className="px-6 py-4 bg-[#007ccfb6] text-white">{item?.name} </td>
+                                <td className="px-6 py-4">{item?.category}</td>
+                                <td className="px-6 py-4">{item?.cName}</td>
+                                <td className="px-6 py-4 bg-[#007ccfb6] text-white">{item?.pDate}</td>
+                                <td className="px-6 py-4">{item?.price}</td>
+                                <td className="px-6 py-4">{item?.eDate}</td>
+                                <td className="px-6 py-4">{item?.stock}</td>
                                 <td className="px-6 py-4 bg-[#007ccfb6] text-white">
                                     <div className="flex space-x-3">
                                         <span onClick={()=>{handleEditClick(item)}}>< CiEdit/></span>
-                                        <span onClick={()=>{handleDeleteClick(item.id)}}><RiDeleteBinLine/></span>
+                                        <span onClick={()=>{handleDeleteClick(item._id, item)}}><RiDeleteBinLine/></span>
                                     </div>
                                 </td>
                             </tr>
@@ -151,10 +203,10 @@ function PharmacyList() {
                         <div className="m-auto space-y-3 capitalize text-gray-600 text-center">
                             <p className=''>are you sure you want to delete ?</p>
                             <ul className='space-x-3'>
-                                <li>Name:Panadol</li>
-                                <li>Company: GalaxoSmithKline</li>
-                                <li>Expiry Date: 31/12/2030</li>
-                                <li>stock: 145</li>                           
+                                <li>Name:{deleteItem.name}</li>
+                                <li>Company: {deleteItem.cName}</li>
+                                <li>Expiry Date:{deleteItem.eDate}</li>
+                                <li>stock: {deleteItem.stock}</li>                           
                             </ul>
                         </div>
                         <div className="flex justify-center gap-4 footer">
@@ -176,37 +228,37 @@ function PharmacyList() {
                             <div className="flex gap-3">
                                 <div className="w-[48%] ">
                                     <label htmlFor="" className="block mb-2 text-sm font-medium">Medicine Name</label>
-                                    <input type="text" name="" id="" onChange={(e)=>{setName(e.target.value)}} className="bg-gray-50 border border-gray-300 text-[#007CFF] text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  placeholder-[#007CFF] dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
+                                    <input type="text" name="" id="" onChange={(e)=>{setName(e.target.value)}} className="bg-gray-50 border border-gray-300 text-[#007cff] text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  placeholder-[#007cff] dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
                                 </div>
                                 <div className="w-[48%] ">
                                     <label htmlFor="" className="block mb-2 text-sm font-medium">Category</label>
-                                    <input type="text" name="" id="" onChange={(e)=>{setCategory(e.target.value)}}  className="bg-gray-50 border border-gray-300 text-[#007CFF] text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  placeholder-[#007CFF] dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required/>
+                                    <input type="text" name="" id="" onChange={(e)=>{setCategory(e.target.value)}}  className="bg-gray-50 border border-gray-300 text-[#007cff] text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  placeholder-[#007cff] dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required/>
                             </div>
                             </div>
                             <div className="flex gap-3">
                                 <div className="w-[48%] ">
                                     <label htmlFor="" className="block mb-2 text-sm font-medium">Company Name</label>
-                                    <input type="text" name="" id="" onChange={(e)=>{setCname(e.target.value)}}  className="bg-gray-50 border border-gray-300 text-[#007CFF] text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  placeholder-[#007CFF] dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
+                                    <input type="text" name="" id="" onChange={(e)=>{setCname(e.target.value)}}  className="bg-gray-50 border border-gray-300 text-[#007cff] text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  placeholder-[#007cff] dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
                                 </div>
                                 <div className="w-[48%] ">
                                     <label htmlFor="" className="block mb-2 text-sm font-medium">Purchase Date</label>
-                                    <input type="date" name="" id="" onChange={(e)=>{setPdate(e.target.value)}}  className="bg-gray-50 border border-gray-300 text-[#007CFF] text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  placeholder-[#007CFF] dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required/>
+                                    <input type="date" name="" id="" onChange={(e)=>{setPdate(e.target.value)}}  className="bg-gray-50 border border-gray-300 text-[#007cff] text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  placeholder-[#007cff] dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required/>
                             </div>
                             </div>
                             <div className="flex gap-3">
                                 <div className="w-[48%] ">
                                     <label htmlFor="" className="block mb-2 text-sm font-medium">Price</label>
-                                    <input type="text" name="" id="" onChange={(e)=>{setPrice(e.target.value)}}  className="bg-gray-50 border border-gray-300 text-[#007CFF] text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  placeholder-[#007CFF] dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
+                                    <input type="text" name="" id="" onChange={(e)=>{setPrice(e.target.value)}}  className="bg-gray-50 border border-gray-300 text-[#007cff] text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  placeholder-[#007cff] dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
                                 </div>
                                 <div className="w-[48%] ">
                                     <label htmlFor="" className="block mb-2 text-sm font-medium">Expiry Date</label>
-                                    <input type="date" name="" id="" onChange={(e)=>{setEdate(e.target.value)}}  className="bg-gray-50 border border-gray-300 text-[#007CFF] text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  placeholder-[#007CFF] dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required/>
+                                    <input type="date" name="" id="" onChange={(e)=>{setEdate(e.target.value)}}  className="bg-gray-50 border border-gray-300 text-[#007cff] text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  placeholder-[#007cff] dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required/>
                             </div>
                             </div>
                             <div className="flex  gap-3">
                                 <div className="w-[48%] ">
                                     <label htmlFor="" className="block mb-2 text-sm font-medium">Quantity In Stock</label>
-                                    <input type="text" name="" id="" onChange={(e)=>{setStock(e.target.value)}}  className="bg-gray-50 border border-gray-300 text-[#007CFF] text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  placeholder-[#007CFF] dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
+                                    <input type="text" name="" id="" onChange={(e)=>{setStock(e.target.value)}}  className="bg-gray-50 border border-gray-300 text-[#007cff] text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  placeholder-[#007cff] dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
                                 </div>
                             
                             </div>
@@ -232,39 +284,37 @@ function PharmacyList() {
                             <div className="flex gap-3">
                                 <div className="w-[48%] ">
                                     <label htmlFor="" className="block mb-2 text-sm font-medium">Medicine Name</label>
-                                    <input type="text" name="" value={name} id="" onChange={(e)=>{setName(e.target.value)}} className="bg-gray-50 border border-gray-300 text-[#007CFF] text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  placeholder-[#007CFF] dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
-                               {console.log(editPharmacy)
-                               }
+                                    <input type="text" name="" value={name} id="" onChange={(e)=>{setName(e.target.value)}} className="bg-gray-50 border border-gray-300 text-[#007cff] text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  placeholder-[#007cff] dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
                                 </div>
                                 <div className="w-[48%] ">
                                     <label htmlFor="" className="block mb-2 text-sm font-medium">Category</label>
-                                    <input type="text" name="" value={category} id="" onChange={(e)=>{setCategory(e.target.value)}}  className="bg-gray-50 border border-gray-300 text-[#007CFF] text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  placeholder-[#007CFF] dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required/>
+                                    <input type="text" name="" value={category} id="" onChange={(e)=>{setCategory(e.target.value)}}  className="bg-gray-50 border border-gray-300 text-[#007cff] text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  placeholder-[#007cff] dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required/>
                             </div>
                             </div>
                             <div className="flex gap-3">
                                 <div className="w-[48%] ">
                                     <label htmlFor="" className="block mb-2 text-sm font-medium">Company Name</label>
-                                    <input type="text" name="" id="" value={cName} onChange={(e)=>{setCname(e.target.value)}}  className="bg-gray-50 border border-gray-300 text-[#007CFF] text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  placeholder-[#007CFF] dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
+                                    <input type="text" name="" id="" value={cName} onChange={(e)=>{setCname(e.target.value)}}  className="bg-gray-50 border border-gray-300 text-[#007cff] text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  placeholder-[#007cff] dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
                                 </div>
                                 <div className="w-[48%] ">
                                     <label htmlFor="" className="block mb-2 text-sm font-medium">Purchase Date</label>
-                                    <input type="date" name="" id="" value={pDate} onChange={(e)=>{setPdate(e.target.value)}}  className="bg-gray-50 border border-gray-300 text-[#007CFF] text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  placeholder-[#007CFF] dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required/>
+                                    <input type="date" name="" id="" value={pDate} onChange={(e)=>{setPdate(e.target.value)}}  className="bg-gray-50 border border-gray-300 text-[#007cff] text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  placeholder-[#007cff] dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required/>
                             </div>
                             </div>
                             <div className="flex gap-3">
                                 <div className="w-[48%] ">
                                     <label htmlFor="" className="block mb-2 text-sm font-medium">Price</label>
-                                    <input type="text" name="" id="" value={price} onChange={(e)=>{setPrice(e.target.value)}}  className="bg-gray-50 border border-gray-300 text-[#007CFF] text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  placeholder-[#007CFF] dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
+                                    <input type="text" name="" id="" value={price} onChange={(e)=>{setPrice(e.target.value)}}  className="bg-gray-50 border border-gray-300 text-[#007cff] text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  placeholder-[#007cff] dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
                                 </div>
                                 <div className="w-[48%] ">
                                     <label htmlFor="" className="block mb-2 text-sm font-medium">Expiry Date</label>
-                                    <input type="date" name="" id="" value={eDate} onChange={(e)=>{setEdate(e.target.value)}}  className="bg-gray-50 border border-gray-300 text-[#007CFF] text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  placeholder-[#007CFF] dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required/>
+                                    <input type="date" name="" id="" value={eDate} onChange={(e)=>{setEdate(e.target.value)}}  className="bg-gray-50 border border-gray-300 text-[#007cff] text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  placeholder-[#007cff] dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required/>
                             </div>
                             </div>
                             <div className="flex  gap-3">
                                 <div className="w-[48%] ">
                                     <label htmlFor="" className="block mb-2 text-sm font-medium">Quantity In Stock</label>
-                                    <input type="text" name="" id="" value={stock} onChange={(e)=>{setStock(e.target.value)}}  className="bg-gray-50 border border-gray-300 text-[#007CFF] text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  placeholder-[#007CFF] dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
+                                    <input type="text" name="" id="" value={stock} onChange={(e)=>{setStock(e.target.value)}}  className="bg-gray-50 border border-gray-300 text-[#007cff] text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  placeholder-[#007cff] dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
                                 </div>
                             
                             </div>

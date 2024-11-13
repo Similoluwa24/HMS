@@ -56,7 +56,7 @@ function BookAppointment() {
         <div className="lg:w-[30%] space-y-8 m-auto  tab">
                     <div className="icons space-y-3">
                       <div className="lg:flex justify-center icon">
-                        <PiAmbulanceLight className="size-20 bg-white border border-[#007cff] p-6 text-[#074cff] rounded-full hover:bg-[#007CFF] hover:text-white "/>
+                        <PiAmbulanceLight className="size-20 bg-white border border-[#007cff] p-6 text-[#074cff] rounded-full hover:bg-[#007cff] hover:text-white "/>
                       </div>
                       <div className="lg:text-center text-[#074cff]  text">
                         <h1 className='font-[poppins] text-lg'>EMERGENCY CONTACT</h1>
@@ -66,7 +66,7 @@ function BookAppointment() {
 
                     <div className="icons text-[#074cff] space-y-3">
                       <div className=" lg:flex justify-center icon">
-                          <FaUserDoctor className="size-20 bg-white border border-[#007cff] p-6 text-[#074cff] rounded-full hover:bg-[#007CFF] hover:text-white "/>
+                          <FaUserDoctor className="size-20 bg-white border border-[#007cff] p-6 text-[#074cff] rounded-full hover:bg-[#007cff] hover:text-white "/>
                       </div>
                       <div className="text text-[#074cff] lg:text-center">
                         <h1 className='font-[poppins] text-lg'>HOME VISIT</h1>
@@ -76,7 +76,7 @@ function BookAppointment() {
 
                     <div className="icons space-y-3">
                       <div className="lg:flex justify-center icon">
-                        <FaPhoneVolume className="size-20 bg-white border border-[#007cff] p-6 text-[#074cff] rounded-full hover:bg-[#007CFF] hover:text-white "/>
+                        <FaPhoneVolume className="size-20 bg-white border border-[#007cff] p-6 text-[#074cff] rounded-full hover:bg-[#007cff] hover:text-white "/>
                       </div>
                       <div className="lg:text-center text-[#074cff] text">
                         <h1 className='font-[poppins] text-lg'>PHONE CONTACT</h1>
@@ -89,21 +89,21 @@ function BookAppointment() {
                       <div className="lg:flex justify-between ">
                         <div className="w-[48%]">
                             <label htmlFor="first_name" className="block mb-1 text-sm font-medium">your first name *</label>
-                            <input type="text" id="first_name" onChange={(e)=>{setFirstName(e.target.value)}} className="bg-white border border-gray-300 text-[#007CFF] text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  " placeholder="" required />
+                            <input type="text" id="first_name" onChange={(e)=>{setFirstName(e.target.value)}} className="bg-white border border-gray-300 text-[#007cff] text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  " placeholder="" required />
                         </div>
                         <div className="w-[48%]">
                             <label htmlFor="last_name" className="block mb-1 text-sm font-medium">your last name *</label>
-                            <input type="text" id="last_name" onChange={(e)=>{setLastName(e.target.value)}} className="bg-white border border-gray-300 text-[#007CFF] text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  " placeholder="" required />
+                            <input type="text" id="last_name" onChange={(e)=>{setLastName(e.target.value)}} className="bg-white border border-gray-300 text-[#007cff] text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  " placeholder="" required />
                         </div>
                       </div>
                         <div className="">
                             <label for="email" className="block mb-1 text-sm font-medium">your email *</label>
-                            <input type="email" id="email" onChange={(e)=>{setEmail(e.target.value)}} className="bg-white border border-gray-300 text-[#007CFF] text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  " placeholder="" required />
+                            <input type="email" id="email" onChange={(e)=>{setEmail(e.target.value)}} className="bg-white border border-gray-300 text-[#007cff] text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  " placeholder="" required />
                         </div>
                         <div className="">
 
                           <label for="doctor" className="block mb-1 text-sm font-medium">select your doctor *</label>
-                            <select name="doctors" id="" onChange={(e)=>{setDoctor(e.target.value)}} className="bg-white border border-gray-300 text-[#007CFF] text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  " placeholder="" required>
+                            <select name="doctors" id="" onChange={(e)=>{setDoctor(e.target.value)}} className="bg-white border border-gray-300 text-[#007cff] text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  " placeholder="" required>
                               <option value="n/a">Choose Doctor</option>
                               {doctors.map((item, index) =>(
                             <option key={index} value={item.first_name} className='divide-y-4'  >{`Dr. ${item.first_name} ${item.last_name}`}</option>
@@ -113,16 +113,16 @@ function BookAppointment() {
                         <div className="flex gap-4 ">
                             <div className="w-[48%]">
                                 <label for="date" className="block mb-1 text-sm font-medium">select appointment date *</label>
-                                <input type="date" id="date" onChange={(e)=>{setDate(e.target.value)}} className="bg-white border border-gray-300 text-[#007CFF] text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  " placeholder="" required />
+                                <input type="date" id="date" onChange={(e)=>{setDate(e.target.value)}} className="bg-white border border-gray-300 text-[#007cff] text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  " placeholder="" required />
                             </div>
                             <div className="w-[48%]">
                                 <label for="time" className="block mb-1 text-sm font-medium">select appointment time *</label>
-                                <input type="time" id="time" onChange={(e)=>{setTime(e.target.value)}} className="bg-white border border-gray-300 text-[#007CFF] text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  " placeholder="" required />
+                                <input type="time" id="time" onChange={(e)=>{setTime(e.target.value)}} className="bg-white border border-gray-300 text-[#007cff] text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  " placeholder="" required />
                             </div>
                         </div>
                         <div className="">
                             <label for="message" className="block mb-1 text-sm font-medium">your message *</label>
-                            <textarea type="text" id="subject" onChange={(e)=>{setMessage(e.target.value)}} rows="8" className="bg-white border border-gray-300 text-[#007CFF] text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  " placeholder="" required />
+                            <textarea type="text" id="subject" onChange={(e)=>{setMessage(e.target.value)}} rows="8" className="bg-white border border-gray-300 text-[#007cff] text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  " placeholder="" required />
                         </div>
                         <div className="bott0n">
                             <button type="submit" className='bg-[#007cff] text-[white] px-5 py-3 rounded-xl '>Book Appointment</button>

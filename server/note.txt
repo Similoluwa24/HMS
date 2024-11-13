@@ -1,0 +1,73 @@
+   // Send the token in the response header
+    // res.status(statusCode)
+    //     .header("user", `Bearer ${token}`)  // Set the token in the Authorization header
+    //     .json({
+    //         status: "success",
+    //         token,  // Optionally, send the token in the response body
+    //         user,   // Send the user data in the response body
+    //     });
+
+//signup
+{
+    "first_name":"",
+    "last_name":"",
+    "gender":"",
+    "email":"",
+    "dob":"",
+    "password":"",
+   "confirmPassword":""
+}
+//login
+
+{
+    
+    "email":"wuraolami2001@gmail.com",
+    "password":"ojoo"
+    
+}
+//appointment
+
+{   "userId":"",
+    "first_name":"",
+    "last_name":"",
+    "email":"",
+    "doctor":"",
+    "date":"",
+    "time":"",
+    "message":""
+}
+
+{   
+    "first_name":"hooo",
+    "last_name":"heee",
+    "email":"wer@gmail.com",
+    "doctor":"ezra",
+    "date":"12/1/2091",
+    "time":"13:00",
+    "message":"test and trial"
+}
+update password
+{
+    "password":"ojomiojo",
+    "confirmPassword":"ojomiojo"
+
+}
+
+{
+     "btype":"AB Negative",
+    "genotype":"AS",
+    "last_name":"ojooo"
+}
+
+http://localhost:5000/user//admin/update/671a440b636c1a09f14a248a
+
+{
+   "email":"wigsbysimzie@gmail.com",
+   "password":"qwerty"
+    
+}
+{
+   "gender":"female",
+   "dob":"12/12/2001"
+    
+}

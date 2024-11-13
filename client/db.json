@@ -143,12 +143,12 @@
   ],
   "department": [
     {
-      "id": "97a6",
       "name": "Gynecology",
-      "description": "Foe Women",
+      "description": "For Women",
       "date": "2024-09-29",
       "hod": "Ojo O.B.",
-      "status": "active"
+      "status": "active",
+      "id": "97a6"
     },
     {
       "name": "Pediatrics ",

@@ -1,35 +1,116 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useContext, useState } from 'react'
+import { Link, Navigate, useNavigate } from 'react-router-dom'
+import { AuthContext } from '../../context/AuthContext'
+import { GiEclipseFlare } from 'react-icons/gi'
+import HospitalContext from '../../context/HospitalContext'
+import Cookies from 'js-cookie';
+
 
 function Login() {
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [state, dispatch] = useContext(AuthContext)
+  const {isAuthenticated, showHide} = useContext(HospitalContext)
+  const navigate = useNavigate()
+
+  // if(isAuthenticated) {
+  //     return <Navigate to="/" />
+  // }
+
+  const submitHandler = async(e)=>{
+    e.preventDefault()
+    try{
+      const res = await fetch('http://localhost:5000/user/login',{
+        method:'POST',
+        headers:{
+          'Content-Type':'application/json',
+        },
+        credentials: 'include',
+        body:JSON.stringify({
+          email,
+          password
+        })
+      })
+      const data = await res.json()
+
+      if (!res.ok) {
+        console.log({ message: data });
+        showHide('error',data.errMessage) // Log error message from the response
+      } else {
+        console.log(data); 
+        showHide('success',`Welcome ${data.user.last_name}`)// Log the data only when the request succeeds
+        localStorage.setItem('user', data.token);
+        dispatch({ type: 'LOGIN', payload: data });
+        Cookies.set('token', data.token, { expires: 1, path: '/' });
+      
+        if(isAuthenticated){
+          if( data.user.role === "admin") {
+            navigate('/admin/home')
+          }else if(data.user.role === "doctor") {
+            navigate('/doctor/home')
+          }else
+          navigate('/user/home')
+        }
+        }
+      
+      
+  } catch (error) {
+    console.log({ message: error.message });
+  }
+  }
   return (
     <>
-        <div className="text-[#fff] w-full border border-white m-8 p-3 rounded-lg  container">
-          <div className="pt-36  login">
-          <h1 className='text-3xl font-bold text-center font-[lora]'>Enter my patient portal</h1>
+       
+    <div className="flex items-center justify-center min-h-screen  container">
+      <div className="bg-white shadow-lg rounded-xl p-8 w-full max-w-md">
+        <h1 className="text-4xl font-bold text-center text-blue-600 mb-8 font-[lora]">Enter My Patient Portal</h1>
+
+        <form onSubmit={submitHandler} className='space-y-6'>
+          <div className="">
+            <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-700">Email Address</label>
+            <input 
+              type="email" 
+              onChange={(e) => setEmail(e.target.value)} 
+              id="email" 
+              className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition placeholder-blue-400" 
+              placeholder="john.doe@company.com" 
+              required 
+            />
           </div>
 
-          <div className="max-w-72  md:max-w-96 mx-auto my-8  forms">
-          <form action="" className='space-y-8'>
-              <div className="">
-                  <label for="email" class="block mb-1 text-sm font-medium">Email address</label>
-                  <input type="email" id="email" class="bg-gray-50 border border-gray-300 text-[#fff] text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 placeholder-[#007cff] dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="john.doe@company.com" required />
-              </div>
-
-              <div class="">
-                  <label for="password" class="block mb-1 text-sm font-medium ">Password</label>
-                  <input type="password" id="password" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 placeholder-[#007cff] dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Input Password" required />
-              </div>
-
-              <div className="m-auto">
-                  <button type="submit" class="text-[#007cff] hover:text-white border bg-white w-[200px] border-[D0F0C0] hover:bg-[#007cff]   font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800">Log In</button>
-                  <p class="text-sm font-light text-[#fff] ">
-                        New Here? <Link to="/auth/register" class="font-medium text-primary-600 hover:underline dark:text-primary-500">Join Us</Link>
-                </p>
-              </div>
-          </form>
+          <div className="">
+            <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-700">Password</label>
+            <input 
+              type="password" 
+              onChange={(e) => setPassword(e.target.value)} 
+              id="password" 
+              className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition placeholder-blue-400" 
+              placeholder="Input Password" 
+              required 
+            />
           </div>
-        </div>
+
+          <div className="text-center">
+            <button 
+              type="submit" 
+              className="w-full bg-blue-600 text-white font-medium py-3 rounded-lg hover:bg-blue-700 transition">
+              Log In
+            </button>
+          </div>
+
+          <div className="mt-4 flex justify-between text-sm">
+            <p className="text-gray-600">
+              New Here? <Link to="/auth/register" className="text-blue-600 hover:underline">Join Us</Link>
+            </p>
+            <p className='text-gray-600'>
+              Forgot Password? <Link to="/auth/forgot" className='text-blue-600 hover:underline'>Click Here!</Link>
+            </p>
+          </div>
+        </form>
+      </div>
+    </div>
+ 
+
     </>
   )
 }

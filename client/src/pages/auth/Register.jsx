@@ -1,17 +1,43 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useContext, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../context/AuthContext';
+import Modals from "../../shared/Modals"
+import otp from '../../assets/otpp.png'
+
 
 function Register() {
+  const [ state, dispatch ] = useContext(AuthContext);
+  const {isAuthenticated} = useContext(AuthContext)
+  const [first_name, setFirstName] = useState('');
+  const [last_name, setLastName] = useState('');
+  const [email, setEmail] = useState('');
+  const [gender, setGender] = useState('');
+  const [dob, setDob] = useState('');
+  const [phone, setPhone] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [otpDigits, setOtpDigits] = useState(['','','','','',''])
+  const [open,setOpen] = useState(false)
+  const [userData, setUserData] = useState(null); // Added state for user data
+
+  const navigate = useNavigate()
 
   const signupHandler = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
+
+    // Ensure password and confirm password match
+    if (password !== confirmPassword) {
+      alert('Passwords do not match');
+      return;
+    }
 
     try {
-      const res = await fetch('http://localhost:3000/user',{
-        method:'POST',
-        headers:{
-          'Content-Type':'application/json'
+      const res = await fetch('http://localhost:5000/user/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
         },
+        credentials: 'include',
         body: JSON.stringify({
           first_name,
           last_name,
@@ -19,87 +45,227 @@ function Register() {
           gender,
           dob,
           phone,
-          pasword
-        })
-      })
-      const data = await res.save()
+          password,
+          confirmPassword,
+        }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        console.log({ message: data.message }); // Log error message from the response
+      } else {
+        console.log(data); // Log the data only when the request succeeds
+        localStorage.setItem('user', JSON.stringify(data));
+        dispatch({ type: 'LOGIN', payload: data });
+        setOpen(true)
+        setUserData(data)
+        console.log(isAuthenticated);
+        
+        
+        
+      }
     } catch (error) {
-      console.log({message: error.message});
-      
+      console.log({ message: error.message });
     }
-    
-  }
+  };
+
+  const handleOtpChange = (index, value) => {
+    if (value.length <= 1) { // Ensure the value is a single digit
+      const newOtpDigits = [...otpDigits]; // Create a copy of the current OTP digits state
+      newOtpDigits[index] = value; // Update the specific index with the new value
+      setOtpDigits(newOtpDigits); 
+      console.log(newOtpDigits);
+      // Update the state with the new array
+    }
+  };
+  
+    // Combine OTP digits into a single string and handle the submission
+    const handleOtpSubmit = (e) => {
+      e.preventDefault();
+      const otpCode = otpDigits.join(''); // Combine digits into a single string
+      console.log("OTP Code:", otpCode);
+      // check if otp entered matches th one in database
+      if (otpCode === userData?.user?.verificationToken) {
+        if( userData.user.role === "admin") {
+            navigate('/admin/home')
+          }else if(userData.user.role === "doctor") {
+            navigate('/doctor/home')
+          }else
+          navigate('/user/home')
+      } else {
+        alert('incorrect verification code. try again!')
+      }
+      setOpen(false)
+    };
+  
+
   return (
     <>
-         <div className="text-[#fff] w-full container">
-          <div className="register">
-            <h1 className='text-center pt-12 text-3xl font-bold font-[lora]'>Your Healthcare Starts Here</h1>
+     
+    <div className="flex items-center justify-center min-h-screen container">
+      <div className="bg-white shadow-lg rounded-xl px-8 py-4 w-full max-w-2xl">
+        <h1 className="text-4xl font-bold text-center text-blue-600 mb-8 font-[lora]">Create Your Account</h1>
+
+        <form onSubmit={signupHandler} className="space-y-4">
+          <div className="flex flex-wrap justify-between">
+            <div className="w-[48%]">
+              <label htmlFor="first_name" className="block mb-2 text-sm font-medium text-gray-700">First Name</label>
+              <input
+                type="text"
+                id="first_name"
+                onChange={(e) => setFirstName(e.target.value)}
+                className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition placeholder-blue-400"
+                placeholder="Input Firstname"
+                required
+              />
+            </div>
+            <div className="w-[48%]">
+              <label htmlFor="last_name" className="block mb-2 text-sm font-medium text-gray-700">Last Name</label>
+              <input
+                type="text"
+                id="last_name"
+                onChange={(e) => setLastName(e.target.value)}
+                className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition placeholder-blue-400"
+                placeholder="Input Lastname"
+                required
+              />
+            </div>
           </div>
-          <div className=" mx-5  mt-4 form">
-            <form action="" className='space-y-8'>
 
-                <div className="flex flex-wrap justify-between className">
-                      <div className='w-[48%] '>
-                        <label for="first_name" className="block mb-2 text-sm font-medium">First name</label>
-                        <input type="text" id="first_name" className="bg-gray-50 border border-gray-300 text-[#0000ff] text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 placeholder-[#0000ff] dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Input Firstname" required />
-                      </div>
-                      <div className='w-[48%] '>
-                        <label for="last_name" className="block mb-2 text-sm font-medium">Last name</label>
-                        <input type="text" id="last_name" className="bg-gray-50 border border-gray-300 text-[#0000ff] text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 placeholder-[#0000ff] dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Input Lastname" required />
-                    </div>
-                </div>
+          <div className="flex flex-wrap justify-between">
+            <div className="w-[48%]">
+              <label htmlFor="gender" className="block mb-2 text-sm font-medium text-gray-700">Select Gender</label>
+              <select
+                id="gender"
+                onChange={(e) => setGender(e.target.value)}
+                className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition placeholder-blue-400"
+                required
+              >
+                <option defaultValue="n/a">Choose Your Gender</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+              </select>
+            </div>
 
-                <div className="flex  justify-between">
-                  <div className="w-[48%] gender">
-                     <label htmlFor="gender" className="block mb-2 text-sm font-medium">Select Gender</label>
-                    <select id="gender" className="bg-gray-50 border border-gray-300 text-[#0000ff] text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 placeholder-[#0000ff] dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
-                        <option selected>Choose Your Gender</option>
-                        <option value="male">Male</option>
-                        <option value="female">Female</option>
-                        <option value="others">Others</option>
-                        <option value="null">I'd rather not say</option>
-                    </select>                      
-                  </div>
-
-                  <div className="w-[48%] date">
-                    <label htmlFor="" className="block mb-2 text-sm font-medium">Date of Birth</label>
-                    <input type="date" name="date" id="dob" className="bg-gray-50 border border-gray-300 text-[#0000ff] text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 placeholder-[#0000ff] dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required/>
-                  </div>
-                </div>
-
-                <div className="flex justify-between">
-                    <div className='w-[48%] phone'>
-                        <label for="phone" class="block mb-2 text-sm font-medium">Phone number</label>
-                        <input type="tel" id="phone" class="bg-gray-50 border border-gray-300 text-[#0000ff] text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 placeholder-[#0000ff] dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Input Phone Number" pattern="[0-9]{11}" required />
-                    </div>
-                    <div className="w-[48%]">
-                        <label for="email" class="block mb-2 text-sm font-medium">Email address</label>
-                        <input type="email" id="email" class="bg-gray-50 border border-gray-300 text-[#0000ff] text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 placeholder-[#0000ff] dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="john.doe@company.com" required />
-                    </div>
-                </div>
-
-                <div className="flex justify-between">
-                    <div class="w-[48%]">
-                        <label for="password" class="block mb-2 text-sm font-medium ">Password</label>
-                        <input type="password" id="password" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 placeholder-[#0000ff] dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Input Password" required />
-                    </div> 
-                    <div class="w-[48%]">
-                        <label for="confirm_password" class="block mb-2 text-sm font-medium">Confirm password</label>
-                        <input type="password" id="confirm_password" class="bg-gray-50 border border-gray-300 text-[#0000ff] text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 placeholder-[#0000ff] dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Repeat Password" required />
-                    </div> 
-                </div>
-
-                <div className="m-auto">
-                <button type="submit" class="text-blue-700 hover:text-white border bg-white w-[200px] border-blue-700 hover:bg-blue-800  font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800">Sign Up</button>
-                <p class="text-sm font-light text-[#fff] ">
-                      Already have an account? <Link to="/auth/login" class="font-medium text-primary-600 hover:underline dark:text-primary-500">Login here</Link>
-               </p>
-                </div>
-            </form>
+            <div className="w-[48%]">
+              <label htmlFor="dob" className="block mb-2 text-sm font-medium text-gray-700">Date of Birth</label>
+              <input
+                type="date"
+                id="dob"
+                onChange={(e) => setDob(e.target.value)}
+                className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition placeholder-blue-400"
+                required
+              />
+            </div>
           </div>
+
+          <div className="flex flex-wrap justify-between">
+            <div className="w-[48%]">
+              <label htmlFor="phone" className="block mb-2 text-sm font-medium text-gray-700">Phone Number</label>
+              <input
+                type="tel"
+                id="phone"
+                onChange={(e) => setPhone(e.target.value)}
+                className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition placeholder-blue-400"
+                placeholder="Input Phone Number"
+                pattern="[0-9]{11}"
+                required
+              />
+            </div>
+            <div className="w-[48%]">
+              <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-700">Email Address</label>
+              <input
+                type="email"
+                id="email"
+                onChange={(e) => setEmail(e.target.value)}
+                className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition placeholder-blue-400"
+                placeholder="john.doe@company.com"
+                required
+              />
+            </div>
+          </div>
+
+          <div className="flex flex-wrap justify-between">
+            <div className="w-[48%]">
+              <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-700">Password</label>
+              <input
+                type="password"
+                id="password"
+                onChange={(e) => setPassword(e.target.value)}
+                className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition placeholder-blue-400"
+                placeholder="Input Password"
+                required
+              />
+            </div>
+            <div className="w-[48%]">
+              <label htmlFor="confirm_password" className="block mb-2 text-sm font-medium text-gray-700">Confirm Password</label>
+              <input
+                type="password"
+                id="confirm_password"
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition placeholder-blue-400"
+                placeholder="Repeat Password"
+                required
+              />
+            </div>
+          </div>
+
+          <div className="text-center">
+            <button
+              type="submit"
+              className="w-full bg-blue-600 text-white font-medium py-3 rounded-lg hover:bg-blue-700 transition"
+            >
+              Sign Up
+            </button>
+          </div>
+
+          <div className="mt-4 text-center text-sm">
+            <p className="text-gray-600">
+              Already have an account? <Link to="/auth/login" className="text-blue-600 hover:underline">Login here</Link>
+            </p>
+          </div>
+        </form>
+      </div>
     </div>
+ 
+
+
+    {open &&
+      <Modals>
+            <div className='bg-white space-y-4 my-8 w-full h-full'>
+            <div className="flex flex-col items-center">
+              <img src={otp} alt="" className='w-[150px] h-[150px] ' />    
+              <div className="txt">
+                <p id="helper-text-explanation" className="mt-2 text-lg font-semibold text-gray-500 dark:text-gray-400">Please introduce the 6 digit code we sent via email.</p>
+               <p  className='text-[#007cff] mt-2 text-lg font-semibold underline'>{userData?.user?.email || 'No email available'}</p>
+              </div>
+            </div>
+            <div className=" flex justify-center input"> 
+              <form onSubmit={handleOtpSubmit} className="max-w-sm mx-auto">
+                  <div className="flex mb-2 space-x-2 ">
+                    {otpDigits.map((digits,index)=>(
+                        <div key={index}>
+                            <label htmlFor={`code-${index+1}`} className="sr-only">{`Code ${index + 1}`}</label>
+                            <input type="text" maxLength="1" value={digits} onChange={(e) => handleOtpChange(index, e.target.value)} id={`code-${index + 1}`} className="block w-9 h-9 py-3 text-sm font-extrabold text-center text-gray-900 bg-white border border-gray-300 rounded-lg focus:ring-primary-500  " required />
+                        </div>
+                    ))}
+                     
+                  </div>
+                      <p  className="mt-2 text-sm text-gray-500 dark:text-gray-400">Please do not refresh this page.</p>
+                  <button type="submit" className="text-[#007cff] hover:text-white border bg-white w-full mt-5  border-[#007cff] hover:bg-[#007cff] font-medium rounded-lg text-sm px-5 py-2.5 text-center me-5 mb-2 ">
+                      Verify
+                  </button>
+              </form>
+
+            </div>
+            </div>
+
+      </Modals>
+}
     </>
-  )
+  );
 }
 
-export default Register
+export default Register;
+``

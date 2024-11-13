@@ -20,11 +20,11 @@ function Doctors() {
                 <div key={index} className="bg-white h-[300px] rounded-lg doctor">
                     <div className="  card">
                         <div className="object-fit object-cover h-full card_img">
-                          <img src={item.img} alt="" />
+                          <img src={item.photo} alt="" />
                         </div>                    
                         <div className="space-y-2 text-center card_title">
-                        <div className="text-gray-600 text-[1rem] pt-2">{item.department}</div>
-                          <p className='text-[#007cff] font-[poppins] font-semibold text-xl '>{item.full_name}</p>
+                        <div className="text-gray-600 text-[1rem] pt-2">{item.departments}</div>
+                          <p className='text-[#007cff] font-[poppins] font-semibold text-xl '>{item.first_name} {item.last_name}</p>
                           <p className="text-gray-600 text-[13px] pt-2">{item.email}</p>
                         </div>
                         
