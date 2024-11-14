@@ -17,6 +17,17 @@ function Appointment() {
   const [time, setTime] = useState('');
   const [message, setMessage] = useState('');
   const id = editAppointment.items._id;
+  // console.log(appoint);
+  
+
+    // Get today's date in the format 'YYYY-MM-DD'
+    const getTodayDate = () => {
+      const today = new Date();
+      const yyyy = today.getFullYear();
+      const mm = String(today.getMonth() + 1).padStart(2, '0'); // Month is zero-indexed
+      const dd = String(today.getDate()).padStart(2, '0');
+      return `${yyyy}-${mm}-${dd}`;
+    };
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -109,7 +120,9 @@ function Appointment() {
           <tbody className="divide-y">
             {appoint.map((item, index) => (
               <tr key={index} className="hover:bg-gray-100 transition-all">
-                <td className="px-6 py-4 font-medium text-gray-700">{item.doctor}</td>
+                <td className="px-6 py-4 font-medium text-gray-700">
+                    {item.doctor ? `Dr. ${item.doctor.first_name} ${item.doctor.last_name}` : 'N/A'}
+                </td>
                 <td className="px-6 py-4">{item.date }</td>
                 <td className="px-6 py-4">{item.time}</td>
                 <td className="px-6 py-4">
@@ -117,7 +130,7 @@ function Appointment() {
                     {item.status}
                   </span>
                 </td>
-                <td className="px-6 py-4 flex gap-4 items-center">
+                <td className="px-6 py-4 flex gap-4 items-center ">
                   <CiEdit onClick={() => { editOpener(item); }} className=' cursor-pointer text-blue-500 hover:text-blue-700 transition-all' />
                   <Link to={`/user/details/${item._id}`}>
                     <FaBookOpen className=' cursor-pointer text-blue-500 hover:text-blue-700 transition-all' />
@@ -155,18 +168,18 @@ function Appointment() {
                   <select id="doctor" onChange={(e) => { setDoctor(e.target.value); }} className="w-full p-2 border rounded-lg text-sm text-blue-600 focus:ring-blue-500 focus:border-blue-500" required>
                     <option value="n/a">Choose Doctor</option>
                     {doctors.map((item, index) => (
-                      <option key={index} value={item.last_name}>Dr. {item.first_name} {item.last_name}</option>
+                      <option key={index} value={item._id}>Dr. {item.first_name} {item.last_name}</option>
                     ))}
                   </select>
                 </div>
                 <div className="flex gap-4">
                   <div className="w-1/2">
                     <label htmlFor="date" className="block mb-2 text-sm font-medium">Select Appointment Date *</label>
-                    <input type="date" id="date" onChange={(e) => { setDate(e.target.value); }} className="w-full p-2 border rounded-lg text-sm text-blue-600 focus:ring-blue-500 focus:border-blue-500" required />
+                    <input type="date" id="date" min={getTodayDate()} onChange={(e) => { setDate(e.target.value); }} className="w-full p-2 border rounded-lg text-sm text-blue-600 focus:ring-blue-500 focus:border-blue-500" required />
                   </div>
                   <div className="w-1/2">
                     <label htmlFor="time" className="block mb-2 text-sm font-medium">Select Appointment Time *</label>
-                    <input type="time" id="time" onChange={(e) => { setTime(e.target.value); }} className="w-full p-2 border rounded-lg text-sm text-blue-600 focus:ring-blue-500 focus:border-blue -500" required />
+                    <input type="time" id="time" onChange={(e) => { setTime(e.target.value); }}  className="w-full p-2 border rounded-lg text-sm text-blue-600 focus:ring-blue-500 focus:border-blue -500" required />
                   </div>
                 </div>
                 <div>
@@ -213,7 +226,7 @@ function Appointment() {
                 <div className="flex gap-4">
                   <div className="w-1/2">
                     <label htmlFor="date" className="block mb-2 text-sm font-medium">Date *</label>
-                    <input type="date" id="date" value={date} onChange={(e) => { setDate(e.target.value); }} className="w-full p-2 border rounded-lg text-sm text-blue-600 focus:ring-blue-500 focus:border-blue-500" required />
+                    <input type="date" id="date" value={date} min={getTodayDate()} onChange={(e) => { setDate(e.target.value); }} className="w-full p-2 border rounded-lg text-sm text-blue-600 focus:ring-blue-500 focus:border-blue-500" required />
                   </div>
                   <div className="w-1/2">
                     <label htmlFor="time" className="block mb-2 text-sm font-medium">Time *</label>

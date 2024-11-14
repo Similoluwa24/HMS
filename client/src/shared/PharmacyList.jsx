@@ -135,52 +135,32 @@ function PharmacyList() {
             <div className="flex justify-end">
                 <button onClick={()=>{setOpenAdd(true)}}  className='bg-[#007cff] lg:p-2 text-[12px] font-[poppins] text-white rounded-lg'>Add Medications +</button>
             </div>
-            <div className="relative overflow-x-auto  shadow-md sm:rounded-lg ">
-                <table className=" divide-y text-sm text-left  min-w-[65rem] m-auto rtl:text-right text-gray-500 ">
-                        <thead className="text-xs text-gray-700 uppercase ">                       
-                            <tr>
-                                <th scope="col" className="px-6 py-3 bg-[#007ccfb6] text-white">
-                                    Medicine Name
-                                </th>
-                                <th scope="col" className="px-6 py-3">
-                                    Category
-                                </th>
-                                <th scope="col" className="px-6 py-3">
-                                    Company Name
-                                </th>
-                                <th scope="col" className="px-6 py-3 text-white bg-[#007ccfb6] ">
-                                    Purchase Date
-                                </th>
-                                <th scope="col" className="px-6 py-3">
-                                    Price
-                                </th>
-                                <th scope="col" className="px-6 py-3">
-                                    Expiry Date
-                                </th>
-                                <th scope="col" className="px-6 py-3">
-                                    Stock
-                                </th>
-                                <th scope="col" className="px-6 py-3 bg-[#007ccfb6] text-white">
-                                    Actions
-                                </th>
-                            </tr>
-                        </thead>
+            <div className="relative overflow-x-auto shadow-md sm:rounded-lg ">
+                <table className="w-full min-w-[65rem] text-sm text-left text-gray-600 border-separate border-spacing-0">
+                    <thead className="bg-blue-600 text-white text-xs uppercase">
+                        <tr>
+                        {['Medicine Name', 'Category', 'Company Name', 'Purchase Date', ' Price','Expiry Date','Stock', 'Actions'].map((header, index) => (
+                            <th key={index} className={`px-6 py-3 ${index % 2 === 0 ? 'bg-blue-700' : ''}`}>
+                            {header}
+                            </th>
+                        ))}
+                        </tr>
+                    </thead>
+                      
                         <tbody>
                             {pharmacy.map((item,index)=>(
 
-                            <tr key={index} className="border-b capitalize border-gray-200 dark:border-gray-700">
-                                <td className="px-6 py-4 bg-[#007ccfb6] text-white">{item?.name} </td>
+                             <tr key={index} className="border-b border-gray-200 hover:bg-gray-100 transition duration-150">
+                                <td className="px-6 py-4 font-medium text-gray-800 bg-blue-100">{item?.name} </td>
                                 <td className="px-6 py-4">{item?.category}</td>
                                 <td className="px-6 py-4">{item?.cName}</td>
-                                <td className="px-6 py-4 bg-[#007ccfb6] text-white">{item?.pDate}</td>
+                                <td className="px-6 py-4 text-gray-800 bg-blue-100">{item?.pDate}</td>
                                 <td className="px-6 py-4">{item?.price}</td>
                                 <td className="px-6 py-4">{item?.eDate}</td>
                                 <td className="px-6 py-4">{item?.stock}</td>
-                                <td className="px-6 py-4 bg-[#007ccfb6] text-white">
-                                    <div className="flex space-x-3">
-                                        <span onClick={()=>{handleEditClick(item)}}>< CiEdit/></span>
-                                        <span onClick={()=>{handleDeleteClick(item._id, item)}}><RiDeleteBinLine/></span>
-                                    </div>
+                                <td className="px-6 py-4 flex space-x-2 items-center justify-center bg-blue-100">
+                                       <span className="text-blue-600 hover:text-blue-800 transition" onClick={()=>{handleEditClick(item)}}><CiEdit/></span>
+                                        <span className="text-red-600 hover:text-red-800 transition" onClick={()=>{handleDeleteClick(item._id,item)}}><RiDeleteBinLine/></span>
                                 </td>
                             </tr>
                             ))}

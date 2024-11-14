@@ -5,39 +5,20 @@ import HospitalContext from '../../context/HospitalContext';
 import { AuthContext } from '../../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
+import useLogout from '../../hooks/useLogout';
 function PatientHeader() {
   const { user } = useContext(HospitalContext);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [state, dispatch] = useContext(AuthContext);
   const navigate = useNavigate();
+  const logout = useLogout
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
 
-  const logout = async () => {
-      try {
-          const res = await fetch('http://localhost:5000/user/logout', {
-              method: 'GET',
-              headers: {
-                  'Content-Type': 'application/json',
-              },
-              credentials: 'include',
-          });
-
-          const data = await res.json();
-
-          if (!res.ok) {
-              console.log({ message: data });
-          } else {
-              dispatch({ type: 'LOGOUT', payload: null });
-              localStorage.removeItem('user');
-              Cookies.remove('token');
-              navigate('/auth/login');
-          }
-      } catch (error) {
-          console.log({ message: error.message });
-      }
+  const logoutHandler = async () => {
+     logout()
   };
 
   return (
@@ -78,7 +59,7 @@ function PatientHeader() {
                 <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">View Profile</li>
                 <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Settings</li>
                 <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
-                  <button onClick={logout}>Logout</button></li>
+                  <button onClick={logoutHandler}>Logout</button></li>
               </ul>
             </div>
           )}

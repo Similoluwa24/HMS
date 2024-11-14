@@ -41,7 +41,7 @@
     "first_name":"hooo",
     "last_name":"heee",
     "email":"wer@gmail.com",
-    "doctor":"ezra",
+    "doctor":"672137a0e7cbcddb2f019c6a",
     "date":"12/1/2091",
     "time":"13:00",
     "message":"test and trial"
@@ -71,3 +71,5 @@ http://localhost:5000/user//admin/update/671a440b636c1a09f14a248a
    "dob":"12/12/2001"
     
 }
+
+: Array.isArray(findApp) ? findApp : [findApp],

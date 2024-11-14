@@ -24,8 +24,9 @@ const appointmentSchema = new mongoose.Schema({
         validate: [isEmail, 'Please enter valid email']    
     },
     doctor:{
-        type: String,
-        required: [true, 'Please specify preferred Doctor'],
+        type: mongoose.Schema.ObjectId,
+        ref:'User',
+        required:[true, 'user is required']
     },
     date:{
         type:String,

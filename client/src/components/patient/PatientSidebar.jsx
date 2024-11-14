@@ -7,34 +7,15 @@ import { TbReportMedical } from "react-icons/tb";
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext';
 import Cookies from 'js-cookie';
+import useLogout from '../../hooks/useLogout';
 
 function DoctorSidebar() {
     const [state, dispatch] = useContext(AuthContext);
     const navigate = useNavigate();
+    const logout = useLogout()
 
-    const logout = async () => {
-        try {
-            const res = await fetch('http://localhost:5000/user/logout', {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                credentials: 'include',
-            });
-
-            const data = await res.json();
-
-            if (!res.ok) {
-                console.log({ message: data });
-            } else {
-                dispatch({ type: 'LOGOUT', payload: null });
-                localStorage.removeItem('user');
-                Cookies.remove('token');
-                navigate('/auth/login');
-            }
-        } catch (error) {
-            console.log({ message: error.message });
-        }
+    const logoutHandler = async () => {
+        logout()
     };
 
     return (
@@ -76,7 +57,7 @@ function DoctorSidebar() {
                         </Link>
                     </li>
                     <li>
-                        <button onClick={logout} className="flex items-center space-x-4 p-3 rounded-xl bg-white hover:bg-red-100 shadow-sm hover:shadow-md transition-all w-full">
+                        <button onClick={logoutHandler} className="flex items-center space-x-4 p-3 rounded-xl bg-white hover:bg-red-100 shadow-sm hover:shadow-md transition-all w-full">
                             <CiLogout className="text-2xl text-red-600" />
                             <span className="text-lg font-medium text-red-600">Log Out</span>
                         </button>

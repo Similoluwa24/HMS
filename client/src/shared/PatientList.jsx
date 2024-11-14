@@ -4,7 +4,7 @@ import { CiEdit } from 'react-icons/ci';
 import { RiDeleteBinLine } from "react-icons/ri";
 import Modals from './Modals';
 import { Link } from 'react-router-dom';
-import { TbTrashX } from 'react-icons/tb';
+import { TbEye, TbTrashX } from 'react-icons/tb';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -87,6 +87,9 @@ function PatientList() {
                   {item.NHIS}
                 </td>
                 <td className="px-6 py-4 flex space-x-2 items-center justify-center bg-blue-100">
+                  <Link to={`/admin/details/${item._id}`}  className="text-blue-600 hover:text-blue-800 transition">
+                    <TbEye />
+                  </Link>
                   <Link to={`/admin/editpa/${item._id}`} onClick={() => { editPatientHandler({ item }) }} className="text-blue-600 hover:text-blue-800 transition">
                     <CiEdit />
                   </Link>

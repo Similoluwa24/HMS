@@ -5,30 +5,31 @@ import Cookies from 'js-cookie'
 import useAlert from "../hooks/useAlert";
 
 export const HospitalProvider = ({children})=>{
-    useEffect(()=>{
-        // fetchUser()
-        fetchUserAll()
-        getallQuestions()
-        getallDepartment()
-        getallApointment()
-        getallPharmacy()
-        getInventory()
-        getAppointmentById();
-    },[])
-    // const [doctors, setDoctors] = useState([])
-    const [faq, setFaq] = useState([])
-    const [department, setDepartment] = useState([])
-    // const [patient, setPatient] = useState([])
+  // const [doctors, setDoctors] = useState([])
+  const [faq, setFaq] = useState([])
+  const [department, setDepartment] = useState([])
+  // const [patient, setPatient] = useState([])
     const [appointment, setAppointment] = useState([])
     const [pharmacy, setPharmacy] = useState([])
     const [inventory, setInventory] = useState([])
     const [user, setUser]  = useState(null)
     const [alluser, setallUser]  = useState([])
     const [appoint, setAppoint] = useState([])
+    const [appointmentbyDoctor,  setAppointmentbyDoctor] = useState([])
     const [state, dispatch] =  useContext(AuthContext);
-     const isAuthenticated = state.user !== null
-     const token = Cookies.get('token') 
-     const {alertInfo, showHide} = useAlert()
+    const isAuthenticated = state.user !== null
+    const token = Cookies.get('token') 
+    const {alertInfo, showHide} = useAlert()
+    useEffect(()=>{
+        // fetchUser()
+        fetchUserAll()
+        getallDepartment()
+        getallApointment()
+        getallPharmacy()
+        getInventory()
+        getAppointmentById();
+        getAppointmentbyDoctor();
+    },[isAuthenticated])
     const [editAppointment, setEditAppointment] = useState({
       items:{},
       edit:false
@@ -58,31 +59,36 @@ export const HospitalProvider = ({children})=>{
       items:{}
     })
 
-    useEffect(()=>{
+    useEffect(() => {
       const fetchUser = async () => {
         try {
-          const res = await fetch('http://localhost:5000/user/me',{
-            method:'GET',
-            headers:{
-              'Content-Type':'application/json'
+          const res = await fetch('http://localhost:5000/user/me', {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json'
             },
             credentials: 'include', // This allows cookies to be sent with the request
-          })
-          const data = await res.json()
-          
+          });
+          const data = await res.json();
+    
           if (res.ok) {
-            setUser(data)
-          } 
-          else {
-            console.log({message: data});
+            setUser(data);
+            // console.log(data); // Log data directly after receiving it
+          } else {
+            console.log({ message: data });
           }
-        }catch (error) {
-          console.log({message:error.message});
-          
+        } catch (error) {
+          console.log({ message: error.message });
         }
-      }
-      fetchUser()
-    },[])
+      };
+      fetchUser();
+    }, [isAuthenticated]);
+    
+    // If you want to log the state when it changes:
+    // useEffect(() => {
+    //   console.log(user);
+    // }, [user]);
+    
     const fetchUserAll = async () => {
       try {
         const res = await fetch('http://localhost:5000/user/admin',{
@@ -93,7 +99,7 @@ export const HospitalProvider = ({children})=>{
           credentials: 'include', // This allows cookies to be sent with the request
         })
         const data = await res.json()
-        console.log(data);
+        
         
         if (res.ok) {
           setallUser(data.users)
@@ -110,12 +116,7 @@ export const HospitalProvider = ({children})=>{
     const admin = alluser.filter((user)=>user.role === 'admin')
 
 
-    const getallQuestions = async ()=>{
-        const res = await fetch('http://localhost:3000/faq')
-        const data = await res.json()
-        setFaq(data)
-        
-    }
+    
     const getallDepartment = async ()=>{
       try {
         const res = await fetch('http://localhost:5000/department/admin/get',{
@@ -131,7 +132,7 @@ export const HospitalProvider = ({children})=>{
           showHide('error',data.errMessage)
         } else {
           setDepartment(data.findDept)    
-          console.log(data);
+          // console.log(data);
              
           
         }
@@ -142,6 +143,8 @@ export const HospitalProvider = ({children})=>{
         
     }
    
+
+ 
 
     const getallApointment = async () => {
       try {
@@ -154,7 +157,7 @@ export const HospitalProvider = ({children})=>{
         })
         const data = await res.json()
         if (res.ok) {
-         console.log(data);
+        //  console.log(data);
          
           setAppointment(data.findApp)      
         } else {
@@ -185,7 +188,7 @@ export const HospitalProvider = ({children})=>{
             showHide('error', data.errMessage); // Show error if response is not ok
           } else {
             setAppoint(data.findApp); // Set the appointment data in state
-            console.log(data);
+            // console.log(data);
           }
         } catch (error) {
           console.error("Network error:", error);
@@ -194,6 +197,32 @@ export const HospitalProvider = ({children})=>{
       };
   
      
+      
+        const getAppointmentbyDoctor = async () => {
+            try {
+                const res = await fetch(`http://localhost:5000/appointment/doctor`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    credentials: 'include' // Ensure the backend supports credentials
+                });
+    
+                const data = await res.json();
+    
+                if (!res.ok) {
+                    console.error('Error response:', data);
+                    // showHide('error', data.message || data.errMessage);
+                } else {
+                    setAppointmentbyDoctor(data.appointments); // Adjust based on the data structure
+                    // console.log('Appointments data:', data);
+                }
+            } catch (error) {
+                console.error('Fetch error:', error);
+            }
+        };
+        
+    
     
       
       
@@ -212,7 +241,7 @@ export const HospitalProvider = ({children})=>{
           console.log(data);       
         } else {
           setPharmacy(data.meds)
-          console.log(data);
+          // console.log(data);
              
         }
         
@@ -235,7 +264,7 @@ export const HospitalProvider = ({children})=>{
         showHide('error',data.errMessage)
       } else {
         setInventory(data.data)
-        console.log(data);
+        // console.log(data);
                 
       }
     }
@@ -321,12 +350,13 @@ export const HospitalProvider = ({children})=>{
             alertInfo,
             appoint,
             editUser,
+            appointmentbyDoctor,
+            getAppointmentbyDoctor,
             editUserHandler,
             getallApointment,
             fetchUserAll,
             getallPharmacy,
             getallDepartment,
-            getallQuestions,
             getInventory,
             getAppointmentById,
              showHide,

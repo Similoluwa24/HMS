@@ -1,7 +1,35 @@
-import React from 'react'
+import React, { useContext, useState } from 'react'
 import { Link } from 'react-router-dom'
+import HospitalContext from '../../context/HospitalContext';
 
 function Diagnosis() {
+    const {user,showHide} = useContext(HospitalContext)
+    const [diagnosis, setDiagnosis] = useState('')
+    const [doctor, setDoctor] = useState('')
+    const [plan, setPlan] = useState('')
+    const [medication, setMedication] = useState('')
+    const [notes, setNotes] = useState('')
+
+    const addDiagnosis = async(e)=>{
+        e.preventDefault()
+        const res = await fetch('qwertyui',{
+            method:'POST',
+            headers:{
+                'Content-Type':'application/json'
+            },
+            credentials:'include',
+            body:JSON.stringify({diagnosis,doctor,plan,medication,notes})
+        })
+        const data = await res.json()
+        if (!res.ok) {
+            console.log(data);
+            showHide('error',data.errMessage)
+        } else {
+            showHide('success','Diagnosis Added!')
+        }
+    }
+    
+    
   return (
     <>
         <div className="bg-gray-50 shadow-lg rounded-2xl p-8 max-w-4xl m-auto my-10 space-y-8">
@@ -23,6 +51,7 @@ function Diagnosis() {
                 type="text" 
                 className="w-full border border-gray-300 rounded-lg px-4 py-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-teal-500"
                 placeholder="Enter diagnosis"
+                onChange={(e)=>{setDiagnosis(e.target.value)}}
             />
         </div>
 
@@ -30,9 +59,12 @@ function Diagnosis() {
         <div>
             <label className="block text-sm font-semibold text-gray-700 mb-1">Doctor</label>
             <input 
-                type="text" 
-                className="w-full border border-gray-300 rounded-lg px-4 py-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-teal-500"
+                type="text"
+                value={`Dr. ${user?.user.first_name}  ${user?.user.last_name}`}
+                disabled
+                className="w-full border border-gray-300 capitalize rounded-lg px-4 py-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-teal-500"
                 placeholder="Enter doctor's name"
+                onChange={(e)=>{setDoctor(e.target.value)}}
             />
         </div>
 
@@ -43,6 +75,7 @@ function Diagnosis() {
                 className="w-full border border-gray-300 rounded-lg px-4 py-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-teal-500"
                 rows="3"
                 placeholder="Describe the treatment plan"
+                onChange={(e)=>{setPlan(e.target.value)}}
             ></textarea>
         </div>
 
@@ -51,6 +84,7 @@ function Diagnosis() {
             <label className="block text-sm font-semibold text-gray-700 mb-1">Medications</label>
             <input 
                 type="text" 
+                onChange={(e)=>{setMedication(e.target.value)}}
                 className="w-full border border-gray-300 rounded-lg px-4 py-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-teal-500"
                 placeholder="List medications (comma-separated)"
             />
@@ -63,6 +97,7 @@ function Diagnosis() {
                 className="w-full border border-gray-300 rounded-lg px-4 py-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-teal-500"
                 rows="4"
                 placeholder="Additional notes or observations"
+                onChange={(e)=>{setNotes(e.target.value)}}
             ></textarea>
         </div>
 

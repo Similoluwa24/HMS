@@ -64,7 +64,7 @@ function AppointmentList() {
   <table className="w-full min-w-[60rem] text-sm text-left text-gray-600 border-separate border-spacing-0">
     <thead className="bg-blue-600 text-white uppercase text-xs">
       <tr>
-        {["ID", "Full Name", "Email", "Doctor", "Appointment Date", "Appointment Time", "Appointment Status", "Actions"].map((header, index) => (
+        {[ "Full Name", "Email", "Doctor", "Appointment Date", "Appointment Time", "Appointment Status", "Actions"].map((header, index) => (
           <th key={index} className={`px-6 py-3 ${index % 2 === 0 ? 'bg-blue-700' : ''}`}>
             {header}
           </th>
@@ -76,17 +76,17 @@ function AppointmentList() {
         return search.toLowerCase() === "" ? item : item.first_name.toLowerCase().includes(search);
       }).map((item, index) => (
         <tr key={index} className="border-b border-gray-200 hover:bg-gray-100 transition duration-150">
-          <td className="px-6 py-4 font-medium text-gray-800 bg-blue-100">
+          {/* <td className="px-6 py-4 font-medium text-gray-800 bg-blue-100">
             {item._id}
-          </td>
+          </td> */}
           <td className="px-6 py-4 capitalize">
             {`${item.first_name} ${item.last_name}`}
           </td>
           <td className="px-6 py-4">
             {item.email}
           </td>
-          <td className="px-6 py-4 bg-blue-100 text-gray-800">
-            {item.doctor}
+          <td className="px-6 py-4 font-medium text-gray-700">
+                    {item.doctor ? `Dr. ${item.doctor.first_name} ${item.doctor.last_name}` : 'N/A'}
           </td>
           <td className="px-6 py-4">
             {item.date}

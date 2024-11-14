@@ -52,6 +52,7 @@ import AppDetails from './pages/patient/AppDetails'
 import Diagnosis from './pages/doctor/Diagnosis'
 import PatientDiagnosis from './pages/patient/PatientDiagnosis'
 import AppointmentDetails from './pages/doctor/AppointmentDetails'
+import PrescriptionList from './pages/doctor/PrescriptionList'
 
 function App() {
   const token = localStorage.getItem('user')
@@ -91,6 +92,7 @@ function App() {
               <Route path='billing' element={<Billings/>}/>
               <Route path='settings' element={<Settings/>}/>
               <Route path='prescription' element={<MyPrescriptions/>}/>
+           
               <Route path='details/:id' element={<AppDetails/>} />
               <Route path='diagnosis' element={<PatientDiagnosis/>} />
               
@@ -122,14 +124,15 @@ function App() {
             <Route path='/doctor' element={
               // <AuthHandler>
               <DoctorLayout/>
-              /* </AuthHandler> */
+              // /* </AuthHandler> */
               } >
               <Route path='home' element={<DoctorHome/>} />
               <Route path='appointment' element={<DoctorAppointment/>} />
               <Route path='prescription' element={<DrPrescription/>} />
+              <Route path='prescription/list' element={<PrescriptionList/>}/>
               <Route path='settings' element={<DrSettings/>} />
               <Route path='diagnosis' element={<Diagnosis/>} />
-              <Route path='details' element={<AppointmentDetails/>} />
+              <Route path='details/:id' element={<AppointmentDetails/>} />
 
             </Route>
           </Routes>

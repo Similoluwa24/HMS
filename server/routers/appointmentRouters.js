@@ -8,5 +8,6 @@ route.put('/edit/:id',isAuthenticated,appointmentControllers.editAppointment)
 route.delete('/delete/:id',isAuthenticated,appointmentControllers.deleteAppointment)
 route.get('/admin',appointmentControllers.findAppointment)
 route.get('/get',isAuthenticated,appointmentControllers.findAppointmentByUserId)
+route.get('/doctor',isAuthenticated, appointmentControllers.getAppointmentsByDoctor);
 
 module.exports = route

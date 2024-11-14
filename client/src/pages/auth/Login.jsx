@@ -43,7 +43,7 @@ function Login() {
         dispatch({ type: 'LOGIN', payload: data });
         Cookies.set('token', data.token, { expires: 1, path: '/' });
       
-        if(isAuthenticated){
+        // if(isAuthenticated){
           if( data.user.role === "admin") {
             navigate('/admin/home')
           }else if(data.user.role === "doctor") {
@@ -51,7 +51,7 @@ function Login() {
           }else
           navigate('/user/home')
         }
-        }
+        
       
       
   } catch (error) {
