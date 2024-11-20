@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import HospitalContext from '../../context/HospitalContext'
 
 function DrPrescription() {
@@ -11,22 +11,34 @@ function DrPrescription() {
     const [dosage, setDosage] = useState('')
     const [notes, setNotes] = useState('')
     const [doctor, setDoctor] = useState('')
+    const [userId, setUserId] = useState('')
+    const navigate = useNavigate()
 
-    const addPrescription = async () => {
-        const res = await fetch('qwertyuiop',{
+      // Get today's date in the format 'YYYY-MM-DD'
+    const getTodayDate = () => {
+        const today = new Date();
+        const yyyy = today.getFullYear();
+        const mm = String(today.getMonth() + 1).padStart(2, '0'); // Month is zero-indexed
+        const dd = String(today.getDate()).padStart(2, '0');
+        return `${yyyy}-${mm}-${dd}`;
+    };
+    const addPrescription = async (e) => {
+        e.preventDefault()
+        const res = await fetch('http://localhost:5000/prescription/add',{
             method:'POST',
             headers:{
                 'Content-Type':'application/json'
             },
             credentials:'include',
-            body:JSON.stringify({patient,dop,ailment,medication,dosage,notes,doctor})
+            body:JSON.stringify({patient,dop,ailment,medication,dosage,notes,userId,doctor})
         })
         const data = await res.json()
         if (!res.ok) {
             console.log(data);
             showHide('error', data.errMessage)           
         } else {
-          showHide('success','Prescription Added!')  
+          showHide('success','Prescription Added!') 
+          navigate('/doctor/home') 
         }
     }
   return (
@@ -42,39 +54,67 @@ function DrPrescription() {
         </Link>
     </div>
 
-    <form className="bg-white rounded-lg p-6 shadow-md space-y-6">
-        {/* Patient Name Field */}
+    <form onSubmit={addPrescription} className="bg-white rounded-lg p-6 shadow-md space-y-6">
+        {/* Patient ID Field */}
         <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-1">Patient Name</label>
+            <label className="block text-sm font-semibold text-gray-700 mb-1">Patient ID</label>
             <input 
                 type="text" 
                 className="w-full border border-gray-300 rounded-lg px-4 py-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                placeholder="Enter patient name"
-                onChange={(e)=>{setPatient(e.target.value)}}
+                placeholder="Enter patient ID"
+                onChange={(e)=>{setUserId(e.target.value)}}
             />
         </div>
+      
         
-
-        {/* Date of Prescription Field */}
-        <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-1">Date of Prescription</label>
-            <input 
-                type="date" 
-                onChange={(e)=>{setDop(e.target.value)}}
-                className="w-full border border-gray-300 rounded-lg px-4 py-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-            />
-        </div>
-
-         {/* Ailment Field */}
+         {/* Patient Name Field */}
          <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-1">Ailment</label>
-            <input 
-                type="text" 
-                className="w-full border border-gray-300 rounded-lg px-4 py-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                placeholder="Enter ailment or condition"
-                onChange={(e)=>{setAilment(e.target.value)}}
+            <label className="block text-sm font-semibold text-gray-700 mb-1">Patient Name</label>
+            <input
+              type="text"
+              className="w-full border border-gray-300 rounded-lg px-4 py-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              placeholder="Enter patient name"
+              onChange={(e) => setPatient({ ...patient, name: e.target.value })}
             />
-        </div>
+          </div>
+
+          {/* Patient Age Field */}
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 mb-1">Patient Age</label>
+            <input
+              type="number"
+              className="w-full border border-gray-300 rounded-lg px-4 py-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              placeholder="Enter patient age"
+              onChange={(e) => setPatient({ ...patient, age: e.target.value })}
+            />
+          </div>
+
+
+
+
+          {/* Date of Prescription Field */}
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 mb-1">Date of Prescription</label>
+            <input
+              type="date"
+              min={getTodayDate()}
+              onChange={(e) => setDop(e.target.value)}
+              className="w-full border border-gray-300 rounded-lg px-4 py-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            />
+          </div>
+
+          {/* Ailment Field */}
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 mb-1">Ailment</label>
+            <input
+              type="text"
+              className="w-full border border-gray-300 rounded-lg px-4 py-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              placeholder="Enter ailment or condition"
+              onChange={(e) => setAilment(e.target.value)}
+            />
+          </div>
+
+      
 
         {/* Medications Field */}
         <div>
@@ -117,7 +157,7 @@ function DrPrescription() {
                 className="w-full border border-gray-300 rounded-lg px-4 py-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                 placeholder="Enter doctor name"
                 disabled
-                value={`Dr. ${user.user.first_name} ${user.user.last_name}`}
+                value={`Dr. ${user.first_name} ${user.last_name}`}
                 onChange={(e)=>{setDoctor(e.target.value)}}
             />
         </div>

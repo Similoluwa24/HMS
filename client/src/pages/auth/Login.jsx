@@ -10,7 +10,7 @@ function Login() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [state, dispatch] = useContext(AuthContext)
-  const {isAuthenticated, showHide} = useContext(HospitalContext)
+  const {isAuthenticated, showHide,fetchUser} = useContext(HospitalContext)
   const navigate = useNavigate()
 
   // if(isAuthenticated) {
@@ -51,9 +51,9 @@ function Login() {
           }else
           navigate('/user/home')
         }
-        
-      
-      
+
+
+        await fetchUser()  
   } catch (error) {
     console.log({ message: error.message });
   }

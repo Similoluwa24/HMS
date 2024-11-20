@@ -4,12 +4,12 @@ import { CiEdit } from 'react-icons/ci'
 import { RiDeleteBinLine } from "react-icons/ri";
 import Modals from './Modals';
 import { Link } from 'react-router-dom';
-import { TbTrashX } from 'react-icons/tb';
+import { TbEye, TbTrashX } from 'react-icons/tb';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 function DoctorList() {
-  const {doctors,editDoctorHandler} = useContext(HospitalContext)
+  const {doctors,editDoctorHandler,fetchUserAll,showHide} = useContext(HospitalContext)
   const [modal, setModal] = useState(false)
   const [deleteId, setDeleteId] = useState(null)
   const [search, setSearch] = useState('')
@@ -28,6 +28,7 @@ function DoctorList() {
   const handleDeleteClick = (id)=>{
     setModal(true)
     setDeleteId(id)
+    
 
   }
   const handleDelete = async()=>{
@@ -44,7 +45,8 @@ function DoctorList() {
         
     } else {
         setModal(false)
-        notify()       
+        showHide('success', 'Doctor Deleted')
+        await fetchUserAll()      
     }
   }
 
@@ -89,8 +91,11 @@ function DoctorList() {
                             <td className="px-6 py-4">
                                 {item.department} {item.departments}
                             </td>
-                            <td className="px-6 py-4 flex space-x-2 items-center justify-center bg-blue-100">                        
-                                <Link to={`/admin/editdoc/${item.id}`} className="text-blue-600 hover:text-blue-800 transition" onClick={()=>{editDoctorHandler({item})}}><span><CiEdit className='inline'/></span></Link> 
+                            <td className="px-6 py-4 flex space-x-2 items-center justify-center bg-blue-100"> 
+                            <Link to={`/admin/details/doctor/${item._id}`}  className="text-blue-600 hover:text-blue-800 transition">
+                              <TbEye />
+                            </Link>                       
+                                <Link to={`/admin/editdoc/${item._id}`} className="text-blue-600 hover:text-blue-800 transition" onClick={()=>{editDoctorHandler({item})}}><span><CiEdit className='inline'/></span></Link> 
                                 <span  className="text-red-600 hover:text-red-800 transition"><RiDeleteBinLine onClick={()=>{handleDeleteClick(item._id)}} className='inline'/></span>
                             </td>
                         </tr>            

@@ -12,7 +12,12 @@ function DoctorHome(){
     <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white p-10">
       <header className="flex justify-between items-center mb-10 bg-white shadow-md p-5 rounded-lg">
         <div className="">
-        <h1 className="text-3xl font-bold text-blue-600 capitalize">Welcome, Dr. {user?.user.first_name} {user?.user.last_name}</h1>
+          {user ? (
+            <h1 className="text-3xl font-bold text-blue-600 capitalize">Welcome, Dr. {user?.first_name} {user?.last_name}</h1>
+
+          ):(
+            <p>Loading user data...</p>
+          )}
         <p className='text-gray-400 font-[poppins] '>Have an amazing day today!</p>
         </div>
         

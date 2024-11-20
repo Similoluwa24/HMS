@@ -1,28 +1,34 @@
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import HospitalContext from '../../context/HospitalContext';
 
 function PrescriptionList() {
-  const prescriptions = [
-    {
-      id: 1,
-      patientName: 'John Doe',
-      date: '2024-11-01',
-      ailment: 'Flu and throat infection',
-      medications: 'Paracetamol 500mg - 1 tablet twice a day\nAmoxicillin 250mg - 1 capsule three times a day',
-      instructions: 'Ensure to take with meals. Hydrate well.',
-      notes: 'Patient is allergic to ibuprofen.',
-    },
-    {
-      id: 2,
-      patientName: 'Jane Smith',
-      date: '2024-11-03',
-      ailment: 'Type 2 Diabetes and hypertension',
-      medications: 'Metformin 500mg - 1 tablet in the morning and evening\nLosartan 50mg - 1 tablet daily',
-      instructions: 'Avoid excessive sugar intake.',
-      notes: 'Monitor blood pressure weekly.',
-    },
-    // Add more prescriptions as needed
-  ];
+  const {isAuthenticated} = useContext(HospitalContext)
+  const [prescriptions, setPrescriptions] = useState([])
+  const [loading, setLoading] = useState(true)
+  useEffect(()=>{
+    const fetchPrescription = async () => {
+      const res = await fetch('http://localhost:5000/prescription/doctor',{
+        method:'GET',
+        headers:{
+          'Content-Type':'application/json'
+        },
+        credentials:'include'
+      })
+      const data = await res.json()
+      if (!res.ok) {
+        console.log(data);
+        
+      } else {
+        setPrescriptions(data.prescription)
+        setLoading(false)
+        
+      }
+      
+    }
+    fetchPrescription()
+  },[isAuthenticated])
+
 
   return (
     <div className="bg-gray-50 shadow-lg rounded-2xl p-8 max-w-5xl m-auto my-10 space-y-8">
@@ -45,28 +51,48 @@ function PrescriptionList() {
       </div>
 
       <div className="space-y-6">
-        {prescriptions.map((prescription) => (
-          <div key={prescription.id} className="bg-white rounded-lg shadow-md p-6 border border-gray-200">
-            <div className="flex justify-between">
-            <h3 className="text-2xl font-bold text-gray-800 mb-2">Patient: {prescription.patientName}</h3>
-            <p className='text-gray-400 font-[poppins]'>Dr. Ojo Oluwapelumi Beatrice</p>
-            </div>
-            <p className="text-sm text-gray-600 mb-2">Date: {prescription.date}</p>
-            <p className="text-sm text-gray-600 mb-4">Ailment: {prescription.ailment}</p>
-            <div className="mb-3">
-              <h4 className="font-semibold text-gray-700">Medications:</h4>
-              <pre className="whitespace-pre-wrap text-gray-700 bg-gray-50 rounded-md p-3 border border-gray-200">{prescription.medications}</pre>
-            </div>
-            <div className="mb-3">
-              <h4 className="font-semibold text-gray-700">Dosage & Instructions:</h4>
-              <p className="text-gray-700">{prescription.instructions}</p>
-            </div>
-            <div className="mb-3">
-              <h4 className="font-semibold text-gray-700">Additional Notes:</h4>
-              <p className="text-gray-700">{prescription.notes}</p>
-            </div>
+        {loading ? (
+          <div className="flex justify-center items-center py-6">
+          <div className="flex items-center space-x-2">
+            <div className="w-6 h-6 border-t-4 border-blue-500 border-solid rounded-full animate-spin"></div>
+            <span className="text-xl text-gray-700">Loading...</span>
           </div>
-        ))}
+        </div>
+        ):( 
+         prescriptions.map((prescription) => (
+            <div key={prescription._id} className="bg-white rounded-lg shadow-md p-6 border border-gray-200">
+              <div className="flex justify-between">
+                <h3 className="text-2xl font-bold text-gray-800 mb-2">
+                  Patient: {prescription.patient.name}
+                </h3>
+                <p className='text-gray-400 font-[poppins]'>
+                  Dr. {prescription.doctor.first_name} {prescription.doctor.last_name}
+                </p>
+              </div>
+              <p className="text-sm text-gray-600 mb-2">
+                Date: {new Date(prescription.dop).toLocaleDateString()}
+              </p>
+              <p className="text-sm text-gray-600 mb-4">
+                Ailment: {prescription.ailment}
+              </p>
+              <div className="mb-3">
+                <h4 className="font-semibold text-gray-700">Medications:</h4>
+                <pre className="whitespace-pre-wrap text-gray-700 bg-gray-50 rounded-md p-3 border border-gray-200">
+                  {prescription.medication}
+                </pre>
+              </div>
+              <div className="mb-3">
+                <h4 className="font-semibold text-gray-700">Dosage & Instructions:</h4>
+                <p className="text-gray-700">{prescription.dosage}</p>
+              </div>
+              <div className="mb-3">
+                <h4 className="font-semibold text-gray-700">Additional Notes:</h4>
+                <p className="text-gray-700">{prescription.notes}</p>
+              </div>
+            </div>
+          ))
+        )}
+
       </div>
     </div>
   );

@@ -6,6 +6,9 @@ const appointmentRouters = require('./routers/appointmentRouters');
 const pharmacyRoutes = require('./routers/pharmacyRoutes');
 const departmentRouter = require('./routers/departmentRouter');
 const inventoryRoutes = require('./routers/inventoryRoutes');
+const prescriptionRoutes = require('./routers/prescriptionRoutes');
+const diagnosisRoutes = require('./routers/diagnosisRoutes');
+const invoiceRoutes = require('./routers/invoiceRoutes');
 const dotenv = require('dotenv');
 const cors = require('cors');
 const ErrorMiddleware = require('./middleware/error');
@@ -23,7 +26,7 @@ app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 
 app.use(cors({
     origin:["http://localhost:5173"],
-    allowedHeaders : ["Content-Type" ,"Authorization","user"],
+    allowedHeaders : ["Content-Type" ,"Authorization","user",, 'Cache-Control'],
     methods : ["GET", "POST","PUT","PATCH", "DELETE"],
     credentials : true
 }))
@@ -34,6 +37,9 @@ app.use('/appointment', appointmentRouters)
 app.use('/pharmacy', pharmacyRoutes)
 app.use('/department',departmentRouter)
 app.use('/inventory',inventoryRoutes)
+app.use('/prescription',prescriptionRoutes)
+app.use('/diagnosis',diagnosisRoutes)
+app.use('/invoice',invoiceRoutes)
 
 //middleware
 app.use(ErrorMiddleware)

@@ -118,26 +118,35 @@ function Appointment() {
             </tr>
           </thead>
           <tbody className="divide-y">
-            {appoint.map((item, index) => (
-              <tr key={index} className="hover:bg-gray-100 transition-all">
-                <td className="px-6 py-4 font-medium text-gray-700">
-                    {item.doctor ? `Dr. ${item.doctor.first_name} ${item.doctor.last_name}` : 'N/A'}
-                </td>
-                <td className="px-6 py-4">{item.date }</td>
-                <td className="px-6 py-4">{item.time}</td>
-                <td className="px-6 py-4">
-                  <span className={`p-2 rounded-md capitalize ${item.status === 'pending' ? 'bg-yellow-200 text-yellow-700' : item.status === 'confirmed' ? 'bg-green-200 text-green-700' : 'bg-red-200 text-red-700'}`}>
-                    {item.status}
-                  </span>
-                </td>
-                <td className="px-6 py-4 flex gap-4 items-center ">
-                  <CiEdit onClick={() => { editOpener(item); }} className=' cursor-pointer text-blue-500 hover:text-blue-700 transition-all' />
-                  <Link to={`/user/details/${item._id}`}>
-                    <FaBookOpen className=' cursor-pointer text-blue-500 hover:text-blue-700 transition-all' />
-                  </Link>
-                </td>
-              </tr>
-            ))}
+            {appoint.length > 0 ? (
+              appoint.map((item, index) => (
+                <tr key={index} className="hover:bg-gray-100 transition-all">
+                  <td className="px-6 py-4 font-medium text-gray-700">
+                      {item.doctor ? `Dr. ${item.doctor.first_name} ${item.doctor.last_name}` : 'N/A'}
+                  </td>
+                  <td className="px-6 py-4">{item.date }</td>
+                  <td className="px-6 py-4">{item.time}</td>
+                  <td className="px-6 py-4">
+                    <span className={`p-2 rounded-md capitalize ${item.status === 'pending' ? 'bg-yellow-200 text-yellow-700' : item.status === 'confirmed' ? 'bg-green-200 text-green-700' : 'bg-red-200 text-red-700'}`}>
+                      {item.status}
+                    </span>
+                  </td>
+                  <td className="px-6 py-4 flex gap-4 items-center ">
+                    <CiEdit onClick={() => { editOpener(item); }} className=' cursor-pointer text-blue-500 hover:text-blue-700 transition-all' />
+                    <Link to={`/user/details/${item._id}`}>
+                      <FaBookOpen className=' cursor-pointer text-blue-500 hover:text-blue-700 transition-all' />
+                    </Link>
+                  </td>
+                </tr>
+              ))
+              
+            ):
+            <tr>
+              <td colSpan="5" className="px-4 py-3 text-center text-gray-600">
+                No appointments found.
+              </td>
+            </tr>
+          } 
           </tbody>
         </table>
 

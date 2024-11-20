@@ -45,7 +45,7 @@ function DoctorSidebar() {
                         </Link>
                     </li>
                     <li>
-                        <Link to='diagnosis' className="flex items-center space-x-3 p-2 rounded-lg hover:bg-[#f0f4ff] hover:text-[#0056b3] transition-all">
+                        <Link to='diagnosis/list' className="flex items-center space-x-3 p-2 rounded-lg hover:bg-[#f0f4ff] hover:text-[#0056b3] transition-all">
                             <TbReportMedical className="text-xl" />
                             <span className="text-sm md:text-base hidden lg:inline">Diagnosis</span>
                         </Link>

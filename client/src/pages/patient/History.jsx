@@ -24,9 +24,9 @@ function History() {
         <div className="flex items-center space-x-4">
             {/* <img src="/path/to/profile-picture.jpg" alt="Profile" className="w-20 h-20 rounded-full shadow-md" /> */}
             <div>
-                <h3 className="text-2xl font-semibold text-gray-800">{user.user.first_name} {user.user.last_name} </h3>
+                <h3 className="text-2xl font-semibold text-gray-800">{user.first_name} {user.last_name} </h3>
                 <p className="text-gray-600">45 years old</p>
-                <p className="text-gray-500">{user.user.phone} </p>
+                <p className="text-gray-500">{user.phone} </p>
             </div>
         </div>
     </div>

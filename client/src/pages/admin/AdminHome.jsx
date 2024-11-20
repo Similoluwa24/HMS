@@ -20,7 +20,7 @@ defaults.plugins.title.color = 'black'
 function AdminHome() {
     const {doctors,user, appointment, patient,alluser} = useContext(HospitalContext)
     
-console.log({user});
+console.log(user);
   
   return (
     <>
@@ -28,7 +28,7 @@ console.log({user});
             <div className=" lg:px-12 lg:py-6 ">
             <div className="flex bg-white justify-around items-center rounded-md">
                 <div className="text">
-                    <h2 className='font-bold text-gray-700 text-3xl font-[poppins]'>Good day, <span className='text-[#007cff]'>{user?.user.first_name} {user?.user.last_name}</span></h2>
+                    <h2 className='font-bold text-gray-700 text-3xl font-[poppins]'>Good day, <span className='text-[#007cff]'>{user?.first_name} {user?.last_name}</span></h2>
                     <p className='text-gray-400 font-[poppins] '>Have a nice day at work!</p>
                 </div>
                 <div className="img">

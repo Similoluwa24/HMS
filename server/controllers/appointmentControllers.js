@@ -5,15 +5,7 @@ const User = require('../models/user')
 const mongoose = require('mongoose');
 
 
-// exports.createAppointment = catchAsyncErrors(async (req,res) => {
-    
-//      req.body.user = req.user.id
-//     const appointment = await Appointment.create(req.body)
-//     res.status(201).json({
-//         status:"success",
-//         appointment
-//     })
-// })
+
 exports.createAppointment = catchAsyncErrors(async (req,res) => {
   // Ensure the user is authenticated and their id is available
   req.body.user = req.user.id;
@@ -129,25 +121,3 @@ console.log(req.user);
     res.status(200).json({ appointments });
 });
 
-// exports.getAppointmentsByDoctor = catchAsyncErrors(async (req,res) => {
-//         // Get doctor ID from the request params (assuming the doctor ID is passed in the URL)
-//         const { doctorId } = req.params;
-
-//         // Validate that doctorId is a valid MongoDB ObjectId
-//         if (!mongoose.Types.ObjectId.isValid(doctorId)) {
-//             return res.status(400).json({ message: 'Invalid doctor ID' });
-//         }
-
-//         // Fetch the appointments for the specific doctor
-//         const appointments = await Appointment.find({ doctor: req.user.id })
-//             .populate('user', 'first_name last_name email') // Populating user details if needed
-//             .populate('doctor', 'first_name last_name email'); // Populating doctor details
-//         // If no appointments found, return a message
-//     if (!appointments || appointments.length === 0) {
-//         return res.status(404).json({ message: 'No appointments found for this doctor' });
-//     }
-
-//     // Return the list of appointments
-//     res.status(200).json({ appointments });
-   
-// })

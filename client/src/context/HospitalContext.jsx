@@ -12,7 +12,9 @@ export const HospitalProvider = ({children})=>{
     const [appointment, setAppointment] = useState([])
     const [pharmacy, setPharmacy] = useState([])
     const [inventory, setInventory] = useState([])
-    const [user, setUser]  = useState(null)
+    const [user, setUser] = useState(null);
+     const [loading, setLoading] = useState(true);
+     const [error, setError] = useState(null);
     const [alluser, setallUser]  = useState([])
     const [appoint, setAppoint] = useState([])
     const [appointmentbyDoctor,  setAppointmentbyDoctor] = useState([])
@@ -21,7 +23,7 @@ export const HospitalProvider = ({children})=>{
     const token = Cookies.get('token') 
     const {alertInfo, showHide} = useAlert()
     useEffect(()=>{
-        // fetchUser()
+         fetchUser()
         fetchUserAll()
         getallDepartment()
         getallApointment()
@@ -59,30 +61,28 @@ export const HospitalProvider = ({children})=>{
       items:{}
     })
 
-    useEffect(() => {
-      const fetchUser = async () => {
-        try {
-          const res = await fetch('http://localhost:5000/user/me', {
-            method: 'GET',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            credentials: 'include', // This allows cookies to be sent with the request
-          });
-          const data = await res.json();
-    
-          if (res.ok) {
-            setUser(data);
-            // console.log(data); // Log data directly after receiving it
-          } else {
-            console.log({ message: data });
-          }
-        } catch (error) {
-          console.log({ message: error.message });
-        }
-      };
-      fetchUser();
-    }, [isAuthenticated]);
+  
+  const fetchUser = async () => {
+  try {
+    const res = await fetch('http://localhost:5000/user/me', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Cache-Control': 'no-cache', // Disable caching
+      },
+      credentials: 'include',
+    });
+    const data = await res.json();
+    if (res.ok) {
+      setUser(data.user);
+    } else {
+      console.log({ message: data });
+    }
+  } catch (error) {
+    console.log({ message: error.message });
+  }
+};
+
     
     // If you want to log the state when it changes:
     // useEffect(() => {
@@ -211,7 +211,7 @@ export const HospitalProvider = ({children})=>{
                 const data = await res.json();
     
                 if (!res.ok) {
-                    console.error('Error response:', data);
+                    // console.error('Error response:', data);
                     // showHide('error', data.message || data.errMessage);
                 } else {
                     setAppointmentbyDoctor(data.appointments); // Adjust based on the data structure
@@ -355,6 +355,7 @@ export const HospitalProvider = ({children})=>{
             editUserHandler,
             getallApointment,
             fetchUserAll,
+            fetchUser,
             getallPharmacy,
             getallDepartment,
             getInventory,

@@ -1,8 +1,6 @@
 import React, { useContext, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import HospitalContext from '../../context/HospitalContext'
-import Compressor from 'compressorjs'
-import Modals from '../../shared/Modals'
 
 function CreateDoctors() {
   const { department,showHide,fetchUserAll} = useContext(HospitalContext)
@@ -20,51 +18,6 @@ function CreateDoctors() {
   const [confirmPassword, setConfirmPassword] = useState('')
   const [role, setRole] = useState('')
   const navigate = useNavigate()
- 
-
-  // const handleImageUpload = (e)=>{
-  //   const file = e.target.files[0]
-  //   console.log(file);
-
-  //   transformFile(file)
-    
-  // }
-  // const transformFile =(file)=>{
-  //   const reader = new FileReader
-  //   reader.readAsDataURL(file)
-  //   reader.onloadend = ()=>{
-  //     setPhoto(reader.result)
-  //   }
-    
-    
-  // }
-  const handleImageUpload = (e) => {
-    const file = e.target.files[0]
-    if (file) {
-      compressImage(file)
-    }
-  }
-
-  const compressImage = (file) => {
-    new Compressor(file, {
-      quality: 0.6, // Adjust quality here
-      success: (compressedFile) => {
-        // Convert the compressed file to base64
-        transformFile(compressedFile)
-      },
-      error: (err) => {
-        console.error('Compression failed:', err.message)
-      },
-    })
-  }
-
-  const transformFile = (file) => {
-    const reader = new FileReader()
-    reader.readAsDataURL(file)
-    reader.onloadend = () => {
-      setPhoto(reader.result)
-    }
-  }
 
  
   console.log(photo);
@@ -119,6 +72,42 @@ function CreateDoctors() {
 
      
   }
+
+  
+
+//   const submitHandler = async (e) => {
+//     e.preventDefault();
+
+//     const formData = new FormData();
+//     formData.append('first_name', first_name);
+//     formData.append('last_name', last_name);
+//     formData.append('gender', gender);
+//     formData.append('email', email);
+//     formData.append('dob', dob);
+//     formData.append('phone', phone);
+//     formData.append('photo', photo[0]); // Assuming `photo` is from `e.target.files`
+//     formData.append('address', address);
+//     formData.append('school', school);
+//     formData.append('departments', departments);
+//     formData.append('password', password);
+//     formData.append('confirmPassword', confirmPassword);
+//     formData.append('role', role);
+
+//     try {
+//         const res = await fetch('http://localhost:5000/user/signup', {
+//             method: 'POST',
+//             credentials: 'include',
+//             body: formData,
+//         });
+//         const data = await res.json()
+//         console.log(data);
+        
+//         // handle response
+//     } catch (error) {
+//         console.error(error);
+//     }
+// };
+
   return (
     <div className='my-8 mx-5'>
       <p className='font-[poppins] text-lg text-gray-600 '><Link to="/admin/alldoc" > {`Doctor's List >> `} </Link>CreateDoctors</p>
@@ -143,7 +132,7 @@ function CreateDoctors() {
                     </div>
                       <div className='lg:w-[48%] '>                       
                         <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file_input">Upload file</label>
-                        <input onChange={handleImageUpload} class="block w-full text-sm text-[#007cff] border border-gray-300 rounded-lg cursor-pointer bg-gray-50 d focus:outline-none" aria-describedby="file_input_help" id="file_input" type="file"/>
+                        <input onChange={(e)=>{setPhoto(e.target.files)}} class="block w-full text-sm text-[#007cff] border border-gray-300 rounded-lg cursor-pointer bg-gray-50 d focus:outline-none" aria-describedby="file_input_help" id="file_input" type="file"/>
                         
                       </div>
                 </div>

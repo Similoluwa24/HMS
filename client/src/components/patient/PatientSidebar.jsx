@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { BsJournalBookmark } from 'react-icons/bs';
+import { BsCreditCard, BsJournalBookmark } from 'react-icons/bs';
 import { CiLogout } from 'react-icons/ci';
 import { IoHomeOutline, IoReceiptOutline, IoSettingsOutline } from 'react-icons/io5';
 import { MdLocalHospital } from 'react-icons/md';
@@ -48,6 +48,12 @@ function DoctorSidebar() {
                         <Link to='diagnosis' className="flex items-center space-x-4 p-3 rounded-xl bg-white hover:bg-[#e3f2fd] shadow-sm hover:shadow-md transition-all">
                             <TbReportMedical className="text-2xl text-[#007cff]" />
                             <span className="text-lg font-medium text-gray-700">Diagnosis</span>
+                        </Link>
+                    </li>
+                    <li>
+                        <Link to='billing' className="flex items-center space-x-4 p-3 rounded-xl bg-white hover:bg-[#e3f2fd] shadow-sm hover:shadow-md transition-all">
+                            <BsCreditCard className="text-2xl text-[#007cff]" />
+                            <span className="text-lg font-medium text-gray-700">Billings</span>
                         </Link>
                     </li>
                     <li>

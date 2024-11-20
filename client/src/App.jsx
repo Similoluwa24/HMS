@@ -53,6 +53,14 @@ import Diagnosis from './pages/doctor/Diagnosis'
 import PatientDiagnosis from './pages/patient/PatientDiagnosis'
 import AppointmentDetails from './pages/doctor/AppointmentDetails'
 import PrescriptionList from './pages/doctor/PrescriptionList'
+import DiagnosesTable from './pages/doctor/DiagnosesTable'
+import UserProfile from './pages/doctor/UserProfile'
+import AdminInvoice from './pages/admin/AdminInvoice'
+import AdminDetails from './pages/admin/AdminDetails'
+import DocDetails from './pages/admin/DocDetails'
+import InvoiceDetail from './pages/admin/InvoiceDetail'
+import BillingList from './pages/patient/BillingList'
+import PatientProfile from './pages/patient/PatientProfile'
 
 function App() {
   const token = localStorage.getItem('user')
@@ -89,7 +97,9 @@ function App() {
               <Route path='appointment' element={<Appointment/>}/>
               <Route path='home' element={<Home/>}/>
               <Route path='history' element={<History/>}/>
-              <Route path='billing' element={<Billings/>}/>
+              <Route path='billing' element={<BillingList/>}/>
+              <Route path='profile' element={<PatientProfile/>}/>
+              <Route path='billing/:id' element={<Billings/>}/>
               <Route path='settings' element={<Settings/>}/>
               <Route path='prescription' element={<MyPrescriptions/>}/>
            
@@ -105,6 +115,8 @@ function App() {
               } >
                 <Route path='sidebar' element={<AdminSidebar/>} />
                 <Route path='home' element={<AdminHome/>} />
+                <Route path='details/:id' element={<AdminDetails/>} />
+                <Route path='details/doctor/:id' element={<DocDetails/>} />
                 <Route path='createdoc' element={<CreateDoctors/>}/>
                 <Route path='createpa' element={<CreatePatient/>}/>
                 <Route path='createapp' element={<CreateAppointment/>}/>
@@ -119,20 +131,24 @@ function App() {
                 <Route path='allpharm' element={<AdminPharmacy/>}/>
                 <Route path='alladmin' element={<AllAdmin/>}/>
                 <Route path='transactions' element={<AdminPayment/>}/>
+                <Route path='invoice' element={<AdminInvoice/>}/>
+                <Route path='invoice/:id' element={<InvoiceDetail/>}/>
             </Route>
 
             <Route path='/doctor' element={
               // <AuthHandler>
               <DoctorLayout/>
-              // /* </AuthHandler> */
+              /* </AuthHandler> */
               } >
               <Route path='home' element={<DoctorHome/>} />
               <Route path='appointment' element={<DoctorAppointment/>} />
               <Route path='prescription' element={<DrPrescription/>} />
               <Route path='prescription/list' element={<PrescriptionList/>}/>
               <Route path='settings' element={<DrSettings/>} />
+              <Route path='profile' element={<UserProfile/>} />
               <Route path='diagnosis' element={<Diagnosis/>} />
               <Route path='details/:id' element={<AppointmentDetails/>} />
+              <Route path='diagnosis/list' element={<DiagnosesTable/>} />
 
             </Route>
           </Routes>

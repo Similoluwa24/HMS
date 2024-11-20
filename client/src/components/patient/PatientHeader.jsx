@@ -3,7 +3,7 @@ import { RxAvatar } from "react-icons/rx";
 import { FaRegBell, FaRegEnvelope, FaSearch } from "react-icons/fa";
 import HospitalContext from '../../context/HospitalContext';
 import { AuthContext } from '../../context/AuthContext';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import useLogout from '../../hooks/useLogout';
 function PatientHeader() {
@@ -40,7 +40,7 @@ function PatientHeader() {
         <div className="relative">
           <div onClick={toggleDropdown} className="flex items-center space-x-2 cursor-pointer">
             <p className="font-medium text-sm text-gray-700">
-              {user?.user.first_name} {user?.user.last_name}
+              {user?.first_name} {user?.last_name}
             </p>
             <RxAvatar className='text-2xl text-[#007cff] hover:text-blue-700' />
           </div>
@@ -51,13 +51,13 @@ function PatientHeader() {
               <div className="p-4 border-b text-center">
                 <RxAvatar className='text-4xl mx-auto text-[#007cff]' />
                 <p className="mt-2 font-semibold text-gray-700">
-                  {user?.user.first_name} {user?.user.last_name}
+                  {user?.first_name} {user?.last_name}
                 </p>
-                <p className="text-sm text-gray-500">{user?.user.email}</p>
+                <p className="text-sm text-gray-500">{user?.email}</p>
               </div>
               <ul className="py-2 text-gray-700">
-                <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">View Profile</li>
-                <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Settings</li>
+                <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer"><Link to={'profile'}>View Profile</Link></li>
+                <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer"><Link to={'settings'}> Settings</Link></li>
                 <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
                   <button onClick={logoutHandler}>Logout</button></li>
               </ul>

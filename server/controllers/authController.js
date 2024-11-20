@@ -11,30 +11,70 @@ const  cloudinary  = require('../utils/cloudinary');
 dotenv.config()
 
 
+// exports.signup = catchAsyncErrors(async (req, res, next) => {
+//     const {
+//       first_name, last_name, email, gender, dob, password, confirmPassword, role,
+//       phone, photo, departments, address, school, NHIS,genotype,btype
+//     } = req.body;
+    
+    
+  
+//     if (password !== confirmPassword) {
+//       return res.status(400).json({ message: 'Passwords do not match' });
+//     }
+  
+//     let photoUrl = '';
+//     if (photo) {
+//       const uploadResponse = await cloudinary.uploader.upload(`data:${file.mimetype};base64,${file.buffer.toString("base64")}`)
+//       images.push({ img: result.secure_url })
+//       photoUrl = uploadResponse.secure_url;
+//     }
+  
+//     const hashedPassword = await bcrypt.hash(password, 12);
+//     const verificationToken = Math.floor(100000 + Math.random() * 900000).toString();
+
+//     const newUser = await User.create({
+//       first_name, last_name, email, gender, password: hashedPassword, dob, role, phone,
+//       departments, address, school, NHIS,genotype,btype, photo: photoUrl, verificationToken,
+//       verificationExpire: Date.now() + 24 * 60 * 60 * 1000,
+//     });
+  
+//     sendToken(newUser, 200, res);
+  
+//     const message = `Welcome to OJ Hospital. Thank you for choosing us. Your Verification Token is ${verificationToken} and it expires in 24 hours.`;
+//     try {
+//       await sendEmail({
+//         email: newUser.email,
+//         subject: 'OJ Hospital Verification',
+//         message,
+//       });
+//     } catch (error) {
+//       console.log('Email failed to send:', error);
+//     }
+//   });
+
+// Updated signup controller
 exports.signup = catchAsyncErrors(async (req, res, next) => {
     const {
       first_name, last_name, email, gender, dob, password, confirmPassword, role,
-      phone, photo, departments, address, school, NHIS,genotype,btype
+      phone, departments, address, school, NHIS, genotype, btype
     } = req.body;
-    
-    
   
     if (password !== confirmPassword) {
       return res.status(400).json({ message: 'Passwords do not match' });
     }
   
     let photoUrl = '';
-    if (photo) {
-      const uploadResponse = await cloudinary.uploader.upload(photo, { upload_preset: 'hospital' });
-      photoUrl = uploadResponse.secure_url;
+    if (req.file) {
+      photoUrl = req.file.path; // URL provided by multer with Cloudinary
     }
   
     const hashedPassword = await bcrypt.hash(password, 12);
     const verificationToken = Math.floor(100000 + Math.random() * 900000).toString();
-
+  
     const newUser = await User.create({
       first_name, last_name, email, gender, password: hashedPassword, dob, role, phone,
-      departments, address, school, NHIS,genotype,btype, photo: photoUrl, verificationToken,
+      departments, address, school, NHIS, genotype, btype, photo: photoUrl, verificationToken,
       verificationExpire: Date.now() + 24 * 60 * 60 * 1000,
     });
   

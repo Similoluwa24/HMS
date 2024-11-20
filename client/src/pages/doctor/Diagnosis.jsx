@@ -1,24 +1,26 @@
 import React, { useContext, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import HospitalContext from '../../context/HospitalContext';
 
 function Diagnosis() {
     const {user,showHide} = useContext(HospitalContext)
     const [diagnosis, setDiagnosis] = useState('')
     const [doctor, setDoctor] = useState('')
-    const [plan, setPlan] = useState('')
-    const [medication, setMedication] = useState('')
+    const [symptoms, setSymptoms] = useState('')
+    const [patient, setPatient] = useState('')
     const [notes, setNotes] = useState('')
+    const [userId, setUserId] = useState('')
+    const navigate = useNavigate()
 
     const addDiagnosis = async(e)=>{
         e.preventDefault()
-        const res = await fetch('qwertyui',{
+        const res = await fetch('http://localhost:5000/diagnosis/add',{
             method:'POST',
             headers:{
                 'Content-Type':'application/json'
             },
             credentials:'include',
-            body:JSON.stringify({diagnosis,doctor,plan,medication,notes})
+            body:JSON.stringify({userId,diagnosis,doctor,symptoms,patient,notes})
         })
         const data = await res.json()
         if (!res.ok) {
@@ -26,6 +28,7 @@ function Diagnosis() {
             showHide('error',data.errMessage)
         } else {
             showHide('success','Diagnosis Added!')
+            navigate('/doctor/home')
         }
     }
     
@@ -43,7 +46,52 @@ function Diagnosis() {
         </Link>
     </div>
 
-    <form className="bg-white rounded-lg p-6 shadow-md space-y-6">
+    <form onSubmit={addDiagnosis} className="bg-white rounded-lg p-6 shadow-md space-y-6">
+
+          {/* Patient ID Field */}
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 mb-1">Patient ID</label>
+            <input 
+                type="text" 
+                className="w-full border border-gray-300 rounded-lg px-4 py-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                placeholder="Enter patient ID"
+                onChange={(e)=>{setUserId(e.target.value)}}
+            />
+        </div>
+      
+        
+         {/* Patient Name Field */}
+         <div>
+            <label className="block text-sm font-semibold text-gray-700 mb-1">Patient Name</label>
+            <input
+              type="text"
+              className="w-full border border-gray-300 rounded-lg px-4 py-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              placeholder="Enter patient name"
+              onChange={(e) => setPatient({ ...patient, name: e.target.value })}
+            />
+          </div>
+
+          {/* Patient Age Field */}
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 mb-1">Patient Age</label>
+            <input
+              type="number"
+              className="w-full border border-gray-300 rounded-lg px-4 py-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              placeholder="Enter patient age"
+              onChange={(e) => setPatient({ ...patient, age: e.target.value })}
+            />
+          </div>
+
+                  {/* Patient Relationship Field */}
+         <div>
+            <label className="block text-sm font-semibold text-gray-700 mb-1">Relationship</label>
+            <input
+              type="text"
+              className="w-full border border-gray-300 rounded-lg px-4 py-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              placeholder="Enter relationship (e.g., daughter, son) If Applicable"
+              onChange={(e) => setPatient({ ...patient, relationship: e.target.value })}
+            />
+          </div>
         {/* Diagnosis Field */}
         <div>
             <label className="block text-sm font-semibold text-gray-700 mb-1">Diagnosis</label>
@@ -60,7 +108,7 @@ function Diagnosis() {
             <label className="block text-sm font-semibold text-gray-700 mb-1">Doctor</label>
             <input 
                 type="text"
-                value={`Dr. ${user?.user.first_name}  ${user?.user.last_name}`}
+                value={`Dr. ${user?.first_name}  ${user?.last_name}`}
                 disabled
                 className="w-full border border-gray-300 capitalize rounded-lg px-4 py-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-teal-500"
                 placeholder="Enter doctor's name"
@@ -70,17 +118,17 @@ function Diagnosis() {
 
         {/* Treatment Plan Field */}
         <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-1">Treatment Plan</label>
+            <label className="block text-sm font-semibold text-gray-700 mb-1">Symptoms</label>
             <textarea 
                 className="w-full border border-gray-300 rounded-lg px-4 py-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-teal-500"
                 rows="3"
-                placeholder="Describe the treatment plan"
-                onChange={(e)=>{setPlan(e.target.value)}}
+                placeholder="Describe the Symptoms"
+                onChange={(e)=>{setSymptoms(e.target.value)}}
             ></textarea>
         </div>
 
         {/* Medications Field */}
-        <div>
+       {/* <div>
             <label className="block text-sm font-semibold text-gray-700 mb-1">Medications</label>
             <input 
                 type="text" 
@@ -88,7 +136,7 @@ function Diagnosis() {
                 className="w-full border border-gray-300 rounded-lg px-4 py-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-teal-500"
                 placeholder="List medications (comma-separated)"
             />
-        </div>
+        </div> */}
 
         {/* Notes Field */}
         <div>

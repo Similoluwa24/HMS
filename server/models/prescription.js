@@ -1,9 +1,15 @@
 const mongoose = require('mongoose');
+const User = require('./user')
 
 const prescriptionSchema = new mongoose.Schema({
-    patient:{
-        type:String,
+    userId:{
+        type:mongoose.Schema.ObjectId,
+        ref:'User',
         required:true
+    },
+    patient: {
+        name: { type: String, required: true },
+        age: { type: Number, required: true },
     },
     dop:{
         type:String,
@@ -26,7 +32,8 @@ const prescriptionSchema = new mongoose.Schema({
         required:true
     },
     doctor:{
-        type:String,
+        type:mongoose.Schema.ObjectId,
+        ref:'User',
         required:true
     }
 })

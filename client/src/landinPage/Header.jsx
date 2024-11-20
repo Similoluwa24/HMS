@@ -1,9 +1,23 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { MdLocalHospital } from "react-icons/md";
 import { CiMenuKebab } from "react-icons/ci";
-import { Link } from 'react-router-dom' 
+import { Link, useNavigate } from 'react-router-dom' 
+import HospitalContext from '../context/HospitalContext';
 
 function Header() {
+  // const {isAuthenticated, user} = useContext(HospitalContext)
+  // const navigate = useNavigate()
+  // console.log(user);
+  
+  // if(isAuthenticated){
+  //   if( user.role === "admin") {
+  //     navigate('/admin/home')
+  //   }else if(user.role === "doctor") {
+  //     navigate('/doctor/home')
+  //   }else
+  //   navigate('/user/home')
+  // }
+   
   return (
     <div>
         <div className="flex fixe z-10 w-full bg-white justify-between items-center px-6 py-2 header border-b-2 border-[#007cff]  ">

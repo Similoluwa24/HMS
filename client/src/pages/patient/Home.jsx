@@ -29,7 +29,7 @@ function Home() {
           <div className="w-[60%] ">
             <h2 className='text-gray-500 text-[15px]  lg:text-lg font-[poppins] '>Welcome Back</h2>
                 <h1 className='text-[#007cff] text-[16px] lg:text-2xl font-[poppins]'>
-                  {`${user?.user.first_name} ${user?.user.last_name}!`}
+                  {`${user?.first_name} ${user?.last_name}!`}
                 </h1>
             <p className='text-gray-500 text-[7px] lg:text-[13px] font-[poppins]'>We would like to take this opportunity to welcome you to our practice and to thank you 
               for choosing our physicians to participate in your healthcare. We look forward to providing 
@@ -43,7 +43,7 @@ function Home() {
                         <img src={bp} className='inline size-14' alt="" />
                         <div className="">
                         <p className="text-[0.8] font-semibold tip">Blood Type</p>
-                        <p className="text-[1.3em] font-bold text-[#007cff] font-[poppins] tracking-wide second-text">{`${user?.user.btype}`}</p>                        
+                        <p className="text-[1.3em] font-bold text-[#007cff] font-[poppins] tracking-wide second-text">{`${user?.btype}`}</p>                        
                         </div>
                     </div>
 
@@ -68,7 +68,7 @@ function Home() {
                     <img src={geno} alt="" />
                     <div className="">
                     <p className="text-[0.8em] font-semibold tip">Genotype</p>
-                    <p className="text-[1.3em] font-bold text-[#007cff] font-[poppins] tracking-wide second-text">{`${user?.user.genotype}`}</p>
+                    <p className="text-[1.3em] font-bold text-[#007cff] font-[poppins] tracking-wide second-text">{`${user?.genotype}`}</p>
                   </div>
                 </div>
                

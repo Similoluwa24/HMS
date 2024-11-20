@@ -8,10 +8,10 @@ function AuthHandler({ isAuthenticated, user, children }) {
   // Ensure that the correct property is accessed
   const role = user?.role || user?.user?.role;
 
-  // Redirect unauthenticated users to login page
-  if (!isAuthenticated && !(location.pathname.includes("/login") || location.pathname.includes("/register"))) {
-    return <Navigate to="/auth/login" />;
-  }
+  // // Redirect unauthenticated users to login page
+  // if (isAuthenticated && !(location.pathname.includes("/login") || location.pathname.includes("/register"))) {
+  //   return <Navigate to="/auth/login" />;
+  // }
 
   // Redirect authenticated users from login/register pages
   if (isAuthenticated && (location.pathname.includes("/login") || location.pathname.includes("/register"))) {

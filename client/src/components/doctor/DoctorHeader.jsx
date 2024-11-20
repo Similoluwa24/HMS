@@ -1,5 +1,4 @@
 import React, { useContext, useState } from 'react';
-import { RxAvatar } from "react-icons/rx";
 import { FaRegBell, FaRegEnvelope, FaSearch } from "react-icons/fa";
 import HospitalContext from '../../context/HospitalContext';
 import useLogout from '../../hooks/useLogout';
@@ -7,14 +6,22 @@ import useLogout from '../../hooks/useLogout';
 function DoctorHeader() {
   const { user } = useContext(HospitalContext);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const logout = useLogout()
+  const logout = useLogout();
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
-  const logoutHandler = ()=>{
-    logout()
-  }
+
+  const logoutHandler = () => {
+    logout();
+  };
+
+  // Function to get initials from the user's first and last name
+  const getInitials = (firstName, lastName) => {
+    if (!firstName && !lastName) return "?";
+    return `${firstName?.[0] || ''}${lastName?.[0] || ''}`.toUpperCase();
+  };
+
   return (
     <div className="bg-white shadow-md p-4 w-full flex justify-between items-center border-b border-gray-200">
       {/* Search bar or logo placeholder */}
@@ -34,20 +41,24 @@ function DoctorHeader() {
         <div className="relative">
           <div onClick={toggleDropdown} className="flex items-center space-x-2 cursor-pointer">
             <p className="font-medium text-sm text-gray-700">
-              {user?.user.first_name} {user?.user.last_name}
+              {user?.first_name} {user?.last_name}
             </p>
-            <RxAvatar className='text-2xl text-[#007cff] hover:text-blue-700' />
+            <div className='w-8 h-8 flex justify-center items-center rounded-full bg-[#007cff] text-white font-bold'>
+              {getInitials(user?.first_name, user?.last_name)}
+            </div>
           </div>
           
           {/* Dropdown */}
           {isDropdownOpen && (
             <div className="absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-lg border border-gray-200 z-10">
               <div className="p-4 border-b text-center">
-                <RxAvatar className='text-4xl mx-auto text-[#007cff]' />
+                <div className='w-12 h-12 flex justify-center items-center rounded-full bg-[#007cff] text-white font-bold mx-auto'>
+                  {getInitials(user?.first_name, user?.last_name)}
+                </div>
                 <p className="mt-2 font-semibold text-gray-700">
-                  {user?.user.first_name} {user?.user.last_name}
+                  {user?.first_name} {user?.last_name}
                 </p>
-                <p className="text-sm text-gray-500">{user?.user.email}</p>
+                <p className="text-sm text-gray-500">{user?.email}</p>
               </div>
               <ul className="py-2 text-gray-700">
                 <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">View Profile</li>

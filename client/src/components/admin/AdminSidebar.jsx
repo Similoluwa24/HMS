@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { MdLocalHospital, MdOutlineInventory } from "react-icons/md";
 import { BsJournalBookmark } from "react-icons/bs";
 import { CiLogout, CiMoneyBill, CiStethoscope, CiCreditCard1 } from "react-icons/ci";
+import { CiCalculator1 } from "react-icons/ci";
 import { IoHomeOutline } from "react-icons/io5";
 import { CiUser } from "react-icons/ci";
 import { SiAwsorganizations } from "react-icons/si";
@@ -80,8 +81,8 @@ function AdminSidebar() {
                     </li>
                     <li>
                         <Link to='/admin/transactions' className="flex items-center space-x-3 p-2 rounded-lg hover:bg-[#f0f4ff] hover:text-[#0056b3] transition-all">
-                            <CiCreditCard1 className="text-xl" />
-                            <span className="text-sm lg:text-base hidden lg:inline">Payment</span>
+                            <CiCalculator1 className="text-xl" />
+                            <span className="text-sm lg:text-base hidden lg:inline">Accounts</span>
                         </Link>
                     </li>
                     <li>

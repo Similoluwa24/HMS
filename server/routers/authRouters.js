@@ -2,8 +2,12 @@ const express = require('express');
 const router = express.Router()
 const authController = require('../controllers/authController');
 const {isAuthenticated, isAdmin} = require('../middleware/auth')
+const multer = require('multer')
 
-router.post("/signup", authController.signup)
+const storage = multer.memoryStorage()
+const uploads = multer({storage:storage})
+
+router.post('/signup', uploads.single('photo'), authController.signup);
 router.post("/login", authController.login)
 router.get("/logout", authController.logout)
 router.post("/forgotpwd", authController.forgotPassword)

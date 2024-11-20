@@ -14,7 +14,7 @@ exports.addInventory = catchAsyncErrors(async (req,res) => {
 exports.deleteInventory = catchAsyncErrors(async (req,res) => {
     const data = await Inventory.findById(req.params.id)
     if (!data) {
-        next(new ErrorHandler('Inventory not Found',404))
+       return next(new ErrorHandler('Inventory not Found',404))
     }
     await data.deleteOne()
     res.status(200).json({
