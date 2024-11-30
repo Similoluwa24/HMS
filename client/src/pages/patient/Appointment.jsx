@@ -50,6 +50,8 @@ function Appointment() {
     const data = await res.json();
     if (!res.ok) {
       showHide('error', data.errMessage);
+      console.log(data);
+      
     } else {
       showHide('success', 'Appointment Created');
       await getAppointmentById();
@@ -228,7 +230,7 @@ function Appointment() {
                   <select id="doctor" value={doctor} onChange={(e) => { setDoctor(e.target.value); }} className="w-full p-2 border rounded-lg text-sm text-blue-600 focus:ring-blue-500 focus:border-blue-500" required>
                     <option value="n/a">Choose Doctor</option>
                     {doctors.map((item, index) => (
-                      <option key={index} value={item.last_name}>Dr. {item.first_name} {item.last_name}</option>
+                      <option key={index} value={item._id}>Dr. {item.first_name} {item.last_name}</option>
                     ))}
                   </select>
                 </div>

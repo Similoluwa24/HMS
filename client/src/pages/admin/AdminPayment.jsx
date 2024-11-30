@@ -68,16 +68,16 @@ function AdminPayment() {
                 <tr key={invoice.id} className="border-b hover:bg-gray-50">
                   <td className="py-3 px-6 text-gray-700">{invoice._id}</td>
                   <td className="py-3 px-6 text-gray-700">{invoice.patientId.first_name} {invoice.patientId.last_name}</td>
-                  <td className="py-3 px-6 text-gray-700">{invoice.issuedDate}</td>
+                  <td className="py-3 px-6 text-gray-700">{new Date(invoice.issuedDate).toLocaleDateString()}</td>
                   <td className="py-3 px-6 text-gray-700">{invoice.totalCost}</td>
                   <td className={`py-3 px-6 text-gray-700 font-semibold ${
-                    invoice.status === 'Paid' ? 'text-green-600' :
+                    invoice.status === 'paid' ? 'text-green-600' :
                     invoice.status === 'Pending' ? 'text-yellow-600' :
                     'text-red-600'
                   }`}>{invoice.status}</td>
                   <td className="px-6 py-3 flex space-x-2 items-center justify-center bg-blue-100">
-                    <Link to={`/admin/invoice/${invoice._id}`}><FaRegEye className="text-blue-600 hover:text-blue-800 transition"/></Link>
-                    <Link><CiEdit className="text-blue-600 hover:text-blue-800 transition"/></Link>
+                    <Link to={`/admin/invoices/${invoice._id}`} className="text-blue-600 underline  hover:text-blue-800 transition">View</Link>
+                    {/* <Link><CiEdit className="text-blue-600 hover:text-blue-800 transition"/></Link> */}
                   </td>
                 </tr>
               ))}

@@ -56,8 +56,9 @@ const userSchema = new mongoose.Schema({
     school:{
         type:String
     },
-    photo:{
-        type:String
+    photo: {
+        type: String,
+        default: null
     },
     NHIS:{
         type:String

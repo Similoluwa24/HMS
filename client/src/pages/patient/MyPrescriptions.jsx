@@ -32,7 +32,7 @@ function MyPrescriptions() {
         <>
             <div className="bg-gray-50 shadow-lg rounded-2xl p-8 max-w-4xl m-auto my-10 space-y-8">
                 <div className="flex items-center justify-between border-b pb-4 mb-6">
-                    <h2 className="text-3xl font-bold text-gray-900">Patient Prescription History</h2>
+                    <h2 className="lg:text-3xl font-bold text-gray-900">Patient Prescription History</h2>
                     <Link
                         to={'/user/home'}
                         className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-5 py-2 rounded-lg shadow-md hover:from-blue-600 hover:to-indigo-700 transition duration-300"
@@ -53,8 +53,8 @@ function MyPrescriptions() {
                         {prescriptions.length >= 1 ? (
                             prescriptions.map((item, index) => (
                                 <div key={index} className="bg-white rounded-lg p-6 shadow-sm hover:shadow-md transition duration-300">
-                                    <div className="flex justify-between items-center mb-2">
-                                        <h4 className="text-xl font-semibold text-gray-800">Prescription Date: {item.dop}</h4>
+                                    <div className="flex justify-between gap-3 items-center mb-2">
+                                        <h4 className="lg:text-xl text-[15px] font-semibold text-gray-800">Prescription Date: {item.dop}</h4>
                                         <span className="text-sm capitalize text-gray-500">{`Dr. ${item.doctor.first_name} ${item.doctor.last_name}`}</span>
                                     </div>
                                     <div className="text-gray-700 space-y-2">

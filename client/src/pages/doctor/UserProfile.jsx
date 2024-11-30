@@ -49,35 +49,39 @@ function UserProfile() {
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-200">
       {user ? (
-        <div className="bg-white shadow-md rounded-lg p-8 w-1/2 mx-auto">
+        <div className="bg-white shadow-md rounded-lg p-8 lg:kw-1/2 md:mx-auto">
           <h1 className="text-2xl font-bold text-gray-800 mb-4">User Profile</h1>
-          <div className="space-y-4">
-            <div>
-              <span className="block text-sm font-medium text-gray-500">Name</span>
-              <p className="text-lg capitalize text-gray-700">{`${user.first_name} ${user.last_name}`}</p>
+        <div className="flex gap-6">
+
+            <img src={user.photo} className='rounded-full w-16 h-16 md:w-[200px] md:h-[200px] ' alt="" />
+            <div className="space-y-4">
+              <div>
+                <span className="block text-sm font-medium text-gray-500">Name</span>
+                <p className="text-lg capitalize text-gray-700">{`${user.first_name} ${user.last_name}`}</p>
+              </div>
+              <div>
+                <span className="block text-sm font-medium text-gray-500">Email</span>
+                <p className="text-lg text-gray-700">{user.email}</p>
+              </div>
+              <div>
+                <span className="block text-sm font-medium text-gray-500">Role</span>
+                <p className="text-lg text-gray-700">{user.role}</p>
+              </div>
+              <div>
+                <span className="block text-sm font-medium text-gray-500">Gender</span>
+                <p className="text-lg text-gray-700">{user.gender}</p>
+              </div>
+              <div>
+                <span className="block text-sm font-medium text-gray-500">Date of Birth</span>
+                <p className="text-lg text-gray-700">{new Date(user.dob).toLocaleDateString()}</p>
+              </div>
+              <div>
+                <span className="block text-sm font-medium text-gray-500">Phone</span>
+                <p className="text-lg text-gray-700">{user.phone}</p>
+              </div>
+              
             </div>
-            <div>
-              <span className="block text-sm font-medium text-gray-500">Email</span>
-              <p className="text-lg text-gray-700">{user.email}</p>
-            </div>
-            <div>
-              <span className="block text-sm font-medium text-gray-500">Role</span>
-              <p className="text-lg text-gray-700">{user.role}</p>
-            </div>
-            <div>
-              <span className="block text-sm font-medium text-gray-500">Role</span>
-              <p className="text-lg text-gray-700">{user.gender}</p>
-            </div>
-            <div>
-              <span className="block text-sm font-medium text-gray-500">Role</span>
-              <p className="text-lg text-gray-700">{user.dob}</p>
-            </div>
-            <div>
-              <span className="block text-sm font-medium text-gray-500">Role</span>
-              <p className="text-lg text-gray-700">{user.phone}</p>
-            </div>
-            
-          </div>
+        </div>
         </div>
       ) : (
         <p className="text-center text-white text-lg">No user data available.</p>

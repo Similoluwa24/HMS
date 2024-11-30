@@ -9,5 +9,6 @@ route.delete('/delete/:id',isAuthenticated,appointmentControllers.deleteAppointm
 route.get('/admin',appointmentControllers.findAppointment)
 route.get('/get',isAuthenticated,appointmentControllers.findAppointmentByUserId)
 route.get('/doctor',isAuthenticated, appointmentControllers.getAppointmentsByDoctor);
+route.get('/latest',isAuthenticated, appointmentControllers.getLatestAppointment);
 
 module.exports = route

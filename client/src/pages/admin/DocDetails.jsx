@@ -28,9 +28,9 @@ function DocDetails() {
             </div>
             {details &&
                 <div className="about my-5">
-                    <div className="flex justify-evenly items-center">
+                    <div className="flex lg:flex-row flex-col justify-evenly items-center">
                         <div className="border rounded-full bg-blue-400 h-[200px] w-[200px] flex items-center justify-center ">
-                            <img src={details.photo} alt="" />
+                            <img src={details.photo} className="border rounded-full object-cover bg-blue-400 h-[200px] w-[200px] flex items-center justify-center " alt="" />
                             {/* <p className='text-white text-4xl font-[poppins]'>{getInitials(details.first_name, details.last_name)}</p> */}
                         </div>
                         <div className=" rounded-lg p-6 capitalize max-w-md mx-auto mt-10 space-y-4">

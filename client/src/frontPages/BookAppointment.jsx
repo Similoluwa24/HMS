@@ -7,7 +7,7 @@ import HospitalContext from '../context/HospitalContext'
 import { useNavigate } from 'react-router-dom';
 
 function BookAppointment() {
-  const {doctors, addAppointment}= useContext(HospitalContext)
+  const {doctors, showHide}= useContext(HospitalContext)
   const navigate = useNavigate();
   const [first_name, setFirstName] = useState('')
   const [last_name, setLastName] = useState('')
@@ -17,19 +17,43 @@ function BookAppointment() {
   const [time, setTime] = useState('')
   const [message, setMessage] = useState('')
 
-  const submitHandler = ()=>{
-    const newAppointment = {
+  const getTodayDate = () => {
+    const today = new Date();
+    const yyyy = today.getFullYear();
+    const mm = String(today.getMonth() + 1).padStart(2, '0'); // Month is zero-indexed
+    const dd = String(today.getDate()).padStart(2, '0');
+    return `${yyyy}-${mm}-${dd}`;
+};
+
+
+const submitHandler = async (e) => {
+  e.preventDefault();
+  const res = await fetch('http://localhost:5000/appointment/add', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    credentials: "include",
+    body: JSON.stringify({
       first_name,
       last_name,
       email,
       doctor,
       date,
       time,
-      message
-    }
-    addAppointment(newAppointment)
+      message,
+    }),
+  });
+  const data = await res.json();
+  if (!res.ok) {
+    showHide('error', data.errMessage);
+    console.log(data);
+    
+  } else {
+    showHide('success', 'Appointment Created');
     navigate('/')
   }
+};
   return (
     <div>
       <div className="pb-6 appoint">
@@ -113,7 +137,7 @@ function BookAppointment() {
                         <div className="flex gap-4 ">
                             <div className="w-[48%]">
                                 <label for="date" className="block mb-1 text-sm font-medium">select appointment date *</label>
-                                <input type="date" id="date" onChange={(e)=>{setDate(e.target.value)}} className="bg-white border border-gray-300 text-[#007cff] text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  " placeholder="" required />
+                                <input type="date" id="date" min={getTodayDate()} onChange={(e)=>{setDate(e.target.value)}} className="bg-white border border-gray-300 text-[#007cff] text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  " placeholder="" required />
                             </div>
                             <div className="w-[48%]">
                                 <label for="time" className="block mb-1 text-sm font-medium">select appointment time *</label>

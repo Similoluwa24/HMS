@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import HospitalContext from '../../context/HospitalContext'
 
 function Settings() {
-  const {showHide, user} = useContext(HospitalContext)
+  const {showHide, user,fetchUser} = useContext(HospitalContext)
   const [oldpassword, setOldPassword] = useState('')
   const [newpassword, setNewPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
@@ -92,7 +92,7 @@ function Settings() {
       showHide('error',data.errMessage)      
     } else {
       console.log(data);
-      
+      fetchUser()
       showHide('success','User data updated successfully!')
     }
   }

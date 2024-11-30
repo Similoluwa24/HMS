@@ -45,8 +45,8 @@ function AppointmentDetails() {
 
   return (
     <div className="p-6 bg-white border border-gray-200 shadow-md rounded-lg max-w-4xl mx-auto mt-8">
-      <div className="flex justify-between">
-        <h2 className="text-2xl font-semibold text-[#007cff] mb-4">Appointment Details</h2>
+      <div className="flex gap-2 justify-between">
+        <h2 className="lg:text-2xl font-semibold text-[#007cff] mb-4">Appointment Details</h2>
         <p className='capitalize text-gray-400'><strong>Appointment Booked By:</strong> {appoint.user.first_name} {appoint.user.last_name}</p>
       </div>
       <div className="space-y-3">

@@ -61,6 +61,14 @@ import DocDetails from './pages/admin/DocDetails'
 import InvoiceDetail from './pages/admin/InvoiceDetail'
 import BillingList from './pages/patient/BillingList'
 import PatientProfile from './pages/patient/PatientProfile'
+import RecieptList from './pages/admin/RecieptList'
+import Reciept from './pages/patient/Reciept'
+import AdminReceipts from './pages/admin/AdminReceipts'
+import PaymentHistory from './pages/patient/PaymentHistory'
+import HistoryDetails from './pages/patient/HistoryDetails'
+import Pending from './pages/admin/Pending'
+import AddVitals from './pages/doctor/AddVitals'
+
 
 function App() {
   const token = localStorage.getItem('user')
@@ -102,7 +110,11 @@ function App() {
               <Route path='billing/:id' element={<Billings/>}/>
               <Route path='settings' element={<Settings/>}/>
               <Route path='prescription' element={<MyPrescriptions/>}/>
+              <Route path='payhistory' element={<PaymentHistory/>}/>
+              <Route path='transaction/:id' element={<HistoryDetails/>}/>
+              <Route path='profile' element={<UserProfile/>}/>
            
+              <Route path='transactions/:id' element={<Reciept/>} />
               <Route path='details/:id' element={<AppDetails/>} />
               <Route path='diagnosis' element={<PatientDiagnosis/>} />
               
@@ -130,9 +142,12 @@ function App() {
                 <Route path='allinvent' element={<AllInventory/>}/>
                 <Route path='allpharm' element={<AdminPharmacy/>}/>
                 <Route path='alladmin' element={<AllAdmin/>}/>
+                <Route path='pending' element={<Pending/>}/>
                 <Route path='transactions' element={<AdminPayment/>}/>
-                <Route path='invoice' element={<AdminInvoice/>}/>
-                <Route path='invoice/:id' element={<InvoiceDetail/>}/>
+                <Route path='invoice/:id' element={<AdminInvoice/>}/>
+                <Route path='reciept' element={<RecieptList/>}/>
+                <Route path='receipt/:id' element={<AdminReceipts/>}/>
+                <Route path='invoices/:id' element={<InvoiceDetail/>}/>
             </Route>
 
             <Route path='/doctor' element={
@@ -146,6 +161,7 @@ function App() {
               <Route path='prescription/list' element={<PrescriptionList/>}/>
               <Route path='settings' element={<DrSettings/>} />
               <Route path='profile' element={<UserProfile/>} />
+              <Route path='addvitals' element={<AddVitals/>} />
               <Route path='diagnosis' element={<Diagnosis/>} />
               <Route path='details/:id' element={<AppointmentDetails/>} />
               <Route path='diagnosis/list' element={<DiagnosesTable/>} />

@@ -6,7 +6,7 @@ function AdminLayout() {
   return (
     <div>
         <div className="h-full flex">
-            <div className="lg:w-[15%] side">
+            <div className="w-[15%] side">
                 <AdminSidebar/>
             </div>
             <div className="overflow-x-scroll bg-[#F0F8FF] lg:bg-inherit w-[85%] lg:overflow-auto main">

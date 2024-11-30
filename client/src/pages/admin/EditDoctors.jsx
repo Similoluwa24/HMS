@@ -33,37 +33,73 @@ function EditDoctors() {
         setDepartments(editDoctors.items.item.departments)
     },[editDoctors])
     
-    const submitHandler = async(e) =>{
-      e.preventDefault()
-      const res = await fetch(`http://localhost:5000/user/admin/update/${id}`,{
-        method:'PUT',
-        headers:{
-          'Content-Type':'application/json'
-        },credentials:'include',
-        body:JSON.stringify({
-          first_name,
-          last_name,
-          gender,
-          email,
-          dob,
-          phone,
-          photo,
-          address,
-          school,
-          departments
-        })
-      })
-       const data = await res.json()
-       if (!res.ok) {
-        console.log(data);
-        showHide('error', data.errMessage)
-       } else {
-        showHide('success','doctor updated')
-        navigate('/admin/alldoc')
-        await fetchUserAll()
-       }     
-    }
-
+    // const submitHandler = async(e) =>{
+    //   e.preventDefault()
+    //   const res = await fetch(`http://localhost:5000/user/admin/update/${id}`,{
+    //     method:'PUT',
+    //     headers:{
+    //       'Content-Type':'application/json'
+    //     },credentials:'include',
+    //     body:JSON.stringify({
+    //       first_name,
+    //       last_name,
+    //       gender,
+    //       email,
+    //       dob,
+    //       phone,
+    //       photo,
+    //       address,
+    //       school,
+    //       departments
+    //     })
+    //   })
+    //    const data = await res.json()
+    //    if (!res.ok) {
+    //     console.log(data);
+    //     showHide('error', data.errMessage)
+    //    } else {
+    //     showHide('success','doctor updated')
+    //     navigate('/admin/alldoc')
+    //     await fetchUserAll()
+    //    }     
+    // }
+    const submitHandler = async (e) => {
+      e.preventDefault();
+  
+      const formData = new FormData();
+      formData.append('first_name', first_name);
+      formData.append('last_name', last_name);
+      formData.append('gender', gender);
+      formData.append('email', email);
+      formData.append('dob', dob);
+      formData.append('phone', phone);
+      formData.append('photo', photo[0]); // Assuming `photo` is from `e.target.files`
+      formData.append('address', address);
+      formData.append('school', school);
+      formData.append('departments', departments);
+  
+      try {
+          const res = await fetch(`http://localhost:5000/user/admin/update/${id}`, {
+              method: 'PUT',
+              credentials: 'include',
+              body: formData,
+          });
+          const data = await res.json()
+          console.log(data);
+          if (!res.ok) {
+            console.log(data);
+            showHide('error', 'An Error Has Occured!')
+          } else {
+            showHide('success','Profile Updated Successfully')
+            await fetchUserAll()
+            navigate('/admin/alldoc')
+          }
+          
+          // handle response
+      } catch (error) {
+          console.error(error);
+      }
+  };
   return (
     <>
         <div className=" lg:mx-5 lg:min-w-[60rem] mt-4 form w-full">

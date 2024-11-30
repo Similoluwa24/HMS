@@ -22,7 +22,7 @@ function DoctorSidebar() {
         <div className="min-h-screen py-5 px-4 bg-white text-[#007cff] border-r border-gray-200 shadow-lg">
             <div className="mb-8 flex items-center justify-start space-x-2">
                 <MdLocalHospital className="text-3xl lg:text-4xl p-2 bg-[#007cff] text-white rounded-full" />
-                <p className="text-lg md:text-xl font-bold text-[#007cff]">OJ Hospital</p>
+                <p className="text-lg md:text-xl hidden md:inline font-bold text-[#007cff]">OJ Hospital</p>
             </div>
             <div className="space-y-8">
                 <ul className="space-y-6">

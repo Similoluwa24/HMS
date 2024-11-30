@@ -1,13 +1,13 @@
 import React, { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext';
+import  HospitalContext  from '../../context/HospitalContext';
 import Modals from "../../shared/Modals"
 import otp from '../../assets/otpp.png'
 
-
 function Register() {
-  const [ state, dispatch ] = useContext(AuthContext);
-  const {isAuthenticated} = useContext(AuthContext)
+  const [state, dispatch] = useContext(AuthContext);
+  const { isAuthenticated, fetchUser } = useContext(HospitalContext);
   const [first_name, setFirstName] = useState('');
   const [last_name, setLastName] = useState('');
   const [email, setEmail] = useState('');
@@ -16,11 +16,11 @@ function Register() {
   const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [otpDigits, setOtpDigits] = useState(['','','','','',''])
-  const [open,setOpen] = useState(false)
+  const [otp, setOtp] = useState(''); // Updated to a single input for OTP
+  const [open, setOpen] = useState(false);
   const [userData, setUserData] = useState(null); // Added state for user data
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const signupHandler = async (e) => {
     e.preventDefault();
@@ -53,61 +53,46 @@ function Register() {
       const data = await res.json();
 
       if (!res.ok) {
-        console.log({ message: data.message }); // Log error message from the response
+        console.log({ message: data }); // Log error message from the response
       } else {
         console.log(data); // Log the data only when the request succeeds
         localStorage.setItem('user', JSON.stringify(data));
         dispatch({ type: 'LOGIN', payload: data });
-        setOpen(true)
-        setUserData(data)
+        setOpen(true);
+        setUserData(data);
         console.log(isAuthenticated);
-        
-        
-        
       }
     } catch (error) {
       console.log({ message: error.message });
     }
   };
 
-  const handleOtpChange = (index, value) => {
-    if (value.length <= 1) { // Ensure the value is a single digit
-      const newOtpDigits = [...otpDigits]; // Create a copy of the current OTP digits state
-      newOtpDigits[index] = value; // Update the specific index with the new value
-      setOtpDigits(newOtpDigits); 
-      console.log(newOtpDigits);
-      // Update the state with the new array
-    }
-  };
-  
-    // Combine OTP digits into a single string and handle the submission
-    const handleOtpSubmit = (e) => {
-      e.preventDefault();
-      const otpCode = otpDigits.join(''); // Combine digits into a single string
-      console.log("OTP Code:", otpCode);
-      // check if otp entered matches th one in database
-      if (otpCode === userData?.user?.verificationToken) {
-        if( userData.user.role === "admin") {
-            navigate('/admin/home')
-          }else if(userData.user.role === "doctor") {
-            navigate('/doctor/home')
-          }else
-          navigate('/user/home')
+  const handleOtpSubmit = async (e) => {
+    e.preventDefault();
+
+    // Check if OTP entered matches the one in the database
+    if (otp === userData?.user?.verificationToken) {
+      if (userData.user.role === "admin") {
+        navigate('/admin/home');
+      } else if (userData.user.role === "doctor") {
+        navigate('/doctor/home');
       } else {
-        alert('incorrect verification code. try again!')
+        navigate('/user/home');
       }
-      setOpen(false)
-    };
-  
+      await fetchUser();
+    } else {
+      alert('Incorrect verification code. Please try again!');
+    }
+    setOpen(false);
+  };
 
   return (
     <>
-     
-    <div className="flex items-center justify-center min-h-screen container">
-      <div className="bg-white shadow-lg rounded-xl px-8 py-4 w-full max-w-2xl">
-        <h1 className="text-4xl font-bold text-center text-blue-600 mb-8 font-[lora]">Create Your Account</h1>
+      <div className="flex items-center justify-center min-h-screen container">
+        <div className="bg-white shadow-lg rounded-xl px-8 py-4 w-full max-w-2xl">
+          <h1 className="text-4xl font-bold text-center text-blue-600 mb-8 font-[lora]">Create Your Account</h1>
 
-        <form onSubmit={signupHandler} className="space-y-4">
+          <form onSubmit={signupHandler} className="space-y-4">
           <div className="flex flex-wrap justify-between">
             <div className="w-[48%]">
               <label htmlFor="first_name" className="block mb-2 text-sm font-medium text-gray-700">First Name</label>
@@ -226,46 +211,51 @@ function Register() {
             </p>
           </div>
         </form>
+        </div>
       </div>
-    </div>
- 
 
-
-    {open &&
-      <Modals>
-            <div className='bg-white space-y-4 my-8 w-full h-full'>
+      {open && (
+        <Modals>
+          <div className="bg-white space-y-4 my-8 w-full h-full">
             <div className="flex flex-col items-center">
-              <img src={otp} alt="" className='w-[150px] h-[150px] ' />    
+              <img src={otp} alt="" className="w-[150px] h-[150px]" />
               <div className="txt">
-                <p id="helper-text-explanation" className="mt-2 text-lg font-semibold text-gray-500 dark:text-gray-400">Please introduce the 6 digit code we sent via email.</p>
-               <p  className='text-[#007cff] mt-2 text-lg font-semibold underline'>{userData?.user?.email || 'No email available'}</p>
+                <p id="helper-text-explanation" className="mt-2 text-lg font-semibold text-gray-500 dark:text-gray-400">
+                  Please introduce the code we sent to your email.
+                </p>
+                <p className="text-[#007cff] mt-2 text-lg font-semibold underline">
+                  {userData?.user?.email || 'No email available'}
+                </p>
               </div>
             </div>
-            <div className=" flex justify-center input"> 
+            <div className="flex justify-center input">
               <form onSubmit={handleOtpSubmit} className="max-w-sm mx-auto">
-                  <div className="flex mb-2 space-x-2 ">
-                    {otpDigits.map((digits,index)=>(
-                        <div key={index}>
-                            <label htmlFor={`code-${index+1}`} className="sr-only">{`Code ${index + 1}`}</label>
-                            <input type="text" maxLength="1" value={digits} onChange={(e) => handleOtpChange(index, e.target.value)} id={`code-${index + 1}`} className="block w-9 h-9 py-3 text-sm font-extrabold text-center text-gray-900 bg-white border border-gray-300 rounded-lg focus:ring-primary-500  " required />
-                        </div>
-                    ))}
-                     
-                  </div>
-                      <p  className="mt-2 text-sm text-gray-500 dark:text-gray-400">Please do not refresh this page.</p>
-                  <button type="submit" className="text-[#007cff] hover:text-white border bg-white w-full mt-5  border-[#007cff] hover:bg-[#007cff] font-medium rounded-lg text-sm px-5 py-2.5 text-center me-5 mb-2 ">
-                      Verify
-                  </button>
+                <label htmlFor="otp" className="block text-sm font-medium text-gray-700">
+                  Enter OTP
+                </label>
+                <input
+                  type="text"
+                  id="otp"
+                  value={otp}
+                  onChange={(e) => setOtp(e.target.value)}
+                  className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  placeholder="Enter 6-digit code"
+                  required
+                />
+                <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">Please do not refresh this page.</p>
+                <button
+                  type="submit"
+                  className="text-[#007cff] hover:text-white border bg-white w-full mt-5 border-[#007cff] hover:bg-[#007cff] font-medium rounded-lg text-sm px-5 py-2.5 text-center me-5 mb-2"
+                >
+                  Verify
+                </button>
               </form>
-
             </div>
-            </div>
-
-      </Modals>
-}
+          </div>
+        </Modals>
+      )}
     </>
   );
 }
 
 export default Register;
-``

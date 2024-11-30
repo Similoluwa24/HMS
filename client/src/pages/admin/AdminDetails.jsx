@@ -20,14 +20,14 @@ function AdminDetails() {
     <>
         <div className="p-6 bg-white border border-gray-200 shadow-md rounded-lg max-w-4xl mx-auto mt-8">
             <div className="flex justify-between items-center  border-b border-gray-200 p-5">
-                <h1 className='text-gray-400 font-[poppins] '>Patient Details</h1>
+                <h1 className='text-gray-400 font-[poppins] '><Link to={''}>Patient Details</Link></h1>
                 <Link 
                  className="bg-gradient-to-r from-blue-300 to-purple-600 text-white px-5 py-2 rounded-lg shadow-md hover:from-blue-600 hover:to-indigo-700 transition duration-300" to={'/admin/allpa'} >
                     Back To Patient's List </Link>
             </div>
             {details &&
                 <div className="about my-5">
-                    <div className="flex justify-evenly items-center">
+                    <div className="flex lg:flex-row flex-col justify-evenly items-center">
                         <div className="border rounded-full bg-blue-400 h-[200px] w-[200px] flex items-center justify-center ">
                             <p className='text-white text-4xl font-[poppins]'>{getInitials(details.first_name, details.last_name)}</p>
                         </div>
@@ -43,7 +43,7 @@ function AdminDetails() {
                                 <span className="font-medium text-gray-800">Phone: </span>{details.phone}
                                 </p>
                                 <p className="text-gray-600">
-                                <span className="font-medium text-gray-800">NHIS: </span>{details.NHIS}
+                                <span className="font-medium text-gray-800">NHIS: </span>{details.NHIS || 'Not Applicable'}
                                 </p>
                                 <p className="text-gray-600">
                                 <span className="font-medium text-gray-800">Gender: </span>{details.gender}

@@ -2,14 +2,14 @@ import React, { useContext, useEffect, useState } from 'react'
 import HospitalContext from '../../context/HospitalContext'
 
 function DrSettings() {
-  const {showHide, user} = useContext(HospitalContext)
+  const {showHide, user, fetchUser} = useContext(HospitalContext)
   const [oldpassword, setOldPassword] = useState('')
   const [newpassword, setNewPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [first_name, setFirstName] = useState('')
   const [last_name, setLastName] = useState('')
   const [dob, setDob] = useState('')
-  const [email, setEmail] = useState('')
+  const [photo, setPhoto] = useState('')
   const [address, setAddress] = useState('')
   const [phone, setPhone] = useState('')
   const [btype, setBtype] = useState('')
@@ -36,7 +36,7 @@ function DrSettings() {
           setFirstName(data.user.first_name || '');
           setLastName(data.user.last_name || '');
           setDob(data.user.dob || '');
-          setEmail(data.user.email || '');
+          setPhoto(data.user.photo || '');
           setAddress(data.user.address || '');
           setPhone(data.user.phone || '');
           setBtype(data.user.btype || '');
@@ -75,27 +75,62 @@ function DrSettings() {
       }}
   }
 
-  const handleSubmit = async (e) => {
-    e.preventDefault()
-    const res = await fetch('http://localhost:5000/user/updateprofile',{
-      method:'PUT',
-      headers:{
-        'Content-Type':'application/json'
-      },
-      credentials:'include',
-      body:JSON.stringify({first_name,last_name,email,phone,address,genotype,btype,dob})
-    })
-    const data = await res.json()
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault()
+  //   const res = await fetch('http://localhost:5000/user/updateprofile',{
+  //     method:'PUT',
+  //     headers:{
+  //       'Content-Type':'application/json'
+  //     },
+  //     credentials:'include',
+  //     body:JSON.stringify({first_name,last_name,photo,phone,address,genotype,btype,dob})
+  //   })
+  //   const data = await res.json()
 
-    if (!res.ok) {
-      console.log(data);
-      showHide('error',data.errMessage)      
-    } else {
-      console.log(data);
+  //   if (!res.ok) {
+  //     console.log(data);
+  //     showHide('error',data.errMessage)      
+  //   } else {
+  //     console.log(data);
       
-      showHide('success','User data updated successfully!')
+  //     showHide('success','User data updated successfully!')
+  //   }
+  // }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData();
+    formData.append('first_name', first_name);
+    formData.append('last_name', last_name);
+    formData.append('dob', dob);
+    formData.append('phone', phone);
+    formData.append('photo', photo[0]); // Assuming `photo` is from `e.target.files`
+    formData.append('address', address);
+    console.log(formData);
+    
+    try {
+        const res = await fetch('http://localhost:5000/user/updateprofile', {
+            method: 'PUT',
+            credentials: 'include',
+            body: formData,
+        });
+        const data = await res.json()
+        console.log(data);
+        if (!res.ok) {
+          console.log(data);
+          showHide('error', 'An Error Has Occured!')
+        } else {
+          showHide('success','Profile Updated Successfully')
+          await fetchUser()
+          navigate('/admin/alldoc')
+        }
+        
+        // handle response
+    } catch (error) {
+        console.error(error);
     }
-  }
+};
   return (
     <>
           <div className="bg-gradient-to-b from-gray-50 to-gray-100 min-h-screen py-10">
@@ -175,15 +210,8 @@ function DrSettings() {
               />
             </div>
             <div className="md:w-1/2">
-              <label className="block mb-1 text-sm font-medium text-gray-600">Email</label>
-              <input 
-                type="email" 
-                value={email} 
-                disabled
-                onChange={(e) => setEmail(e.target.value)} 
-                className="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
-                required 
-              />
+              <label className="block mb-1 text-sm font-medium text-gray-600">photo</label>
+              <input onChange={(e)=>{setPhoto(e.target.files)}}  className="block w-full text-sm text-[#007cff] border border-gray-300 rounded-lg cursor-pointer bg-gray-50 d focus:outline-none" aria-describedby="file_input_help" id="file_input" type="file"/>
             </div>
           </div>
           <div className="md:flex gap-4">

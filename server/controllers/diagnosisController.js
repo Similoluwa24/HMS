@@ -51,16 +51,6 @@ exports.findDiagnosis = catchAsyncErrors(async (req,res,next) => {
     })
 })
 
-// exports.findByDoctorId = catchAsyncErrors(async (req,res,next) => {
-//     if (!req.user || !req.user.id) {
-//       return  next(new ErrorHandler('Dostor Id is invalid',400))
-//     }
-//     const diagnosis = await Diagnosis.findById(req.body.id).populate('doctor').populate('userId')
-
-//     res.status(200).json({
-//         diagnosis
-//     })
-// })
 
 exports.findByDoctorId = catchAsyncErrors(async (req, res, next) => {
     const doctorId = req.user.id; // Use req.query for GET requests

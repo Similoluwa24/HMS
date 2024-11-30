@@ -14,10 +14,10 @@ function AppDetails() {
         <>
             <div className="bg-white shadow-lg rounded-2xl p-8 max-w-2xl m-auto space-y-6 w-full relative my-10">
                 <div className="flex items-center justify-between mb-6">
-                    <h2 className="text-3xl font-bold text-gray-900">Appointment Details</h2>
+                    <h2 className="lg:text-3xl font-bold text-gray-900">Appointment Details</h2>
                     <Link
                         to={'/user/appointment'}
-                        className="bg-gradient-to-r from-blue-500 to-blue-600 text-white px-5 py-2 rounded-lg shadow-md hover:from-blue-600 hover:to-blue-700 transition duration-300"
+                        className="bg-gradient-to-r from-blue-500 to-blue-600 text-white p-2 text-sm lg:text-lg lg:px-5 lg:py-2 rounded-lg shadow-md hover:from-blue-600 hover:to-blue-700 transition duration-300"
                     >
                         Back to Appointments
                     </Link>

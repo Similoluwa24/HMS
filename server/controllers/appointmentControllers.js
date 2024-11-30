@@ -3,6 +3,7 @@ const Appointment = require("../models/appointment");
 const ErrorHandler = require('../utils/errorHandler')
 const User = require('../models/user')
 const mongoose = require('mongoose');
+const sendEmail = require("../utils/sendEmail");
 
 
 
@@ -40,6 +41,43 @@ exports.createAppointment = catchAsyncErrors(async (req,res) => {
       status: "success",
       appointment
   });
+
+  try {
+    const doctorName = `${doctorExists.first_name} ${doctorExists.last_name}`;
+    
+    const emailContent = `
+      <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: auto; border: 1px solid #ddd; border-radius: 10px; overflow: hidden;">
+        <div style="background-color: #007bff; color: white; padding: 20px; text-align: center;">
+          <h1 style="margin: 0; font-size: 24px;">Appointment Confirmation</h1>
+        </div>
+        <div style="padding: 20px;">
+          <p>Dear <strong>${first_name} ${last_name}</strong>,</p>
+          <p>Your appointment has been successfully scheduled. Here are the details:</p>
+          <ul style="list-style: none; padding: 0;">
+            <li><strong>Doctor:</strong> Dr. ${doctorName}</li>
+            <li><strong>Date:</strong> ${new Date(date).toDateString()}</li>
+            <li><strong>Time:</strong> ${time}</li>
+          </ul>
+          <p>If you have any questions or need to reschedule, please contact us at <a href="mailto:support@ojhospital.com" style="color: #007bff; text-decoration: none;">support@ojhospital.com</a>.</p>
+          <p style="margin-top: 20px;">Best regards,</p>
+          <p style="margin: 0;">The <strong>OJ Hospital</strong> Team</p>
+        </div>
+        <div style="background-color: #f8f9fa; color: #666; padding: 10px; text-align: center; font-size: 12px;">
+          <p style="margin: 0;">OJ Hospital | Your Health, Our Priority</p>
+          <p style="margin: 0;">123 Health Street, City, Country</p>
+          <p style="margin: 0;">Phone: +123-456-7890 | Email: <a href="mailto:support@ojhospital.com" style="color: #007bff; text-decoration: none;">support@ojhospital.com</a></p>
+        </div>
+      </div>
+    `;
+
+    await sendEmail({
+      email: email, 
+      subject: 'Appointment Confirmation - OJ Hospital',
+      html: emailContent, 
+    });
+  } catch (error) {
+    console.error('Failed to send appointment confirmation email:', error);
+  }
 });
 exports.deleteAppointment = catchAsyncErrors(async (req, res, next) => {
     const deleteApp = await Appointment.findById(req.params.id)
@@ -95,8 +133,6 @@ exports.editAppointment = catchAsyncErrors(async (req,res) => {
 })
 
 exports.getAppointmentsByDoctor = catchAsyncErrors(async (req, res) => {
- 
-console.log(req.user);
 
      // Ensure req.user exists and has an ID
     if (!req.user || !req.user.id) {
@@ -107,17 +143,19 @@ console.log(req.user);
     }
   
 
-    // Fetch the appointments for the specific doctor using req.user.id
     const appointments = await Appointment.find({ doctor: req.user.id })
-        .populate('user', 'first_name last_name email') // Populating user details if needed
-        .populate('doctor', 'first_name last_name email'); // Populating doctor details if needed
+        .populate('user', 'first_name last_name email') 
+        .populate('doctor', 'first_name last_name email'); 
 
-    // If no appointments found, return a message
     if (!appointments || appointments.length === 0) {
         return res.status(404).json({ message: 'No appointments found for this doctor' });
     }
-
-    // Return the list of appointments
     res.status(200).json({ appointments });
 });
+
+exports.getLatestAppointment = catchAsyncErrors(async (req,res,next) => {
+    const appointment = await Appointment.findOne().sort({_id: -1}).populate('user','first_name last_name')
+
+    res.status(200).json(appointment)
+})
 

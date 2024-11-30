@@ -1,11 +1,15 @@
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useContext, useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import HospitalContext from '../../context/HospitalContext';
 
 function Billings() {
+  const {showHide} = useContext(HospitalContext)
   const params = useParams()
     const showIn = params.id
     const [details,setDetails] = useState([])
     const [loading, setLoading] = useState(true)
+    const navigate = useNavigate()
+
     
     useEffect(()=>{
         const fetchInvoice = async () => {
@@ -24,20 +28,119 @@ function Billings() {
           } else {
             setDetails(data.invoice)
            setLoading(false)
+           
           }
           
         }
         fetchInvoice()
       },[showIn])
 
+      // const payUp = async (e) => {
+      //   e.preventDefault()
+      //   const res = await fetch('http://localhost:5000/payment/initiate',{
+      //     method:'POST',
+      //     headers:{
+      //       'Content-Type':'application/json'
+      //     },
+      //     credentials:'include',
+      //     body: JSON.stringify({invoiceId:showIn})
+      //   })
+      //   const data = await res.json()
+      //   console.log(data);
+      //   if (!res.ok) {
+      //     showHide('error','Something went wrong')
+      //     console.log(data);
+      //     window.location.href = data.paymentLink
+      //     navigate(data.paymentLink)
+      //   } else {
+          
+      //   }
+        
+      // }
+
+      // const payUp = async (e) => {
+      //   e.preventDefault();
+      
+      //   try {
+      //     const res = await fetch('http://localhost:5000/payment/initiate', {
+      //       method: 'POST',
+      //       headers: {
+      //         'Content-Type': 'application/json',
+      //       },
+      //       credentials: 'include',
+      //       body: JSON.stringify({ invoiceId: showIn }),
+      //     });
+      
+      //     const data = await res.json();
+      //     if(data.message === 'This invoice has been paid'){
+      //       showHide('error','This payment has been made')
+      //     }
+      //     if (!res.ok) {
+      //       showHide('error', 'Something went wrong');
+      //       console.error(data);
+      //       return; // Stop execution if there's an error
+      //     }
+      
+      //     if (data.paymentLink) {
+      //       // Redirect to the payment link
+      //       window.location.href = data.paymentLink; // Use this for external URLs
+      //     } else {
+      //       showHide('error', 'Payment link not available');
+      //     }
+      //   } catch (error) {
+      //     console.error('Error initiating payment:', error);
+      //     showHide('error', 'An unexpected error occurred');
+      //   }
+      // };
+      
+
+
+      const payUp = async (e) => {
+        e.preventDefault();
+        
+        try {
+          const res = await fetch('http://localhost:5000/payment/initiate', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            credentials: 'include',
+            body: JSON.stringify({ invoiceId: showIn }),
+          });
+      
+          const data = await res.json();
+      
+          // Handle the case where the invoice is already paid
+          if (data === 'This invoice has been paid') {
+            showHide('error', 'This payment has been made');
+            return; // Stop further execution
+          }
+      
+          // Handle general errors
+          if (!res.ok) {
+            showHide('error', 'Something went wrong');
+            console.error(data);
+            return; // Stop further execution
+          }
+      
+          // Redirect the user to the payment link
+          if (data.paymentLink) {
+            window.location.href = data.paymentLink;
+          }
+        } catch (error) {
+          console.error('An unexpected error occurred:', error);
+          showHide('error', 'An unexpected error occurred. Please try again.');
+        }
+      };
+      
   return (
     <>
     <div className="bg-gray-50 shadow-lg rounded-2xl p-8 max-w-3xl m-auto my-10 space-y-8 border border-gray-200">
   {details.map((detail, index) => (
     <div key={index} className="mb-6">
       <div className="flex justify-between items-center pb-4 border-b">
-        <h2 className="text-3xl font-bold text-gray-900">Payment Invoice</h2>
-        <p className="text-gray-600">Invoice #INV-{detail._id}</p>
+        <h2 className="lg:text-3xl font-bold text-gray-900">Payment Invoice</h2>
+        <p className="text-gray-600 text-[13px] md:text-lg "> #INV-{detail._id}</p>
       </div>
 
       <div className="space-y-4">
@@ -69,7 +172,7 @@ function Billings() {
       </div>
 
       <div className="mt-8 text-right">
-        <button className="bg-gradient-to-r from-green-500 to-teal-600 text-white px-6 py-2 rounded-lg shadow-md hover:from-green-600 hover:to-teal-700 transition duration-300">
+        <button onClick={payUp} className="bg-gradient-to-r from-green-500 to-teal-600 text-white px-6 py-2 rounded-lg shadow-md hover:from-green-600 hover:to-teal-700 transition duration-300">
           Pay Now
         </button>
       </div>

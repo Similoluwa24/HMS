@@ -84,7 +84,7 @@ function PatientList() {
                   {item.email}
                 </td>
                 <td className="px-6 py-4">
-                  {item.NHIS}
+                  {item.NHIS || 'N/A'}
                 </td>
                 <td className="px-6 py-4 flex space-x-2 items-center justify-center bg-blue-100">
                   <Link to={`/admin/details/${item._id}`}  className="text-blue-600 hover:text-blue-800 transition">

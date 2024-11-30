@@ -11,10 +11,13 @@ const invoiceSchema = new mongoose.Schema({
       date: { type: String, default: Date.now }
     }
   ],
-  patientAddress:{ type: String, required: true },
+  patientAddress:{ type: String, required: false },
   totalCost: { type: Number, required: true },
   issuedDate: { type: Date, default: Date.now },
-  status: { type: String, enum: ['unpaid', 'paid', 'cancelled'], default: 'unpaid' }
-});
+  status: { type: String, enum: ['unpaid', 'paid','pending', 'cancelled'], default: 'unpaid' },
+
+},
+ { timestamps: true });
+
 
 module.exports = mongoose.model('Invoice', invoiceSchema);

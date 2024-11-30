@@ -32,18 +32,18 @@ function PrescriptionList() {
 
   return (
     <div className="bg-gray-50 shadow-lg rounded-2xl p-8 max-w-5xl m-auto my-10 space-y-8">
-      <div className="flex items-center justify-between border-b pb-4 mb-6">
-        <h2 className="text-3xl font-bold text-gray-900">Prescription List</h2>
-        <div className="space-x-4">
+      <div className="flex items-center gap-3 justify-between border-b pb-4 mb-6">
+        <h2 className="md:text-3xl font-bold text-gray-900">Prescription List</h2>
+        <div className="space-x-4 w-full">
           <Link 
             to={'/doctor/prescription'} 
-            className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-5 py-2 rounded-lg shadow-md hover:from-blue-600 hover:to-indigo-700 transition duration-300"
+            className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white md:text-lg text-[9px] px-5 py-2 rounded-lg shadow-md hover:from-blue-600 hover:to-indigo-700 transition duration-300"
           >
             Create New Prescription
           </Link>
           <Link 
             to={'/doctor/home'} 
-            className="bg-gradient-to-r from-blue-300 to-purple-600 text-white px-5 py-2 rounded-lg shadow-md hover:from-blue-600 hover:to-indigo-700 transition duration-300"
+            className="bg-gradient-to-r from-blue-300 to-purple-600 text-white px-5 py-2 hidden md:inline rounded-lg shadow-md hover:from-blue-600 hover:to-indigo-700 transition duration-300"
           >
             Back to Home
           </Link>

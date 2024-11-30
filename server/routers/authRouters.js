@@ -16,9 +16,10 @@ router.get("/admin", authController.getAllUsers)
 router.get("/admin/:id",isAuthenticated,isAdmin, authController.getUserbyId)
 router.get("/me",isAuthenticated, authController.getUserProfile)
 router.put("/updatepwd",isAuthenticated, authController.updatePassword)
-router.put("/updateprofile",isAuthenticated, authController.updateProfile)
-router.put("/admin/update/:id",isAuthenticated,isAdmin, authController.updateProfileAdmin)
+router.put("/updateprofile",isAuthenticated,uploads.single('photo'), authController.updateProfile)
+router.put("/admin/update/:id",isAuthenticated,uploads.single('photo'),isAdmin, authController.updateProfileAdmin)
 router.delete('/delete/:id',authController.deleteUser)
 router.get('/api/v1/test-auth', isAuthenticated, authController.checkMiddleware);
+router.get('/latest', authController.getLatest)
 
 module.exports = router

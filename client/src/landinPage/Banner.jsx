@@ -1,8 +1,23 @@
-import React from 'react'
-import { Link } from 'react-router-dom' 
+import React, { useContext } from 'react'
+import { Link, useNavigate } from 'react-router-dom' 
 import CountUp from 'react-countup'
+import HospitalContext from '../context/HospitalContext';
 
 function Banner() {
+  const { isAuthenticated, user } = useContext(HospitalContext);
+  const navigate = useNavigate();
+  
+
+  // Redirect based on user role
+  if (user && isAuthenticated) {
+    if (user.role === "admin") {
+      navigate('/admin/home');
+    } else if (user.role === "doctor") {
+      navigate('/doctor/home');
+    } else {
+      navigate('/user/home');
+    }
+  }
   return (
     <div>
              <div className="relative  banner" id='top'>

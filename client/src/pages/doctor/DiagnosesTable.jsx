@@ -31,7 +31,7 @@ const DiagnosesTable = () => {
   return (
     <div className="overflow-x-auto w-full mt-6">
          <div className="flex items-center justify-between border-b pb-4 px-4 mb-6">
-        <h2 className="text-3xl font-bold text-gray-900">Prescription List</h2>
+        <h2 className="lg:text-3xl font-bold text-gray-900">Diagnosis List</h2>
         <div className="space-x-4">
           <Link 
             to={'/doctor/diagnosis'} 
@@ -41,7 +41,7 @@ const DiagnosesTable = () => {
           </Link>
           <Link 
             to={'/doctor/home'} 
-            className="bg-gradient-to-r from-blue-300 to-purple-600 text-white px-5 py-2 rounded-lg shadow-md hover:from-blue-600 hover:to-indigo-700 transition duration-300"
+            className="bg-gradient-to-r from-blue-300 to-purple-600 text-white hidden md:inline px-5 py-2 rounded-lg shadow-md hover:from-blue-600 hover:to-indigo-700 transition duration-300"
           >
             Back to Home
           </Link>

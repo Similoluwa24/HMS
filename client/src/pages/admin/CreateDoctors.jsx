@@ -32,81 +32,41 @@ function CreateDoctors() {
     school,
     departments,
     role);
-  const submitHandler = async(e)=>{
-    e.preventDefault()
-    try {
-      const res = await fetch('http://localhost:5000/user/signup',{
-        method:'POST',
-        headers:{
-          "Content-Type":"application/json"
-        },
-        credentials:"include",
-        body:JSON.stringify({ 
-           first_name,
-          last_name,
-          gender,
-          email,
-          dob,
-          phone,
-          photo,
-          address,
-          school,
-          departments,
-          password,role,
-          confirmPassword})
-      })
-      const data = await res.json()
-      if (res.ok) {
-        navigate('/admin/alldoc') 
-         showHide('Doctor created successfully')  
-         await fetchUserAll()
-      }else{
-        console.log(data);
-        
-      }
-      
-    } catch (error) {
-      console.log(error.message);
-      
-    }
-
-     
-  }
 
   
 
-//   const submitHandler = async (e) => {
-//     e.preventDefault();
+  const submitHandler = async (e) => {
+    e.preventDefault();
 
-//     const formData = new FormData();
-//     formData.append('first_name', first_name);
-//     formData.append('last_name', last_name);
-//     formData.append('gender', gender);
-//     formData.append('email', email);
-//     formData.append('dob', dob);
-//     formData.append('phone', phone);
-//     formData.append('photo', photo[0]); // Assuming `photo` is from `e.target.files`
-//     formData.append('address', address);
-//     formData.append('school', school);
-//     formData.append('departments', departments);
-//     formData.append('password', password);
-//     formData.append('confirmPassword', confirmPassword);
-//     formData.append('role', role);
+    const formData = new FormData();
+    formData.append('first_name', first_name);
+    formData.append('last_name', last_name);
+    formData.append('gender', gender);
+    formData.append('email', email);
+    formData.append('dob', dob);
+    formData.append('phone', phone);
+    formData.append('photo', photo[0]); // Assuming `photo` is from `e.target.files`
+    formData.append('address', address);
+    formData.append('school', school);
+    formData.append('departments', departments);
+    formData.append('password', password);
+    formData.append('confirmPassword', confirmPassword);
+    formData.append('role', role);
 
-//     try {
-//         const res = await fetch('http://localhost:5000/user/signup', {
-//             method: 'POST',
-//             credentials: 'include',
-//             body: formData,
-//         });
-//         const data = await res.json()
-//         console.log(data);
+    try {
+        const res = await fetch('http://localhost:5000/user/signup', {
+            method: 'POST',
+            credentials: 'include',
+            body: formData,
+        });
+        const data = await res.json()
+        console.log(data);
         
-//         // handle response
-//     } catch (error) {
-//         console.error(error);
-//     }
-// };
+        // handle response
+    } catch (error) {
+        console.error(error);
+    }
+};
 
   return (
     <div className='my-8 mx-5'>

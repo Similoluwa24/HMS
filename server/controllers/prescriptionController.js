@@ -28,7 +28,8 @@ exports.addPrescription = catchAsyncErrors(async (req,res,next) => {
     medication,
     dosage,
     notes,
-    userId
+    userId,
+    requiresInvoice: true
   })
   res.status(201).json({
     status:'success',
@@ -79,9 +80,9 @@ exports.findPrescriptionByPatientId = catchAsyncErrors(async (req,res,next) => {
                                           .populate('doctor')
                                           .populate('userId')
 
-    if (!prescription || prescription.length === 0) {
-      return res.status(404).json({ message: 'No prescription found for this user' });
-  }                                    
+  //   if (!prescription || prescription.length === 0) {
+  //     return res.status(404).json({ message: 'No prescription found for this user' });
+  // }                                    
     res.status(200).json({
       status:'success',
       prescription
@@ -97,4 +98,23 @@ exports.editPrescription = catchAsyncErrors(async (req,res,next) => {
     status:'success',
     prescription
   })
+})
+
+exports.getPendingInvoices = catchAsyncErrors( async (req, res) => {
+ 
+      const prescriptions = await Prescription.find({ requiresInvoice: true })
+          .populate('userId') 
+          .populate('doctor'); 
+
+      res.status(200).json(prescriptions);
+});
+
+exports.findPrescriptionById = catchAsyncErrors(async (req, res, next) => {
+  const prescription = await Prescription.findById(req.params.id).populate('userId')
+
+  if (!prescription) {
+    res.status(400).json('Prescription not found')
+  }
+
+  res.status(200).json(prescription)
 })

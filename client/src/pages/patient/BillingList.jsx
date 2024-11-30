@@ -56,13 +56,13 @@ function BillingList() {
                 {invoices[0] !== null ? (
                     
                     invoices.map((invoice) => (
-                    <tr key={invoice.id} className="border-b hover:bg-gray-50">
+                    <tr key={invoice.id} className="border-b capitalize hover:bg-gray-50">
                         <td className="py-3 px-6 text-gray-700">{invoice._id}</td>
                         <td className="py-3 px-6 text-gray-700">{new Date(invoice.issuedDate).toLocaleDateString()}</td>
-                        <td className="py-3 px-6 text-gray-700">{invoice.totalCost}</td>
+                        <td className="py-3 px-6 text-gray-700">NGN {invoice.totalCost}</td>
                         <td className={`py-3 px-6 text-gray-700 font-semibold ${
-                        invoice.status === 'Paid' ? 'text-green-600' :
-                        invoice.status === 'Pending' ? 'text-yellow-600' :
+                        invoice.status === 'paid' ? 'text-green-600' :
+                        invoice.status === 'pending' ? 'text-yellow-600' :
                         'text-red-600'
                         }`}>{invoice.status}</td>
                         <td className="px-6 py-3 flex space-x-2 items-center justify-center bg-blue-100">

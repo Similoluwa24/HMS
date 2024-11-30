@@ -86,7 +86,7 @@ function EditAppointment() {
                 ))}
                 </select>
             </div>
-            <div className="flex mx-4 gap-4 ">
+            <div className="flex flex-col lg:flex-row mx-4 gap-4 ">
                 <div className="w-1/2">
                     <label htmlFor="date" className="block mb-1 text-sm font-medium">select appointment date *</label>
                     <input type="date" value={date} id="date" onChange={(e)=>{setDate(e.target.value)}} className="bg-white border border-gray-300 text-[#007cff] text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  " placeholder="" required />

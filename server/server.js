@@ -9,6 +9,7 @@ const inventoryRoutes = require('./routers/inventoryRoutes');
 const prescriptionRoutes = require('./routers/prescriptionRoutes');
 const diagnosisRoutes = require('./routers/diagnosisRoutes');
 const invoiceRoutes = require('./routers/invoiceRoutes');
+const paymentRouter = require('./routers/paymentRouter');
 const dotenv = require('dotenv');
 const cors = require('cors');
 const ErrorMiddleware = require('./middleware/error');
@@ -40,6 +41,8 @@ app.use('/inventory',inventoryRoutes)
 app.use('/prescription',prescriptionRoutes)
 app.use('/diagnosis',diagnosisRoutes)
 app.use('/invoice',invoiceRoutes)
+app.use('/payment',paymentRouter)
+
 
 //middleware
 app.use(ErrorMiddleware)

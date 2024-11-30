@@ -8,5 +8,7 @@ router.get('/doctor',isAuthenticated, prescriptionController.findPrescriptionByD
 router.get('/user',isAuthenticated, prescriptionController.findPrescriptionByPatientId)
 router.delete('/delete/:id',prescriptionController.deletePrescription)
 router.put('/edit/:id',prescriptionController.editPrescription)
+router.get('/pending', isAuthenticated, prescriptionController.getPendingInvoices)
+router.get('/:id', isAuthenticated, prescriptionController.findPrescriptionById)
 
 module.exports = router
